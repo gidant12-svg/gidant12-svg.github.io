@@ -1,0 +1,34 @@
+[
+  {
+    "company": "NVIDIA Corporation",
+    "ticker": "NVDA",
+    "exchange": "NASDAQ",
+    "sector": "AI Infrastructure & Semiconductors",
+    "rating": "HOLD",
+    "target": "$163.76",
+    "price": "$187.16",
+    "upside": "-12.5%",
+    "date": "2026-01-25",
+    "thesis": "A dominant franchise with a deep software moat, but the current price already discounts most of the Blackwell cycle. A deliberately conservative DCF leaves room to be proven wrong on the upside.",
+    "scenarios": { "bear": "$111.79", "base": "$177.25", "bull": "$303.27" },
+    "methods": ["DCF", "EV/EBITDA comps", "P/E comps", "Scenarios"],
+    "pages": 35,
+    "file": "reports/NVDA_Initiation_Jan2026.pdf"
+  },
+  {
+    "company": "Enbridge Inc.",
+    "ticker": "ENB",
+    "exchange": "TSX / NYSE",
+    "sector": "Pipelines & Utilities",
+    "rating": "HOLD / UNDERPERFORM",
+    "target": "C$53.63",
+    "price": "C$65.33",
+    "upside": "-18.0%",
+    "date": "2025-12-29",
+    "thesis": "Durable, contracted cash flows, but C$105B of debt and a premium multiple absorb too much value before it reaches common equity. Even the bull case sits below today's price.",
+    "scenarios": { "bear": "C$32.20", "base": "C$47.30", "bull": "C$63.90" },
+    "methods": ["DCF", "EV/EBITDA comps", "Scenarios", "Sensitivities"],
+    "pages": 3,
+    "file": "reports/ENB_Initiation_Dec2025.pdf"
+  }
+]
