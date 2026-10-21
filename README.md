@@ -27,3 +27,18 @@ Live site: https://gidant12-svg.github.io
 ```
 
 3. Commit. The site updates within about a minute. Reports are sorted by `date` automatically, and ratings containing BUY, HOLD or SELL/UNDERPERFORM get their own colours.
+
+## Adding a milestone (learning, coffee chats, work in progress)
+
+Open `timeline.json` and add an entry. `date` (YYYY-MM-DD) controls the order; `when` is the label shown. Set `"current": true` on the one thing you're working on now to pin it to the top. When an in-progress report is published, delete its timeline entry and add it to `reports.json` instead.
+
+```json
+  {
+    "when": "Spring 2027",
+    "date": "2027-04-01",
+    "tag": "Learning",
+    "title": "Short title",
+    "subtitle": "One line shown when collapsed",
+    "body": "Two or three sentences shown when the row is expanded."
+  },
+```

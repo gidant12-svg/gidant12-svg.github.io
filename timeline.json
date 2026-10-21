@@ -1,0 +1,27 @@
+[
+  {
+    "when": "Now",
+    "date": "2026-10-01",
+    "current": true,
+    "tag": "In progress",
+    "title": "Superior Plus (SPB)",
+    "subtitle": "Initiation report · Propane & gas distribution · TSX",
+    "body": "My first report in my chosen coverage area, built on a full source process: AIF, MD&A, earnings call Q&A, investor presentations, consensus estimates and news flow, starting from the industry primer. CFA Level II (May 2027) comes next."
+  },
+  {
+    "when": "2026",
+    "date": "2026-06-01",
+    "tag": "Learning",
+    "title": "Building the foundation",
+    "subtitle": "Damodaran DCF · Excel practice workbook · Alerian energy infrastructure primer · CFA Level II prep",
+    "body": "Read Damodaran's DCF chapters and built an Excel practice workbook to drill them. Studied the Alerian primer on energy infrastructure to understand how midstream businesses earn their returns. Now preparing for CFA Level II (May 2027)."
+  },
+  {
+    "when": "Since Sep 2026",
+    "date": "2026-09-01",
+    "tag": "Ongoing",
+    "title": "Coffee chats with equity research analysts",
+    "subtitle": "How analysts actually build and write a call",
+    "body": "Regular conversations with equity research analysts about how they actually work: a view that differs from the market, catalysts that close the gap, and notes short enough to be read. Their feedback shapes how I'm structuring the Superior Plus report."
+  }
+]
