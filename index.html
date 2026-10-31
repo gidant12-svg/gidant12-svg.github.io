@@ -132,7 +132,6 @@ h2{font-family:"Source Serif 4",Georgia,serif;font-size:24px;font-weight:600;mar
 .calls .call .stretch:focus-visible::after{outline:2px solid var(--accent);outline-offset:-2px}
 .calls .fmt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .calls .fmt a{position:relative;z-index:1;font-size:12px;font-weight:600;text-decoration:none;padding:4px 10px;border-radius:5px;background:var(--navy);color:var(--bg)}
-.calls .fmt a.alt{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 1.5px var(--navy)}
 .calls .fmt a:hover{opacity:.85}
 
 
@@ -300,7 +299,7 @@ function callRow(r){
     <div class="when">${esc(r.written)}</div>
     <div class="mid"><div class="t"><span class="serif">${title}</span></div>
       <div class="s">${esc(r.format)} · ${esc(r.sector)}</div>${r.deck?`
-      <div class="fmt"><a href="${esc(r.file)}" target="_blank" rel="noopener">Report (PDF)</a>${r.deckPpt?`<a href="${esc(r.deckPpt)}" download title="Recommended: best formatting and easiest to read">Deck (PowerPoint)</a>`:''}<a class="${r.deckPpt?'alt':''}" href="${esc(r.deck)}" target="_blank" rel="noopener">Deck (PDF)</a></div>`:''}</div>
+      <div class="fmt"><a href="${esc(r.file)}" target="_blank" rel="noopener">Report (PDF)</a><a href="${esc(r.deck)}" target="_blank" rel="noopener">Deck (PDF)</a></div>`:''}</div>
     <div class="right"><span class="mini">Target <b>${esc(r.target)}</b> · <b class="${up<0?'neg':'pos'}">${esc(r.upside)}</b></span><span class="badge ${badgeClass(r.rating)}">${esc(r.rating)}</span></div>
     ${GO}`;
   const name = `${esc(r.company)} (${esc(r.ticker)})`;
