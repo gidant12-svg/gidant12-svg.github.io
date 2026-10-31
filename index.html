@@ -276,7 +276,7 @@ function reportItem(r){
       ${r.context?`<p class="context"><b>Context.</b> ${esc(r.context)}</p>`:''}
       <div class="foot">
         <div class="tags">${(r.methods||[]).map(m=>`<span class="tag">${esc(m)}</span>`).join('')}</div>
-        <a class="btn" href="${esc(r.file)}" target="_blank" rel="noopener">Read report (PDF)</a>
+        <span style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="${esc(r.file)}" target="_blank" rel="noopener">Read report (PDF)</a>${r.deck?` <a class="btn" href="${esc(r.deck)}" target="_blank" rel="noopener">View deck (PDF)</a>`:''}</span>
       </div>
     </div>
   </details>`;

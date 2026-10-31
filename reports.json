@@ -1,5 +1,34 @@
 [
   {
+    "company": "Superior Plus Corp.",
+    "ticker": "SPB",
+    "exchange": "TSX",
+    "sector": "Propane & Gas Distribution",
+    "written": "October 2026",
+    "date": "2026-10-31",
+    "format": "5-page note + 6-slide pitch deck",
+    "rating": "BUY",
+    "target": "C$8.95",
+    "price": "C$6.71",
+    "upside": "+33.4%",
+    "thesis": "Priced like propane is on its last legs: at C$6.71 the stock only works if cash flow shrinks about 1% a year forever. Certarus trucks gas to data centres that can't wait for a pipeline, and signed contracts drive volume growth in 2027-28 as debt falls toward 3x.",
+    "context": "My first call in my chosen coverage area, built on a full source process: AIF, MD&A, earnings call Q&A, investor presentations, consensus and news flow. Shaped by coffee chats with equity research analysts: lead with a view that differs from the market, name the catalysts, and keep it short.",
+    "scenarios": {
+      "bear": "C$2.69",
+      "base": "C$8.95",
+      "bull": "C$15.15"
+    },
+    "methods": [
+      "DCF",
+      "EV/EBITDA comps",
+      "Scenarios",
+      "Sensitivities",
+      "Thesis-invalidation matrix"
+    ],
+    "file": "reports/SPB_Initiation_Oct2026.pdf",
+    "deck": "reports/SPB_Deck_Oct2026.pdf"
+  },
+  {
     "company": "Enbridge Inc.",
     "ticker": "ENB",
     "exchange": "TSX / NYSE",
@@ -13,8 +42,17 @@
     "upside": "-18.0%",
     "thesis": "Durable, contracted cash flows, but C$105B of debt and a premium multiple absorb too much value before it reaches common equity. Even the bull case sits below the price at the valuation date.",
     "context": "Written after an equity research analyst advised me to keep reports short. The aim was to lead with a view and keep only what drives value. The trade-off: the thesis and catalysts are there, but the 3-page format gave them too little room.",
-    "scenarios": { "bear": "C$32.20", "base": "C$47.30", "bull": "C$63.90" },
-    "methods": ["DCF", "EV/EBITDA comps", "Scenarios", "Sensitivities"],
+    "scenarios": {
+      "bear": "C$32.20",
+      "base": "C$47.30",
+      "bull": "C$63.90"
+    },
+    "methods": [
+      "DCF",
+      "EV/EBITDA comps",
+      "Scenarios",
+      "Sensitivities"
+    ],
     "file": "reports/ENB_Initiation_Dec2025.pdf"
   },
   {
@@ -31,8 +69,18 @@
     "upside": "-12.5%",
     "thesis": "A dominant franchise with a deep software moat, but the price already reflects most of the Blackwell cycle. A deliberately conservative DCF leaves room to be proven wrong on the upside.",
     "context": "My first full report, written to see whether I could apply what I'd learned in school: a three-statement forecast, DCF, comps and scenarios built from scratch. Heavy on the model, light on industry context and primary sources.",
-    "scenarios": { "bear": "$111.79", "base": "$177.25", "bull": "$303.27" },
-    "methods": ["3-statement model", "DCF", "EV/EBITDA comps", "P/E comps", "Scenarios"],
+    "scenarios": {
+      "bear": "$111.79",
+      "base": "$177.25",
+      "bull": "$303.27"
+    },
+    "methods": [
+      "3-statement model",
+      "DCF",
+      "EV/EBITDA comps",
+      "P/E comps",
+      "Scenarios"
+    ],
     "file": "reports/NVDA_Initiation_Jan2026.pdf"
   }
 ]
