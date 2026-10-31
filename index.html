@@ -117,14 +117,24 @@ h2{font-family:"Source Serif 4",Georgia,serif;font-size:24px;font-weight:600;mar
 .btn.alt{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 1.5px var(--navy)}
 
 /* calls */
-.calls a.call{display:grid;grid-template-columns:96px 1fr auto 18px;gap:16px;align-items:center;padding:16px 20px;border-top:1px solid var(--line);color:inherit;text-decoration:none}
-.calls a.call:first-child{border-top:0}
-.calls a.call:hover{background:var(--hover)}
-.calls a.call:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.calls a.call.pending{cursor:default;box-shadow:inset 3px 0 0 var(--accent)}
-.calls a.call.pending:hover{background:none}
+.calls .call{display:grid;grid-template-columns:96px 1fr auto 18px;gap:16px;align-items:center;padding:16px 20px;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.calls .call:first-child{border-top:0}
+.calls .call:hover{background:var(--hover)}
+.calls .call:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.calls .call.pending{cursor:default;box-shadow:inset 3px 0 0 var(--accent)}
+.calls .call.pending:hover{background:none}
 .calls .go{width:18px;height:18px;color:var(--faint)}
-.calls a.call:not(.pending):hover .go{color:var(--accent)}
+.calls .call:not(.pending):hover .go{color:var(--accent)}
+.calls .call.opts{position:relative}
+.calls .call .stretch{color:inherit;text-decoration:none}
+.calls .call .stretch::after{content:"";position:absolute;inset:0}
+.calls .call .stretch:focus-visible{outline:none}
+.calls .call .stretch:focus-visible::after{outline:2px solid var(--accent);outline-offset:-2px}
+.calls .fmt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.calls .fmt a{position:relative;z-index:1;font-size:12px;font-weight:600;text-decoration:none;padding:4px 10px;border-radius:5px;background:var(--navy);color:var(--bg)}
+.calls .fmt a.alt{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 1.5px var(--navy)}
+.calls .fmt a:hover{opacity:.85}
+
 
 /* process */
 .cmp{display:grid;grid-template-columns:150px 1fr 1fr}
@@ -149,10 +159,10 @@ footer{border-top:1px solid var(--line);padding-top:20px;padding-bottom:32px;fon
   .item summary .right{grid-column:1;justify-content:flex-start}
   .item summary .chev{grid-column:2;grid-row:1 / span 3;align-self:center}
   .proc summary .chev{grid-row:1 / span 2}
-  .calls a.call{grid-template-columns:1fr 18px;gap:6px 12px;padding:14px 16px}
-  .calls a.call>*{grid-column:1;min-width:0}
-  .calls a.call .right{justify-content:flex-start;flex-wrap:wrap;gap:8px 12px}
-  .calls a.call .go{grid-column:2;grid-row:1 / span 3;align-self:center}
+  .calls .call{grid-template-columns:1fr 18px;gap:6px 12px;padding:14px 16px}
+  .calls .call>*{grid-column:1;min-width:0}
+  .calls .call .right{justify-content:flex-start;flex-wrap:wrap;gap:8px 12px}
+  .calls .call .go{grid-column:2;grid-row:1 / span 3;align-self:center}
   .detail{padding:0 16px 18px}
   .fig b{font-size:16px}
   .top nav a{margin-left:14px}
@@ -286,12 +296,17 @@ function reportItem(r){
 const GO = '<svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4l6 6-6 6"/></svg>';
 function callRow(r){
   const up = num(r.upside);
-  return `<a class="call" href="${esc(r.file)}" target="_blank" rel="noopener">
+  const inner = (title) => `
     <div class="when">${esc(r.written)}</div>
-    <div class="mid"><div class="t"><span class="serif">${esc(r.company)} (${esc(r.ticker)})</span></div>
-      <div class="s">${esc(r.format)} · ${esc(r.sector)}</div></div>
+    <div class="mid"><div class="t"><span class="serif">${title}</span></div>
+      <div class="s">${esc(r.format)} · ${esc(r.sector)}</div>${r.deck?`
+      <div class="fmt"><a href="${esc(r.file)}" target="_blank" rel="noopener">Report (PDF)</a>${r.deckPpt?`<a href="${esc(r.deckPpt)}" download title="Recommended: best formatting and easiest to read">Deck (PowerPoint)</a>`:''}<a class="${r.deckPpt?'alt':''}" href="${esc(r.deck)}" target="_blank" rel="noopener">Deck (PDF)</a></div>`:''}</div>
     <div class="right"><span class="mini">Target <b>${esc(r.target)}</b> · <b class="${up<0?'neg':'pos'}">${esc(r.upside)}</b></span><span class="badge ${badgeClass(r.rating)}">${esc(r.rating)}</span></div>
-    ${GO}
+    ${GO}`;
+  const name = `${esc(r.company)} (${esc(r.ticker)})`;
+  if(r.deck) return `<div class="call opts">${inner(`<a class="stretch" href="${esc(r.file)}" target="_blank" rel="noopener">${name}</a>`)}
+  </div>`;
+  return `<a class="call" href="${esc(r.file)}" target="_blank" rel="noopener">${inner(name)}
   </a>`;
 }
 function pendingCall(t){
