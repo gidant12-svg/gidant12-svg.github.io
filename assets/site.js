@@ -74,17 +74,17 @@
     </details>`;
   }
   // Contact links appear only once they are filled in site.json.
-  function contactLinks(site){
+  function contactLinks(site, withGithub){
     if(!site) return '';
     const l = [];
     if(site.linkedin) l.push(`<a href="${esc(site.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>`);
     if(site.email) l.push(`<a href="mailto:${esc(site.email)}">${esc(site.email)}</a>`);
-    if(site.github) l.push(`<a href="${esc(site.github)}" target="_blank" rel="noopener">GitHub</a>`);
+    if(withGithub && site.github) l.push(`<a href="${esc(site.github)}" target="_blank" rel="noopener">GitHub</a>`);
     return l.join('');
   }
   function footer(site){
     const el = document.getElementById('footLinks'); if(!el) return;
-    el.innerHTML = contactLinks(site);
+    el.innerHTML = contactLinks(site, true);
   }
 
   document.querySelectorAll('[data-year]').forEach(e => e.textContent = new Date().getFullYear());

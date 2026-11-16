@@ -46,6 +46,7 @@ h1{font-family:var(--serif);font-weight:600;font-size:clamp(28px,5vw,40px);line-
 .lede{font-size:16.5px;color:var(--muted);max-width:620px;margin:0}
 .focus{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 .chip{font-size:12.5px;font-weight:500;color:var(--accent);background:var(--accent-bg);border-radius:999px;padding:3px 11px}
+.contact:empty{display:none}
 .contact{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
 .contact a{font-size:13.5px;font-weight:600;text-decoration:none;color:var(--navy);border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:7px 12px}
 .contact a:hover{border-color:var(--accent);color:var(--accent)}
