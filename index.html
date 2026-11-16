@@ -68,8 +68,8 @@
       <a class="card" href="notes/">
         <div class="pic"><img src="images/cards/notes.jpg" alt="Notes" width="1200" height="630" loading="lazy"></div>
         <div class="txt"><span class="ex">Exhibit 3</span><h3>Notes</h3>
-          <p>Short write-ups on valuation, coverage, and what I learn from conversations with analysts along the way.</p>
-          <span class="live" data-live="notes">Writing</span></div>
+          <p>My investing journey in writing: what I've learned from analysts, from my own calls, and from life.</p>
+          <span class="live" data-live="notes">Blog</span></div>
       </a>
     </div>
   </section>
@@ -79,7 +79,7 @@
     <a class="card wide" href="studio/">
       <div class="pic"><img src="images/cards/studio.jpg" alt="A black-and-white composite with the LA monogram, beside an astronaut charm on black knit" width="1200" height="630" loading="lazy"></div>
       <div class="txt"><span class="ex">Studio</span><h3>Concept art, paintings and clothing</h3>
-        <p>Pieces I've designed and made away from the spreadsheet, with notes on how each one came together.</p>
+        <p>Finished pieces I've designed and made, and the process behind them, from first sketch to final piece.</p>
         <span class="live" data-live="studio">Creative work</span></div>
     </a>
   </section>
@@ -134,7 +134,7 @@ Promise.all(['site.json','reports.json','timeline.json','desk.json','notes.json'
     calls: r ? `<span><b>${reports.length} call${reports.length===1?'':'s'}</b> · latest ${esc(r.ticker)}, ${esc(r.rating.split(' ')[0])}, ${esc(r.upside)}</span>` : '<span>First call coming soon</span>',
     desk: (() => { const ready = desk.filter(d => !d.soon); return ready.length ? `<span><b>${ready.length} tool${ready.length===1?'':'s'}</b> · ${esc(ready[0].title)}</span>` : '<span>First tool coming soon</span>'; })(),
     notes: notes.length ? `<span><b>${notes.length} post${notes.length===1?'':'s'}</b> · latest ${esc(notes.sort(byDate)[0].when || notes[0].date)}</span>` : '<span>First post coming soon</span>',
-    studio: studio.length ? `<span><b>${studio.length} piece${studio.length===1?'':'s'}</b> · ${esc([...new Set(studio.map(s => s.kind))].join(', ').toLowerCase())}</span>` : '<span>Coming soon</span>'
+    studio: (() => { const fin = studio.filter(s => s.type !== 'process'), pro = studio.filter(s => s.type === 'process'); return studio.length ? `<span><b>${fin.length} finished piece${fin.length===1?'':'s'}</b>${pro.length ? ` · ${pro.length} process${pro.length===1?'':'es'}` : ` · ${esc([...new Set(fin.map(s => s.kind))].join(', ').toLowerCase())}`}</span>` : '<span>Coming soon</span>'; })()
   };
   document.querySelectorAll('[data-live]').forEach(el => el.innerHTML = live[el.dataset.live]);
 });

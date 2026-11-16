@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Notes · Gideon Anthony</title>
-<meta name="description" content="Short write-ups on valuation, coverage and the analyst path by Gideon Anthony.">
+<meta name="description" content="Blog posts by Gideon Anthony on his investing journey and what he has learned from analysts and from life.">
 <meta property="og:title" content="Notes · Gideon Anthony">
-<meta property="og:description" content="Short write-ups on valuation, coverage and the analyst path by Gideon Anthony.">
+<meta property="og:description" content="Blog posts by Gideon Anthony on his investing journey and what he has learned from analysts and from life.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://gidant12-svg.github.io/notes/">
 <meta property="og:image" content="https://gidant12-svg.github.io/images/cards/notes.jpg">
@@ -30,7 +30,7 @@
   <div class="wrap hero"><div class="hero-main">
     <p class="eyebrow">Exhibit 3 · Notes</p>
     <h1>Notes</h1>
-    <p class="lede">Short write-ups on valuation, coverage, and what I learn from conversations with analysts along the way.</p>
+    <p class="lede">Blog posts on my personal investing journey: what I've learned from analysts, from writing my own calls, and from life.</p>
   </div></div>
   <section class="wrap block" aria-label="Posts">
     <div class="entries" id="entries"><p class="empty">Loading…</p></div>
@@ -53,7 +53,7 @@ Promise.all(['site.json','notes.json'].map(get)).then(([site, notes]) => {
         ${n.image ? `<div class="pic"><img src="${esc(url(n.image))}" alt="${esc(n.alt||'')}" width="1200" height="630" loading="lazy"></div>` : ''}
         <div class="txt"><span class="ex">${esc(n.when||n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.summary)}</p>
         <span class="live"><span>${esc(n.read ? n.read + ' read' : 'Read')}</span></span></div></a>`).join('')
-    : '<div class="coming" style="grid-column:1/-1"><b>The first post is on its way.</b><br>Notes will cover valuation, coverage, and what I learn along the way.</div>';
+    : '<div class="coming" style="grid-column:1/-1"><b>The first post is on its way.</b><br>Posts will follow my investing journey: lessons from analysts, from my own calls, and from life.</div>';
 });
 </script>
 </body>

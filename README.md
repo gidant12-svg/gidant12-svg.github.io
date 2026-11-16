@@ -50,7 +50,8 @@ Set `"current": true` on a call you are writing now: it shows at the top of Call
 Add an entry to `desk.json`. `url` is the tool's address on the site; `image` is 1200 × 630.
 Set `"soon": true` to show it as "coming soon" without a link.
 
-## Write a Note
+## Write a blog post (Notes)
+Notes is the blog: your investing journey, lessons from analysts, and things learned through life.
 1. Copy `notes/_post-template.html` to `notes/your-post-name/index.html` and replace the placeholder text.
    (Files starting with `_` are never published.)
 2. Add an entry to `notes.json`:
@@ -60,10 +61,24 @@ Set `"soon": true` to show it as "coming soon" without a link.
 ```
 `image` is optional (1200 × 630).
 
-## Add a Studio piece
-Upload the image to `images/studio/` (around 1600 px on the long side keeps the page fast), then add to `studio.json`:
+## Add to Studio
+Studio has two sections: **Finished work** and **Process**. Upload images to `images/studio/`
+(around 1600 px on the long side keeps the page fast), then add an entry to `studio.json`.
+
+A finished piece:
 ```json
-{ "title": "Piece title", "kind": "Painting", "when": "2026", "date": "2026-08-01",
+{ "type": "finished", "title": "Piece title", "kind": "Painting", "when": "2026", "date": "2026-08-01",
   "image": "images/studio/piece-name.jpg", "alt": "What the image shows, for screen readers",
-  "about": "One or two lines on how it was made." },
+  "about": "One or two lines about the piece." },
+```
+
+A process (shown as numbered steps, left to right):
+```json
+{ "type": "process", "title": "How the astronaut charm piece was made", "kind": "Clothing", "when": "2026", "date": "2026-08-01",
+  "about": "A short intro to the process.",
+  "steps": [
+    { "image": "images/studio/charm-sketch.jpg", "caption": "First sketch" },
+    { "image": "images/studio/charm-test.jpg", "caption": "Test placement on the knit" },
+    { "image": "images/studio/astronaut-charm.jpg", "caption": "Finished" }
+  ] },
 ```

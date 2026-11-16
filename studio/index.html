@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Studio · Gideon Anthony</title>
-<meta name="description" content="Concept art, paintings and clothing designed and made by Gideon Anthony.">
+<meta name="description" content="Concept art, paintings and clothing designed and made by Gideon Anthony, and the process behind them.">
 <meta property="og:title" content="Studio · Gideon Anthony">
-<meta property="og:description" content="Concept art, paintings and clothing designed and made by Gideon Anthony.">
+<meta property="og:description" content="Concept art, paintings and clothing designed and made by Gideon Anthony, and the process behind them.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://gidant12-svg.github.io/studio/">
 <meta property="og:image" content="https://gidant12-svg.github.io/images/cards/studio.jpg">
@@ -30,10 +30,17 @@
   <div class="wrap hero"><div class="hero-main">
     <p class="eyebrow">Outside finance</p>
     <h1>Studio</h1>
-    <p class="lede">Concept art, paintings and clothing I've designed and made, with notes on how each piece came together. Tap any piece to see it full size.</p>
+    <p class="lede">Concept art, paintings and clothing I've designed and made: the finished pieces, and the process behind them. Tap any image to see it full size.</p>
   </div></div>
-  <section class="wrap block" aria-label="Pieces">
+  <section class="wrap block" aria-labelledby="h-fin">
+    <div class="sec-head"><h2 id="h-fin">Finished work</h2></div>
+    <p class="sub">Completed pieces.</p>
     <div class="gallery" id="gallery"><p class="empty">Loading…</p></div>
+  </section>
+  <section class="wrap block" aria-labelledby="h-pro">
+    <div class="sec-head"><h2 id="h-pro">Process</h2></div>
+    <p class="sub">How the pieces come together: sketches, iterations and the steps in between.</p>
+    <div id="process"><p class="empty">Loading…</p></div>
   </section>
 </main>
 <footer class="site">
@@ -48,8 +55,16 @@ const {get, esc, url, byDate, footer} = Site;
 Promise.all(['site.json','studio.json'].map(get)).then(([site, pieces]) => {
   footer(site);
   pieces = (pieces||[]).sort(byDate);
-  document.getElementById('gallery').innerHTML = pieces.length
-    ? pieces.map(p => `<figure class="piece">
+  const fin = pieces.filter(p => p.type !== 'process'), pro = pieces.filter(p => p.type === 'process');
+  // A process entry: a title, a short intro, and a row of step images, each with an optional caption.
+  document.getElementById('process').innerHTML = pro.length
+    ? pro.map(p => `<article class="proc-entry">
+        <span class="pk">${esc(p.kind)}${p.when ? ' · ' + esc(p.when) : ''}</span><h3>${esc(p.title)}</h3>${p.about ? `<p>${esc(p.about)}</p>` : ''}
+        <div class="steps">${(p.steps||[]).map((s,i) => `<figure><a href="${esc(url(s.image))}" target="_blank" rel="noopener"><img src="${esc(url(s.image))}" alt="${esc(s.alt||s.caption||('Step '+(i+1)))}" loading="lazy"></a><figcaption><b>${i+1}</b> ${esc(s.caption||'')}</figcaption></figure>`).join('')}</div>
+      </article>`).join('')
+    : '<div class="coming"><b>Process write-ups are on their way.</b><br>Sketches, iterations and the steps between first idea and finished piece.</div>';
+  document.getElementById('gallery').innerHTML = fin.length
+    ? fin.map(p => `<figure class="piece">
         <a href="${esc(url(p.image))}" target="_blank" rel="noopener"><img src="${esc(url(p.image))}" alt="${esc(p.alt||p.title)}" loading="lazy"></a>
         <figcaption><span class="pk">${esc(p.kind)}${p.when ? ' · ' + esc(p.when) : ''}</span><h3>${esc(p.title)}</h3>${p.about ? `<p>${esc(p.about)}</p>` : ''}</figcaption>
       </figure>`).join('')

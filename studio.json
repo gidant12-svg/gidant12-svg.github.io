@@ -1,6 +1,7 @@
 [
   {
     "title": "Field composite",
+    "type": "finished",
     "kind": "Concept art",
     "when": "",
     "date": "2026-11-02",
@@ -10,6 +11,7 @@
   },
   {
     "title": "Astronaut charm",
+    "type": "finished",
     "kind": "Clothing",
     "when": "",
     "date": "2026-11-01",
