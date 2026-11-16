@@ -67,20 +67,30 @@ Posts are grouped into **collections** (the book covers on the Notes page): `jou
 To add or rename a collection, edit `"collections"` in `notes.json` (a new one also needs a cover colour in `assets/site.css`, class `bk-yourid`).
 
 ## Art & Design (the page at /studio/)
-Everything on the page comes from `art.json`: two **collections** (The Sky Is Not the Limit, then Koi) and the **journey** (Earlier Work).
-Images live in `images/art/<piece>/` as `01.jpg` (1600 px) plus `01-sm.jpg` (720 px); videos in `media/art/<piece>/`.
+A compact catalogue: each row has a description on the left and a gallery on the right (on phones, the description sits above).
+Everything comes from `art.json`: the `disclaimer` line, two **collections** (The Sky Is Not the Limit, then Koi) and the **journey** (Earlier Work).
+Images live in `images/art/<piece>/` as `01.jpg` (1600 px, opened in the lightbox) plus `01-sm.jpg` (720 px, the thumbnail); videos in `media/art/<piece>/`.
 
-**Add a piece to a collection:** upload the images, then add an entry to that collection's `"works"`:
+Each collection has `"works"` (the pieces) and `"sections"` (how they are shown). `"intro"` names the work whose video
+autoplays (muted) at the top of the collection.
+
+**Add a piece:** upload the images, add an entry to the collection's `"works"`, then put its `id` in a section's `"works"` list:
 ```json
-{ "id": "new-piece", "title": "Piece title", "date": "March 2027", "medium": "Hoodie", "layout": "lookbook",
-  "text": "One or two lines shown beside the work.",
-  "note": "Optional: a reflection, shown inside Story and process.",
+{ "id": "new-piece", "title": "Piece title", "date": "March 2027", "medium": "Hoodie", "short": "Cream",
+  "text": "One or two lines.",
   "credits": [["Photographer", "@name"], ["Model", "@name"]],
-  "images": [ { "src": "images/art/new-piece/01.jpg", "sm": "images/art/new-piece/01-sm.jpg", "w": 1280, "h": 1600, "alt": "What the image shows" } ],
-  "process": [ { "src": "...", "sm": "...", "w": 1200, "h": 1200, "caption": "First sketch", "alt": "..." } ] },
+  "images": [ { "src": "images/art/new-piece/01.jpg", "sm": "images/art/new-piece/01-sm.jpg", "w": 1280, "h": 1600, "alt": "What the image shows" } ] },
 ```
-`layout` is one of `feature` (one large image), `pair`, `lookbook` (one large + a grid), `details` (close-ups) or `video`.
-"Story and process" only appears when a piece has a `note`, `credits`, `process` images or extra `videos`.
+**A section** (one row of the catalogue):
+```json
+{ "id": "virgo-hoodie", "label": "B", "title": "The Explorer: Virgo hoodie", "date": "June 2025",
+  "text": ["Shown in the sidebar."], "credits": [["Photographers", "@name"]],
+  "works": ["explorer-black", "explorer-grey", "explorer-details"],
+  "caption": "short", "list": true, "lead": true, "cols": 4 }
+```
+- `caption`: `"title"` puts each piece's title under its tiles, `"short"` uses the piece's `short` label, leave it out for no captions.
+- `list: true` lists each piece (title, date, credits) in the sidebar.
+- `lead: true` makes the first image twice the size. `cols` is 4 or 5 (5 = smaller tiles). `"fit": "contain"` shows whole artworks without cropping.
 
 **Add to Earlier Work:** add an entry to `"journey"` with a `"year"`; it is placed under that year automatically.
 

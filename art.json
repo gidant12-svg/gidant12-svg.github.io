@@ -8,8 +8,7 @@
    "accent": "#6b6fd6",
    "subtitle": "A Journey to Virgo",
    "story": [
-    "The sky was never the limit. Are you ready for a story untold, until now? Presenting: “A Journey to Virgo.”",
-    "Step into the cosmos with The Explorer and chase the stars of Virgo. We’re made of stardust; why stop at the sky?"
+    "The sky was never the limit. Are you ready for a story untold, until now? Presenting: “A Journey to Virgo.”"
    ],
    "featured": {
     "work": "explorer-black",
@@ -178,7 +177,8 @@
        "Edited",
        "@leanton.g"
       ]
-     ]
+     ],
+     "short": "Black"
     },
     {
      "id": "explorer-grey",
@@ -237,7 +237,8 @@
        "Edited",
        "@leanton.g"
       ]
-     ]
+     ],
+     "short": "Grey"
     },
     {
      "id": "explorer-details",
@@ -295,7 +296,8 @@
        "Photos and editing",
        "@leanton.g"
       ]
-     ]
+     ],
+     "short": "Detail"
     },
     {
      "id": "abduction",
@@ -330,6 +332,45 @@
        "@leanton.g"
       ]
      ]
+    }
+   ],
+   "intro": "abduction",
+   "sections": [
+    {
+     "id": "sky-concept-art",
+     "label": "A",
+     "title": "Concept art",
+     "date": "March–May 2025",
+     "text": [
+      "The sky is not the limit; it’s just the beginning.",
+      "Step into the cosmos with The Explorer and chase the stars of Virgo. We’re made of stardust; why stop at the sky?"
+     ],
+     "works": [
+      "sky-teasers",
+      "sky-concept"
+     ],
+     "caption": "title",
+     "fit": "contain",
+     "cols": 4,
+     "list": true
+    },
+    {
+     "id": "virgo-hoodie",
+     "label": "B",
+     "title": "The Explorer: Virgo hoodie",
+     "date": "June 2025",
+     "text": [
+      "Born in the abyss. Not mass produced. Two colourways, black and grey, and a closer look at the details."
+     ],
+     "works": [
+      "explorer-black",
+      "explorer-grey",
+      "explorer-details"
+     ],
+     "caption": "short",
+     "list": true,
+     "lead": true,
+     "cols": 4
     }
    ]
   },
@@ -388,42 +429,42 @@
        "sm": "images/art/koi-pt1/01-sm.jpg",
        "w": 1080,
        "h": 1080,
-       "alt": "KOI pt.1 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt1/02.jpg",
        "sm": "images/art/koi-pt1/02-sm.jpg",
        "w": 1440,
        "h": 1440,
-       "alt": "KOI pt.1 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt1/03.jpg",
        "sm": "images/art/koi-pt1/03-sm.jpg",
        "w": 1080,
        "h": 1080,
-       "alt": "KOI pt.1 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt1/04.jpg",
        "sm": "images/art/koi-pt1/04-sm.jpg",
        "w": 1440,
        "h": 1440,
-       "alt": "KOI pt.1 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt1/05.jpg",
        "sm": "images/art/koi-pt1/05-sm.jpg",
        "w": 1080,
        "h": 1080,
-       "alt": "KOI pt.1 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt1/06.jpg",
        "sm": "images/art/koi-pt1/06-sm.jpg",
        "w": 1080,
        "h": 1080,
-       "alt": "KOI pt.1 lookbook"
+       "alt": "Koi lookbook photo"
       }
      ],
      "text": "Featuring the Karasugi pants (brown), the Karasugi sweater (brown), the Taisho Sanshoku sweatpants (white, orange and black) and the Tweater (green). Custom pieces, not mass produced.",
@@ -454,49 +495,49 @@
        "sm": "images/art/koi-pt15/01-sm.jpg",
        "w": 1080,
        "h": 1363,
-       "alt": "KOI pt.1.5 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt15/02.jpg",
        "sm": "images/art/koi-pt15/02-sm.jpg",
        "w": 1267,
        "h": 1600,
-       "alt": "KOI pt.1.5 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt15/03.jpg",
        "sm": "images/art/koi-pt15/03-sm.jpg",
        "w": 1080,
        "h": 1363,
-       "alt": "KOI pt.1.5 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt15/04.jpg",
        "sm": "images/art/koi-pt15/04-sm.jpg",
        "w": 1080,
        "h": 1363,
-       "alt": "KOI pt.1.5 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt15/05.jpg",
        "sm": "images/art/koi-pt15/05-sm.jpg",
        "w": 1080,
        "h": 1364,
-       "alt": "KOI pt.1.5 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt15/06.jpg",
        "sm": "images/art/koi-pt15/06-sm.jpg",
        "w": 1080,
        "h": 1364,
-       "alt": "KOI pt.1.5 lookbook"
+       "alt": "Koi lookbook photo"
       },
       {
        "src": "images/art/koi-pt15/07.jpg",
        "sm": "images/art/koi-pt15/07-sm.jpg",
        "w": 1267,
        "h": 1600,
-       "alt": "KOI pt.1.5 lookbook"
+       "alt": "Koi lookbook photo"
       }
      ],
      "text": "Same clothing, different vibe. Featuring the Karasugi pants and sweater, and the Kumonryu sweatpants (black and white). Custom pieces, not mass produced.",
@@ -524,7 +565,54 @@
     "h": 1080,
     "alt": "KOI pt.1 lookbook",
     "caption": "KOI pt.1 lookbook"
-   }
+   },
+   "sections": [
+    {
+     "id": "koi-finished",
+     "label": "A",
+     "title": "Finished works",
+     "date": "September 2024",
+     "text": [
+      "Featuring the Karasugi pants (brown), the Karasugi sweater (brown), the Taisho Sanshoku sweatpants (white, orange and black), the Kumonryu sweatpants (black and white) and the Tweater (green).",
+      "Custom pieces, not mass produced."
+     ],
+     "credits": [
+      [
+       "Photographers",
+       "@whykennyco, @elieejila, @se1fdece1t, @dznyb3"
+      ],
+      [
+       "Models",
+       "@se1fdece1t, @mariannealmero, @sammlundqvist, @emeka.w1, @miss.landoo"
+      ],
+      [
+       "Editors",
+       "@fae.vv, @se1fdece1t"
+      ]
+     ],
+     "works": [
+      "koi-pt1",
+      "koi-pt15"
+     ],
+     "lead": true,
+     "cols": 4
+    },
+    {
+     "id": "koi-concept",
+     "label": "B",
+     "title": "Concept art & development",
+     "date": "May–July 2024",
+     "text": [],
+     "works": [
+      "perspective",
+      "koi-vibes"
+     ],
+     "caption": "title",
+     "fit": "contain",
+     "cols": 5,
+     "list": true
+    }
+   ]
   }
  ],
  "journey": [
@@ -969,5 +1057,6 @@
    ],
    "year": 2024
   }
- ]
+ ],
+ "disclaimer": "All works are designed and crafted by hand, from scratch, with each collection developed around a single concept."
 }
