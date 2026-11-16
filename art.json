@@ -1,0 +1,973 @@
+{
+ "collections": [
+  {
+   "id": "sky",
+   "number": "01",
+   "title": "The Sky Is Not the Limit",
+   "years": "2025",
+   "accent": "#6b6fd6",
+   "subtitle": "A Journey to Virgo",
+   "story": [
+    "The sky was never the limit. Are you ready for a story untold, until now? Presenting: “A Journey to Virgo.”",
+    "Step into the cosmos with The Explorer and chase the stars of Virgo. We’re made of stardust; why stop at the sky?"
+   ],
+   "featured": {
+    "work": "explorer-black",
+    "src": "images/art/explorer-black/01.jpg",
+    "sm": "images/art/explorer-black/01-sm.jpg",
+    "w": 1280,
+    "h": 1600,
+    "alt": "The Explorer hoodie in black",
+    "caption": "The Explorer (Black), back: the Virgo constellation"
+   },
+   "works": [
+    {
+     "id": "sky-teasers",
+     "title": "Teasers",
+     "date": "March–April 2025",
+     "medium": "Digital artwork",
+     "layout": "pair",
+     "images": [
+      {
+       "src": "images/art/sky-teasers/01.jpg",
+       "sm": "images/art/sky-teasers/01-sm.jpg",
+       "w": 1000,
+       "h": 1000,
+       "alt": "Teaser artwork: the Le Anton monogram in a galaxy"
+      },
+      {
+       "src": "images/art/sky-teasers/02.jpg",
+       "sm": "images/art/sky-teasers/02-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "Teaser artwork: the Le Anton monogram in a galaxy"
+      }
+     ],
+     "text": "The sky was never the limit. Are you ready for a story untold, until now?"
+    },
+    {
+     "id": "sky-concept",
+     "title": "The sky is not the limit",
+     "date": "May 2025",
+     "medium": "Concept art and motion",
+     "layout": "feature",
+     "images": [
+      {
+       "src": "images/art/sky-concept/01.jpg",
+       "sm": "images/art/sky-concept/01-sm.jpg",
+       "w": 1280,
+       "h": 1600,
+       "alt": "Black-and-white composite: a hooded figure above an open field, with the LA monogram"
+      }
+     ],
+     "text": "The sky is not the limit; it’s just the beginning. A sneak peek at the Explorer hoodie, before it came out.",
+     "credits": [
+      [
+       "Model",
+       "@nikobraji"
+      ],
+      [
+       "Photographer",
+       "@se1fdece1t"
+      ],
+      [
+       "Concept art",
+       "@se1fdece1t"
+      ]
+     ],
+     "videos": [
+      {
+       "video": "media/art/sky-concept/concept-motion.mp4",
+       "poster": "images/art/sky-concept/concept-motion-poster.jpg",
+       "w": 360,
+       "h": 450,
+       "seconds": 8,
+       "caption": "The animated version of the concept art"
+      }
+     ]
+    },
+    {
+     "id": "explorer-black",
+     "title": "The Explorer (Black)",
+     "date": "June 2025",
+     "medium": "Hoodie",
+     "layout": "lookbook",
+     "images": [
+      {
+       "src": "images/art/explorer-black/01.jpg",
+       "sm": "images/art/explorer-black/01-sm.jpg",
+       "w": 1280,
+       "h": 1600,
+       "alt": "The Explorer hoodie in black"
+      },
+      {
+       "src": "images/art/explorer-black/02.jpg",
+       "sm": "images/art/explorer-black/02-sm.jpg",
+       "w": 1280,
+       "h": 1600,
+       "alt": "The Explorer hoodie in black"
+      },
+      {
+       "src": "images/art/explorer-black/03.jpg",
+       "sm": "images/art/explorer-black/03-sm.jpg",
+       "w": 1280,
+       "h": 1600,
+       "alt": "The Explorer hoodie in black"
+      },
+      {
+       "src": "images/art/explorer-black/04.jpg",
+       "sm": "images/art/explorer-black/04-sm.jpg",
+       "w": 1280,
+       "h": 1600,
+       "alt": "The Explorer hoodie in black"
+      },
+      {
+       "src": "images/art/explorer-black/05.jpg",
+       "sm": "images/art/explorer-black/05-sm.jpg",
+       "w": 1280,
+       "h": 1600,
+       "alt": "The Explorer hoodie in black"
+      },
+      {
+       "src": "images/art/explorer-black/06.jpg",
+       "sm": "images/art/explorer-black/06-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "The Explorer hoodie in black"
+      },
+      {
+       "src": "images/art/explorer-black/07.jpg",
+       "sm": "images/art/explorer-black/07-sm.jpg",
+       "w": 1439,
+       "h": 1439,
+       "alt": "The Explorer hoodie in black"
+      },
+      {
+       "src": "images/art/explorer-black/08.jpg",
+       "sm": "images/art/explorer-black/08-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "The Explorer hoodie in black"
+      },
+      {
+       "src": "images/art/explorer-black/09.jpg",
+       "sm": "images/art/explorer-black/09-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "The Explorer hoodie in black"
+      },
+      {
+       "src": "images/art/explorer-black/10.jpg",
+       "sm": "images/art/explorer-black/10-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "The Explorer hoodie in black"
+      }
+     ],
+     "text": "Born in the abyss. Journey to Virgo unveils: The Explorer (Black). Not mass produced.",
+     "credits": [
+      [
+       "Photographed",
+       "@leanton.g"
+      ],
+      [
+       "Modelled",
+       "@leanton.g"
+      ],
+      [
+       "Edited",
+       "@leanton.g"
+      ]
+     ]
+    },
+    {
+     "id": "explorer-grey",
+     "title": "The Explorer (Grey)",
+     "date": "June 2025",
+     "medium": "Hoodie",
+     "layout": "lookbook",
+     "images": [
+      {
+       "src": "images/art/explorer-grey/01.jpg",
+       "sm": "images/art/explorer-grey/01-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "The Explorer hoodie in grey"
+      },
+      {
+       "src": "images/art/explorer-grey/02.jpg",
+       "sm": "images/art/explorer-grey/02-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "The Explorer hoodie in grey"
+      },
+      {
+       "src": "images/art/explorer-grey/03.jpg",
+       "sm": "images/art/explorer-grey/03-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "The Explorer hoodie in grey"
+      },
+      {
+       "src": "images/art/explorer-grey/04.jpg",
+       "sm": "images/art/explorer-grey/04-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "The Explorer hoodie in grey"
+      },
+      {
+       "src": "images/art/explorer-grey/05.jpg",
+       "sm": "images/art/explorer-grey/05-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "The Explorer hoodie in grey"
+      }
+     ],
+     "text": "The Explorer in grey. Not mass produced.",
+     "credits": [
+      [
+       "Photographed",
+       "@leanton.g"
+      ],
+      [
+       "Modelled",
+       "@benmolnar1"
+      ],
+      [
+       "Edited",
+       "@leanton.g"
+      ]
+     ]
+    },
+    {
+     "id": "explorer-details",
+     "title": "A galaxy of little things",
+     "date": "June 2025",
+     "medium": "Hoodie details",
+     "layout": "details",
+     "images": [
+      {
+       "src": "images/art/explorer-details/01.jpg",
+       "sm": "images/art/explorer-details/01-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "Close-up of a charm on the Explorer hoodie"
+      },
+      {
+       "src": "images/art/explorer-details/02.jpg",
+       "sm": "images/art/explorer-details/02-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "Close-up of a charm on the Explorer hoodie"
+      },
+      {
+       "src": "images/art/explorer-details/03.jpg",
+       "sm": "images/art/explorer-details/03-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "Close-up of a charm on the Explorer hoodie"
+      },
+      {
+       "src": "images/art/explorer-details/04.jpg",
+       "sm": "images/art/explorer-details/04-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "Close-up of a charm on the Explorer hoodie"
+      },
+      {
+       "src": "images/art/explorer-details/05.jpg",
+       "sm": "images/art/explorer-details/05-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "Close-up of a charm on the Explorer hoodie"
+      },
+      {
+       "src": "images/art/explorer-details/06.jpg",
+       "sm": "images/art/explorer-details/06-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "Close-up of a charm on the Explorer hoodie"
+      }
+     ],
+     "text": "A closer look at the details on the Explorer hoodie.",
+     "credits": [
+      [
+       "Photos and editing",
+       "@leanton.g"
+      ]
+     ]
+    },
+    {
+     "id": "abduction",
+     "title": "Act 3: The Abduction",
+     "date": "August 2025",
+     "medium": "Animation, 81 seconds",
+     "layout": "video",
+     "images": [],
+     "videos": [
+      {
+       "video": "media/art/abduction/act-3-the-abduction.mp4",
+       "poster": "images/art/abduction/act-3-the-abduction-poster.jpg",
+       "w": 720,
+       "h": 1280,
+       "seconds": 81,
+       "caption": "Act 3: The Abduction"
+      }
+     ],
+     "text": "The unexpected abduction of The Explorer; one can only fathom what may happen to him.",
+     "note": "I tried giving animation a try. It took over 50 hours to make.",
+     "credits": [
+      [
+       "Animation",
+       "@leanton.g"
+      ],
+      [
+       "Editing",
+       "@leanton.g"
+      ],
+      [
+       "Storyboard",
+       "@leanton.g"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "koi",
+   "number": "02",
+   "title": "Koi",
+   "years": "2024",
+   "accent": "#c8553d",
+   "story": [
+    "This collection is inspired by the koi fish pond."
+   ],
+   "works": [
+    {
+     "id": "koi-vibes",
+     "title": "Koi vibes",
+     "date": "July 2024",
+     "medium": "Digital art",
+     "layout": "feature",
+     "images": [
+      {
+       "src": "images/art/koi-vibes/01.jpg",
+       "sm": "images/art/koi-vibes/01-sm.jpg",
+       "w": 1080,
+       "h": 864,
+       "alt": "Digital artwork: a character surrounded by koi fish"
+      }
+     ],
+     "text": "Koi vibes. Swim through it all."
+    },
+    {
+     "id": "perspective",
+     "title": "Perspective is a niche",
+     "date": "May 2024",
+     "medium": "Digital art",
+     "layout": "feature",
+     "images": [
+      {
+       "src": "images/art/perspective/01.jpg",
+       "sm": "images/art/perspective/01-sm.jpg",
+       "w": 1080,
+       "h": 1350,
+       "alt": "Digital artwork: a figure in cream clothing seen from above, on red and green"
+      }
+     ]
+    },
+    {
+     "id": "koi-pt1",
+     "title": "KOI pt.1",
+     "date": "September 2024",
+     "medium": "Clothing",
+     "layout": "lookbook",
+     "images": [
+      {
+       "src": "images/art/koi-pt1/01.jpg",
+       "sm": "images/art/koi-pt1/01-sm.jpg",
+       "w": 1080,
+       "h": 1080,
+       "alt": "KOI pt.1 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt1/02.jpg",
+       "sm": "images/art/koi-pt1/02-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "KOI pt.1 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt1/03.jpg",
+       "sm": "images/art/koi-pt1/03-sm.jpg",
+       "w": 1080,
+       "h": 1080,
+       "alt": "KOI pt.1 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt1/04.jpg",
+       "sm": "images/art/koi-pt1/04-sm.jpg",
+       "w": 1440,
+       "h": 1440,
+       "alt": "KOI pt.1 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt1/05.jpg",
+       "sm": "images/art/koi-pt1/05-sm.jpg",
+       "w": 1080,
+       "h": 1080,
+       "alt": "KOI pt.1 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt1/06.jpg",
+       "sm": "images/art/koi-pt1/06-sm.jpg",
+       "w": 1080,
+       "h": 1080,
+       "alt": "KOI pt.1 lookbook"
+      }
+     ],
+     "text": "Featuring the Karasugi pants (brown), the Karasugi sweater (brown), the Taisho Sanshoku sweatpants (white, orange and black) and the Tweater (green). Custom pieces, not mass produced.",
+     "credits": [
+      [
+       "Photographers",
+       "@whykennyco, @se1fdece1t"
+      ],
+      [
+       "Models",
+       "@se1fdece1t, @mariannealmero, @sammlundqvist"
+      ],
+      [
+       "Editors",
+       "@fae.vv, @se1fdece1t"
+      ]
+     ]
+    },
+    {
+     "id": "koi-pt15",
+     "title": "KOI pt.1.5",
+     "date": "September 2024",
+     "medium": "Clothing",
+     "layout": "lookbook",
+     "images": [
+      {
+       "src": "images/art/koi-pt15/01.jpg",
+       "sm": "images/art/koi-pt15/01-sm.jpg",
+       "w": 1080,
+       "h": 1363,
+       "alt": "KOI pt.1.5 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt15/02.jpg",
+       "sm": "images/art/koi-pt15/02-sm.jpg",
+       "w": 1267,
+       "h": 1600,
+       "alt": "KOI pt.1.5 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt15/03.jpg",
+       "sm": "images/art/koi-pt15/03-sm.jpg",
+       "w": 1080,
+       "h": 1363,
+       "alt": "KOI pt.1.5 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt15/04.jpg",
+       "sm": "images/art/koi-pt15/04-sm.jpg",
+       "w": 1080,
+       "h": 1363,
+       "alt": "KOI pt.1.5 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt15/05.jpg",
+       "sm": "images/art/koi-pt15/05-sm.jpg",
+       "w": 1080,
+       "h": 1364,
+       "alt": "KOI pt.1.5 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt15/06.jpg",
+       "sm": "images/art/koi-pt15/06-sm.jpg",
+       "w": 1080,
+       "h": 1364,
+       "alt": "KOI pt.1.5 lookbook"
+      },
+      {
+       "src": "images/art/koi-pt15/07.jpg",
+       "sm": "images/art/koi-pt15/07-sm.jpg",
+       "w": 1267,
+       "h": 1600,
+       "alt": "KOI pt.1.5 lookbook"
+      }
+     ],
+     "text": "Same clothing, different vibe. Featuring the Karasugi pants and sweater, and the Kumonryu sweatpants (black and white). Custom pieces, not mass produced.",
+     "credits": [
+      [
+       "Photographers",
+       "@elieejila, @se1fdece1t, @dznyb3"
+      ],
+      [
+       "Models",
+       "@se1fdece1t, @emeka.w1, @miss.landoo"
+      ],
+      [
+       "Editors",
+       "@fae.vv, @se1fdece1t"
+      ]
+     ]
+    }
+   ],
+   "featured": {
+    "work": "koi-pt1",
+    "src": "images/art/koi-pt1/01.jpg",
+    "sm": "images/art/koi-pt1/01-sm.jpg",
+    "w": 1080,
+    "h": 1080,
+    "alt": "KOI pt.1 lookbook",
+    "caption": "KOI pt.1 lookbook"
+   }
+  }
+ ],
+ "journey": [
+  {
+   "id": "oya",
+   "title": "Oya",
+   "date": "July 2021",
+   "medium": "Digital art",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/oya/01.jpg",
+     "sm": "images/art/oya/01-sm.jpg",
+     "w": 720,
+     "h": 720,
+     "alt": "Oya"
+    }
+   ],
+   "text": "My first ever character: Oya, a Yoruba goddess.",
+   "year": 2021
+  },
+  {
+   "id": "olorun",
+   "title": "Olorun",
+   "date": "July 2021",
+   "medium": "Digital art",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/olorun/01.jpg",
+     "sm": "images/art/olorun/01-sm.jpg",
+     "w": 1440,
+     "h": 1440,
+     "alt": "Olorun"
+    }
+   ],
+   "text": "Olorun, the god of lightning and thunder, from my Yoruba god series.",
+   "year": 2021
+  },
+  {
+   "id": "eshu",
+   "title": "Eshu",
+   "date": "September 2021",
+   "medium": "Digital art",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/eshu/01.jpg",
+     "sm": "images/art/eshu/01-sm.jpg",
+     "w": 1440,
+     "h": 1440,
+     "alt": "Eshu"
+    }
+   ],
+   "text": "Eshu, the god of doorways.",
+   "year": 2021
+  },
+  {
+   "id": "lfc-ricks",
+   "title": "L.F.C x Ricks",
+   "date": "December 2022",
+   "medium": "Digital art",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/lfc-ricks/01.jpg",
+     "sm": "images/art/lfc-ricks/01-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "L.F.C x Ricks"
+    }
+   ],
+   "process": [
+    {
+     "src": "images/art/lfc-ricks/50.jpg",
+     "sm": "images/art/lfc-ricks/50-sm.jpg",
+     "w": 1287,
+     "h": 1600,
+     "caption": "Pencil sketch",
+     "alt": "L.F.C x Ricks: Pencil sketch"
+    }
+   ],
+   "year": 2022
+  },
+  {
+   "id": "album-concept",
+   "title": "First musical art concept",
+   "date": "December 2022",
+   "medium": "Album cover concept",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/album-concept/01.jpg",
+     "sm": "images/art/album-concept/01-sm.jpg",
+     "w": 1440,
+     "h": 1440,
+     "alt": "First musical art concept"
+    }
+   ],
+   "year": 2022
+  },
+  {
+   "id": "progress",
+   "title": "Before and after",
+   "date": "January 2023",
+   "medium": "Digital art",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/progress/01.jpg",
+     "sm": "images/art/progress/01-sm.jpg",
+     "w": 1080,
+     "h": 864,
+     "alt": "Before and after"
+    }
+   ],
+   "text": "A before and after of my progress in my skills.",
+   "year": 2023
+  },
+  {
+   "id": "profile-pic",
+   "title": "First profile picture design",
+   "date": "January 2023",
+   "medium": "Digital art",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/profile-pic/01.jpg",
+     "sm": "images/art/profile-pic/01-sm.jpg",
+     "w": 320,
+     "h": 320,
+     "alt": "First profile picture design"
+    }
+   ],
+   "year": 2023
+  },
+  {
+   "id": "pencil-figure",
+   "title": "Pencil drawing",
+   "date": "January 2023",
+   "medium": "Drawing",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/pencil-figure/01.jpg",
+     "sm": "images/art/pencil-figure/01-sm.jpg",
+     "w": 1267,
+     "h": 1600,
+     "alt": "Pencil drawing"
+    }
+   ],
+   "year": 2023
+  },
+  {
+   "id": "blue-perception",
+   "title": "Blue perception",
+   "date": "January 2023",
+   "medium": "Art and clothing",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/blue-perception/01.jpg",
+     "sm": "images/art/blue-perception/01-sm.jpg",
+     "w": 1440,
+     "h": 1509,
+     "alt": "Blue perception"
+    },
+    {
+     "src": "images/art/blue-perception/02.jpg",
+     "sm": "images/art/blue-perception/02-sm.jpg",
+     "w": 1440,
+     "h": 1509,
+     "alt": "Blue perception"
+    }
+   ],
+   "text": "I woke up from sleep and decided to recreate a bunch of clothes for an artwork, in my perspective.",
+   "year": 2023
+  },
+  {
+   "id": "sunset",
+   "title": "First ever scenery",
+   "date": "January 2023",
+   "medium": "Digital art",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/sunset/01.jpg",
+     "sm": "images/art/sunset/01-sm.jpg",
+     "w": 1080,
+     "h": 1080,
+     "alt": "First ever scenery"
+    }
+   ],
+   "text": "A sunset concept for a friend.",
+   "year": 2023
+  },
+  {
+   "id": "melancholy",
+   "title": "Melancholy",
+   "date": "January 2023",
+   "medium": "Markers",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/melancholy/01.jpg",
+     "sm": "images/art/melancholy/01-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "Melancholy"
+    },
+    {
+     "src": "images/art/melancholy/02.jpg",
+     "sm": "images/art/melancholy/02-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "Melancholy"
+    }
+   ],
+   "text": "Melancholy: true innate sadness, and then Melancholy reimagined.",
+   "year": 2023
+  },
+  {
+   "id": "first-commission",
+   "title": "First commission",
+   "date": "June 2023",
+   "medium": "Digital art",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/first-commission/01.jpg",
+     "sm": "images/art/first-commission/01-sm.jpg",
+     "w": 1080,
+     "h": 1350,
+     "alt": "First commission"
+    }
+   ],
+   "text": "My first commission, for @mirror.clo.",
+   "year": 2023
+  },
+  {
+   "id": "cotton-candy",
+   "title": "Cotton candy",
+   "date": "August 2023",
+   "medium": "Clothing",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/cotton-candy/01.jpg",
+     "sm": "images/art/cotton-candy/01-sm.jpg",
+     "w": 1267,
+     "h": 1600,
+     "alt": "Cotton candy"
+    },
+    {
+     "src": "images/art/cotton-candy/02.jpg",
+     "sm": "images/art/cotton-candy/02-sm.jpg",
+     "w": 1267,
+     "h": 1600,
+     "alt": "Cotton candy"
+    }
+   ],
+   "text": "My first pair of shorts, machine-sewn with white denim and multicoloured fleece. Exhibition piece, not for sale.",
+   "year": 2023
+  },
+  {
+   "id": "lfc-cotton-candy",
+   "title": "L.F.C x Cotton candy",
+   "date": "August 2023",
+   "medium": "Digital art",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/lfc-cotton-candy/01.jpg",
+     "sm": "images/art/lfc-cotton-candy/01-sm.jpg",
+     "w": 1440,
+     "h": 810,
+     "alt": "L.F.C x Cotton candy"
+    }
+   ],
+   "process": [
+    {
+     "src": "images/art/lfc-cotton-candy/50.jpg",
+     "sm": "images/art/lfc-cotton-candy/50-sm.jpg",
+     "w": 1440,
+     "h": 810,
+     "caption": "Line art",
+     "alt": "L.F.C x Cotton candy: Line art"
+    }
+   ],
+   "year": 2023
+  },
+  {
+   "id": "monogram",
+   "title": "L'Anton: a new beginning",
+   "date": "November 2023",
+   "medium": "Logo design",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/monogram/01.jpg",
+     "sm": "images/art/monogram/01-sm.jpg",
+     "w": 1080,
+     "h": 1080,
+     "alt": "L'Anton: a new beginning"
+    },
+    {
+     "src": "images/art/monogram/02.jpg",
+     "sm": "images/art/monogram/02-sm.jpg",
+     "w": 1080,
+     "h": 1080,
+     "alt": "L'Anton: a new beginning"
+    }
+   ],
+   "year": 2023
+  },
+  {
+   "id": "archive-clothes",
+   "title": "Clothes from 2023",
+   "date": "2023",
+   "medium": "Clothing",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/archive-clothes/01.jpg",
+     "sm": "images/art/archive-clothes/01-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "Clothes from 2023"
+    },
+    {
+     "src": "images/art/archive-clothes/02.jpg",
+     "sm": "images/art/archive-clothes/02-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "Clothes from 2023"
+    },
+    {
+     "src": "images/art/archive-clothes/03.jpg",
+     "sm": "images/art/archive-clothes/03-sm.jpg",
+     "w": 1281,
+     "h": 1600,
+     "alt": "Clothes from 2023"
+    },
+    {
+     "src": "images/art/archive-clothes/04.jpg",
+     "sm": "images/art/archive-clothes/04-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "Clothes from 2023"
+    },
+    {
+     "src": "images/art/archive-clothes/05.jpg",
+     "sm": "images/art/archive-clothes/05-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "Clothes from 2023"
+    },
+    {
+     "src": "images/art/archive-clothes/06.jpg",
+     "sm": "images/art/archive-clothes/06-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "Clothes from 2023"
+    }
+   ],
+   "text": "The year I started sewing.",
+   "year": 2023
+  },
+  {
+   "id": "archive-concepts",
+   "title": "Concept art and sketches from 2023",
+   "date": "2023",
+   "medium": "Sketches",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/archive-concepts/01.jpg",
+     "sm": "images/art/archive-concepts/01-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "Concept art and sketches from 2023"
+    },
+    {
+     "src": "images/art/archive-concepts/02.jpg",
+     "sm": "images/art/archive-concepts/02-sm.jpg",
+     "w": 1281,
+     "h": 1600,
+     "alt": "Concept art and sketches from 2023"
+    },
+    {
+     "src": "images/art/archive-concepts/03.jpg",
+     "sm": "images/art/archive-concepts/03-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "Concept art and sketches from 2023"
+    },
+    {
+     "src": "images/art/archive-concepts/04.jpg",
+     "sm": "images/art/archive-concepts/04-sm.jpg",
+     "w": 1280,
+     "h": 1600,
+     "alt": "Concept art and sketches from 2023"
+    }
+   ],
+   "year": 2023
+  },
+  {
+   "id": "business-cards",
+   "title": "Business cards",
+   "date": "August 2024",
+   "medium": "Brand design",
+   "layout": "feature",
+   "images": [
+    {
+     "src": "images/art/business-cards/01.jpg",
+     "sm": "images/art/business-cards/01-sm.jpg",
+     "w": 1440,
+     "h": 1080,
+     "alt": "Business cards"
+    },
+    {
+     "src": "images/art/business-cards/02.jpg",
+     "sm": "images/art/business-cards/02-sm.jpg",
+     "w": 1440,
+     "h": 1080,
+     "alt": "Business cards"
+    },
+    {
+     "src": "images/art/business-cards/03.jpg",
+     "sm": "images/art/business-cards/03-sm.jpg",
+     "w": 1440,
+     "h": 1080,
+     "alt": "Business cards"
+    },
+    {
+     "src": "images/art/business-cards/04.jpg",
+     "sm": "images/art/business-cards/04-sm.jpg",
+     "w": 675,
+     "h": 506,
+     "alt": "Business cards"
+    }
+   ],
+   "year": 2024
+  }
+ ]
+}
