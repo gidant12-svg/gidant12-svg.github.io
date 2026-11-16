@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=20261116e">
+<link rel="stylesheet" href="../assets/site.css?v=20261116i">
 </head>
 <body class="nt-page">
 <a class="skip" href="#main">Skip to content</a>
@@ -35,10 +35,15 @@
 
   <div class="wrap">
     <div class="nt-sheet">
+      <section id="featBox" aria-labelledby="h-feat" hidden>
+        <div class="nt-row"><h2 id="h-feat">Latest post</h2></div>
+        <div id="feat"></div>
+      </section>
       <div class="nt-row">
         <h2 id="h-coll">Collections</h2>
         <div class="tools"><button type="button" id="shelfNext" aria-label="Scroll collections">→</button></div>
       </div>
+      <p class="nt-hint">Open a collection to see its posts.</p>
       <div class="shelf" id="shelf" aria-labelledby="h-coll"></div>
 
       <div id="collView" hidden></div>
@@ -60,7 +65,22 @@
 <script>
 const {get, esc, url, byDate, footer} = Site;
 let C = [], P = [];
-const item = p => `<li><a href="${esc(url(p.url))}">${esc(p.title)}</a><small>${esc(p.when || p.date)}${p.read ? ' · ' + esc(p.read) + ' read' : ''}</small></li>`;
+const meta = p => `${esc(p.when || p.date)}${p.read ? ' · ' + esc(p.read) + ' read' : ''}`;
+// Every post in a list is one whole clickable row, ending in an arrow.
+const item = p => `<li><a href="${esc(url(p.url))}"><span><b>${esc(p.title)}</b><small>${meta(p)}</small></span><i aria-hidden="true">→</i></a></li>`;
+// The newest post gets a featured card at the top of the page.
+const featCard = p => {
+  const c = C.find(x => x.id === p.collection);
+  return `<a class="nt-feat" href="${esc(url(p.url))}">
+    <span class="cv book bk-${esc(p.collection || 'journey')}" aria-hidden="true"><span class="bk-top">Gideon's Notes</span><span class="bk-title">${esc(c ? c.title : '')}</span></span>
+    <span class="tx">
+      ${c ? `<span class="k">${esc(c.title)}</span>` : ''}
+      <span class="t">${esc(p.title)}</span>
+      ${p.excerpt ? `<span class="x">${esc(p.excerpt)}</span>` : ''}
+      <span class="m">${meta(p)}</span>
+      <span class="go">Read the post →</span>
+    </span></a>`;
+};
 const soon = t => `<li class="soon">${t}</li>`;
 
 function render(){
@@ -81,10 +101,15 @@ function render(){
     view.hidden = false; cols.hidden = true;
   } else {
     view.hidden = true; cols.hidden = false;
-    const featured = P.filter(p => p.featured);
-    const start = (featured.length ? featured : [...P].reverse()).slice(0, 6);
-    document.getElementById('startList').innerHTML = start.length ? start.map(item).join('') : soon('The first post is on its way.');
-    document.getElementById('latestList').innerHTML = P.length ? P.slice(0, 8).map(item).join('') : soon('Posts will follow my investing journey, lessons from analysts, and from life.');
+    const top = P[0], rest = P.slice(1);
+    document.getElementById('featBox').hidden = !top;
+    document.getElementById('feat').innerHTML = top ? featCard(top) : '';
+    const start = P.filter(p => p.featured && p !== top).slice(0, 6);
+    document.getElementById('startList').closest('section').hidden = !start.length;
+    document.getElementById('startList').innerHTML = start.map(item).join('');
+    document.getElementById('latestList').innerHTML = rest.length ? rest.slice(0, 8).map(item).join('')
+      : soon(top ? 'More posts are on the way.' : 'Posts will follow my investing journey, lessons from analysts, and from life.');
+    document.getElementById('h-latest').textContent = top ? 'More posts' : 'Latest posts';
   }
 }
 Promise.all(['site.json','notes.json'].map(get)).then(([site, notes]) => {
