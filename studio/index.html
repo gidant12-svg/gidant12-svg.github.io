@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Studio · Gideon Anthony</title>
-<meta name="description" content="Concept art, paintings and clothing designed and made by Gideon Anthony, and the process behind them.">
-<meta property="og:title" content="Studio · Gideon Anthony">
-<meta property="og:description" content="Concept art, paintings and clothing designed and made by Gideon Anthony, and the process behind them.">
+<title>Art &amp; Design · Gideon Anthony</title>
+<meta name="description" content="Clothing, digital art, concept art and animation by Gideon Anthony: The Sky Is Not the Limit, Koi, and earlier work.">
+<meta property="og:title" content="Art &amp; Design · Gideon Anthony">
+<meta property="og:description" content="Clothing, digital art, concept art and animation: The Sky Is Not the Limit, Koi, and the work that came before.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://gidant12-svg.github.io/studio/">
 <meta property="og:image" content="https://gidant12-svg.github.io/images/cards/studio.jpg">
@@ -14,62 +14,162 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=20261116d">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;1,8..60,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=20261116e">
 </head>
-<body class="studio">
+<body class="art">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site">
   <div class="wrap top">
     <a class="brand" href="../">GIDEON ANTHONY</a>
-    <nav aria-label="Pages"><a href="../">Portfolio</a><a href="../calls/">Calls</a><a href="../desk/">Desk</a><a href="../notes/">Notes</a><a href="../studio/" aria-current="page">Studio</a></nav>
+    <nav aria-label="Pages"><a href="../">Portfolio</a><a href="../calls/">Calls</a><a href="../desk/">Desk</a><a href="../notes/">Notes</a><a href="./" aria-current="page">Art &amp; Design</a></nav>
   </div>
 </header>
+
 <main id="main">
   <div class="wrap"><a class="back" href="../">← Portfolio</a></div>
-  <div class="wrap hero"><div class="hero-main">
+  <section class="wrap art-intro" aria-labelledby="top-title" id="top">
     <p class="eyebrow">Outside finance</p>
-    <h1>Studio</h1>
-    <p class="lede">Concept art, paintings and clothing I've designed and made: the finished pieces, and the process behind them. Tap any image to see it full size.</p>
-  </div></div>
-  <section class="wrap block" aria-labelledby="h-fin">
-    <div class="sec-head"><h2 id="h-fin">Finished work</h2></div>
-    <p class="sub">Completed pieces.</p>
-    <div class="gallery" id="gallery"><p class="empty">Loading…</p></div>
+    <h1 id="top-title">Art &amp; Design</h1>
+    <p class="lede">Clothing, digital art, concept art and animation I've designed and made: two collections, and the work that led to them.</p>
+    <nav class="chapters" aria-label="Collections" id="chapters">
+      <a href="#sky"><span>01</span>The Sky Is Not the Limit <small>2025</small></a>
+      <a href="#koi"><span>02</span>Koi <small>2024</small></a>
+      <a href="#journey"><span>03</span>Earlier Work <small>2021–2024</small></a>
+    </nav>
   </section>
-  <section class="wrap block" aria-labelledby="h-pro">
-    <div class="sec-head"><h2 id="h-pro">Process</h2></div>
-    <p class="sub">How the pieces come together: sketches, iterations and the steps in between.</p>
-    <div id="process"><p class="empty">Loading…</p></div>
-  </section>
+
+  <div id="collections"><p class="wrap empty">Loading the work…</p></div>
+  <noscript><p class="wrap sub">This page needs JavaScript to show the artwork.</p></noscript>
+
+  <div class="wrap top-link"><a href="#top">↑ Back to top</a><a href="../">← Portfolio</a></div>
 </main>
+
+<dialog id="lb" aria-label="Artwork, enlarged">
+  <div class="lb-bar"><span id="lbCap"></span><button type="button" id="lbClose">Close ✕</button></div>
+  <div class="lb-img"><img id="lbImg" alt=""></div>
+  <div class="lb-nav"><button type="button" id="lbPrev" aria-label="Previous image">← Previous</button><span id="lbCount" style="align-self:center;font-size:13px"></span><button type="button" id="lbNext" aria-label="Next image">Next →</button></div>
+</dialog>
+
 <footer class="site">
   <div class="wrap">
     <div class="fl" id="footLinks"></div>
     © <span data-year>2026</span> Gideon Anthony.
   </div>
 </footer>
-<script src="../assets/site.js?v=20261116d"></script>
+
+<script src="../assets/site.js?v=20261116e"></script>
 <script>
-const {get, esc, url, byDate, footer} = Site;
-Promise.all(['site.json','studio.json'].map(get)).then(([site, pieces]) => {
+const {get, esc, url, footer} = Site;
+const SETS = {};   // images per work, for the lightbox
+let setId = 0;
+
+function pic(im, set, i, sizes, eager) {
+  return `<button type="button" class="zoom" data-set="${set}" data-i="${i}" aria-label="Enlarge: ${esc(im.alt || '')}">
+    <img src="${esc(url(im.sm))}" srcset="${esc(url(im.sm))} 720w, ${esc(url(im.src))} 1600w" sizes="${sizes}"
+      width="${im.w}" height="${im.h}" alt="${esc(im.alt || '')}" ${eager ? '' : 'loading="lazy"'} decoding="async"></button>`;
+}
+function register(list, title) {
+  const id = 's' + (setId++);
+  SETS[id] = list.map(im => ({src: url(im.src), alt: im.alt || title, cap: im.caption ? `${title}: ${im.caption}` : title}));
+  return id;
+}
+function videoTag(v) {
+  return `<video class="vid" controls preload="none" playsinline poster="${esc(url(v.poster))}" width="${v.w}" height="${v.h}">
+    <source src="${esc(url(v.video))}" type="video/mp4">Your browser can't play this video.</video>`;
+}
+function credits(c) {
+  return c && c.length ? `<dl class="credits">${c.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : '';
+}
+// "Story and process" only appears when there is something behind it.
+function moreBlock(w, showVideos) {
+  const proc = w.process || [], vids = showVideos ? (w.videos || []) : [];
+  if (!w.note && !(w.credits || []).length && !proc.length && !vids.length) return '';
+  const label = proc.length || vids.length ? 'Story and process' : 'Story and credits';
+  const pset = proc.length ? register(proc, w.title) : null;
+  return `<details class="more"><summary>${label}</summary><div class="in">
+    ${w.note ? `<p class="note">“${esc(w.note)}”</p>` : ''}
+    ${proc.length ? `<div class="proc">${proc.map((p, i) => `<figure>${pic(p, pset, i, '140px')}<figcaption>${esc(p.caption)}</figcaption></figure>`).join('')}</div>` : ''}
+    ${vids.map(v => `<div class="proc" style="grid-template-columns:1fr"><figure>${videoTag(v)}<figcaption>${esc(v.caption || '')}</figcaption></figure></div>`).join('')}
+    ${credits(w.credits)}
+  </div></details>`;
+}
+function workBlock(w, i) {
+  const set = w.images.length ? register(w.images, w.title) : null;
+  const big = w.layout === 'feature' || w.layout === 'video';
+  const media = w.layout === 'video'
+    ? (w.videos || []).map(videoTag).join('')
+    : w.images.map((im, k) => pic(im, set, k, k === 0 ? '(max-width: 860px) 100vw, 640px' : '(max-width: 860px) 50vw, 220px')).join('');
+  const rest = Math.max(0, w.images.length - 1), cols = rest % 3 === 0 ? 3 : rest % 2 === 0 ? 2 : 3;
+  return `<article class="wk lay-${esc(w.layout)}${cols === 2 ? ' c2' : ''}${i % 2 ? ' flip' : ''}" id="${esc(w.id)}">
+    <div class="wk-media">${media}</div>
+    <div class="wk-text">
+      <span class="md">${esc(w.medium)}</span>
+      <h3>${esc(w.title)}</h3>
+      <p class="dt">${esc(w.date)}</p>
+      ${w.text ? `<p>${esc(w.text)}</p>` : ''}
+      ${moreBlock(w, w.layout !== 'video')}
+    </div>
+  </article>`;
+}
+function collection(c) {
+  const f = c.featured, fset = register([f], c.title);
+  return `<section class="coll wrap" id="${esc(c.id)}" style="--ac:${esc(c.accent)}" aria-labelledby="h-${esc(c.id)}">
+    <div class="coll-open">
+      <figure class="feat">${pic(f, fset, 0, '(max-width: 860px) 100vw, 580px', true)}<figcaption>${esc(f.caption || '')}</figcaption></figure>
+      <div>
+        <span class="num">Collection ${esc(c.number)}</span>
+        <h2 id="h-${esc(c.id)}">${esc(c.title)}</h2>
+        ${c.subtitle ? `<p class="sub">${esc(c.subtitle)}</p>` : ''}
+        <p class="yr">${esc(c.years)}</p>
+        <div class="story">${(c.story || []).map(p => `<p>${esc(p)}</p>`).join('')}</div>
+      </div>
+    </div>
+    <div class="works">${c.works.map(w => ({...w, images: w.images.filter(im => im.src !== f.src)})).filter(w => w.images.length || (w.videos || []).length).map(workBlock).join('')}</div>
+  </section>`;
+}
+function journey(items) {
+  const years = [...new Set(items.map(j => j.year))].sort();
+  return `<section class="journey wrap" id="journey" aria-labelledby="h-journey">
+    <div class="journey-head"><span class="num">Chapter 03</span><h2 id="h-journey">Earlier Work / The Journey</h2></div>
+    <p class="lede">Where it started: my first characters, comics and digital art, then learning to sew.</p>
+    ${years.map(y => `<div class="yr-row"><b>${y}</b><div class="yr-items">${items.filter(j => j.year === y).map(j => {
+        const all = j.images.concat(j.process || []), set = register(all, j.title), n = Math.min(all.length, 2);
+        return `<div class="ji" id="${esc(j.id)}"><div class="thumbs" style="--n:${n}">${all.slice(0, 2).map((im, k) => pic(im, set, k, '170px')).join('')}</div>
+          <h3>${esc(j.title)}</h3><span class="dt">${esc(j.date)} · ${esc(j.medium)}${all.length > 2 ? ` · ${all.length} images` : ''}</span>
+          ${j.text ? `<p>${esc(j.text)}</p>` : ''}</div>`;
+      }).join('')}</div></div>`).join('')}
+  </section>`;
+}
+
+Promise.all(['site.json', 'art.json'].map(get)).then(([site, art]) => {
   footer(site);
-  pieces = (pieces||[]).sort(byDate);
-  const fin = pieces.filter(p => p.type !== 'process'), pro = pieces.filter(p => p.type === 'process');
-  // A process entry: a title, a short intro, and a row of step images, each with an optional caption.
-  document.getElementById('process').innerHTML = pro.length
-    ? pro.map(p => `<article class="proc-entry">
-        <span class="pk">${esc(p.kind)}${p.when ? ' · ' + esc(p.when) : ''}</span><h3>${esc(p.title)}</h3>${p.about ? `<p>${esc(p.about)}</p>` : ''}
-        <div class="steps">${(p.steps||[]).map((s,i) => `<figure><a href="${esc(url(s.image))}" target="_blank" rel="noopener"><img src="${esc(url(s.image))}" alt="${esc(s.alt||s.caption||('Step '+(i+1)))}" loading="lazy"></a><figcaption><b>${i+1}</b> ${esc(s.caption||'')}</figcaption></figure>`).join('')}</div>
-      </article>`).join('')
-    : '<div class="coming"><b>Process write-ups are on their way.</b><br>Sketches, iterations and the steps between first idea and finished piece.</div>';
-  document.getElementById('gallery').innerHTML = fin.length
-    ? fin.map(p => `<figure class="piece">
-        <a href="${esc(url(p.image))}" target="_blank" rel="noopener"><img src="${esc(url(p.image))}" alt="${esc(p.alt||p.title)}" loading="lazy"></a>
-        <figcaption><span class="pk">${esc(p.kind)}${p.when ? ' · ' + esc(p.when) : ''}</span><h3>${esc(p.title)}</h3>${p.about ? `<p>${esc(p.about)}</p>` : ''}</figcaption>
-      </figure>`).join('')
-    : '<p class="empty">New pieces are on their way.</p>';
+  if (!art) { document.getElementById('collections').innerHTML = '<p class="wrap empty">The artwork couldn\'t load. Refresh to try again.</p>'; return; }
+  document.getElementById('collections').innerHTML = art.collections.map(collection).join('') + journey(art.journey || []);
+  if (location.hash) { const t = document.querySelector(location.hash); if (t) t.scrollIntoView(); }
 });
+
+// Lightbox: one image at a time, arrows move within the same piece.
+const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg');
+let cur = null, idx = 0;
+function show() {
+  const s = SETS[cur], im = s[idx];
+  lbImg.src = im.src; lbImg.alt = im.alt;
+  document.getElementById('lbCap').textContent = im.cap;
+  document.getElementById('lbCount').textContent = s.length > 1 ? `${idx + 1} / ${s.length}` : '';
+  document.getElementById('lbPrev').hidden = document.getElementById('lbNext').hidden = s.length < 2;
+}
+document.addEventListener('click', e => {
+  const z = e.target.closest('.zoom'); if (!z) return;
+  cur = z.dataset.set; idx = +z.dataset.i; show(); lb.showModal();
+});
+const step = d => { const n = SETS[cur].length; idx = (idx + d + n) % n; show(); };
+document.getElementById('lbPrev').onclick = () => step(-1);
+document.getElementById('lbNext').onclick = () => step(1);
+document.getElementById('lbClose').onclick = () => lb.close();
+lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lb-img')) lb.close(); });
+lb.addEventListener('keydown', e => { if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); });
+lb.addEventListener('close', () => { lbImg.removeAttribute('src'); });
 </script>
 </body>
 </html>

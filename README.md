@@ -66,27 +66,23 @@ Posts are grouped into **collections** (the book covers on the Notes page): `jou
 `featured: true` puts the post under **Start here**; every post appears under **Latest posts** automatically.
 To add or rename a collection, edit `"collections"` in `notes.json` (a new one also needs a cover colour in `assets/site.css`, class `bk-yourid`).
 
-## Add to Studio
-Studio has two sections: **Finished work** and **Process**. Upload images to `images/studio/`
-(around 1600 px on the long side keeps the page fast), then add an entry to `studio.json`.
+## Art & Design (the page at /studio/)
+Everything on the page comes from `art.json`: two **collections** (The Sky Is Not the Limit, then Koi) and the **journey** (Earlier Work).
+Images live in `images/art/<piece>/` as `01.jpg` (1600 px) plus `01-sm.jpg` (720 px); videos in `media/art/<piece>/`.
 
-A finished piece:
+**Add a piece to a collection:** upload the images, then add an entry to that collection's `"works"`:
 ```json
-{ "type": "finished", "title": "Piece title", "kind": "Painting", "when": "2026", "date": "2026-08-01",
-  "image": "images/studio/piece-name.jpg", "alt": "What the image shows, for screen readers",
-  "about": "One or two lines about the piece." },
+{ "id": "new-piece", "title": "Piece title", "date": "March 2027", "medium": "Hoodie", "layout": "lookbook",
+  "text": "One or two lines shown beside the work.",
+  "note": "Optional: a reflection, shown inside Story and process.",
+  "credits": [["Photographer", "@name"], ["Model", "@name"]],
+  "images": [ { "src": "images/art/new-piece/01.jpg", "sm": "images/art/new-piece/01-sm.jpg", "w": 1280, "h": 1600, "alt": "What the image shows" } ],
+  "process": [ { "src": "...", "sm": "...", "w": 1200, "h": 1200, "caption": "First sketch", "alt": "..." } ] },
 ```
+`layout` is one of `feature` (one large image), `pair`, `lookbook` (one large + a grid), `details` (close-ups) or `video`.
+"Story and process" only appears when a piece has a `note`, `credits`, `process` images or extra `videos`.
 
-A process (shown as numbered steps, left to right):
-```json
-{ "type": "process", "title": "How the astronaut charm piece was made", "kind": "Clothing", "when": "2026", "date": "2026-08-01",
-  "about": "A short intro to the process.",
-  "steps": [
-    { "image": "images/studio/charm-sketch.jpg", "caption": "First sketch" },
-    { "image": "images/studio/charm-test.jpg", "caption": "Test placement on the knit" },
-    { "image": "images/studio/astronaut-charm.jpg", "caption": "Finished" }
-  ] },
-```
+**Add to Earlier Work:** add an entry to `"journey"` with a `"year"`; it is placed under that year automatically.
 
 ## After changing `assets/site.css` or `assets/site.js`
 Browsers keep old copies for a few minutes. Bump the `?v=` number on the `site.css` / `site.js` links in every page
