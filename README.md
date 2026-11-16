@@ -85,3 +85,7 @@ A process (shown as numbered steps, left to right):
     { "image": "images/studio/astronaut-charm.jpg", "caption": "Finished" }
   ] },
 ```
+
+## After changing `assets/site.css` or `assets/site.js`
+Browsers keep old copies for a few minutes. Bump the `?v=` number on the `site.css` / `site.js` links in every page
+(search the repo for `?v=`) so visitors get the new version straight away.
