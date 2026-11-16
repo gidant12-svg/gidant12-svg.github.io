@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Notes · Gideon Anthony</title>
+<meta name="description" content="Short write-ups on valuation, coverage and the analyst path by Gideon Anthony.">
+<meta property="og:title" content="Notes · Gideon Anthony">
+<meta property="og:description" content="Short write-ups on valuation, coverage and the analyst path by Gideon Anthony.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gidant12-svg.github.io/notes/">
+<meta property="og:image" content="https://gidant12-svg.github.io/images/cards/notes.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap top">
+    <a class="brand" href="../">GIDEON ANTHONY</a>
+    <nav aria-label="Pages"><a href="../">Portfolio</a><a href="../calls/">Calls</a><a href="../desk/">Desk</a><a href="../notes/" aria-current="page">Notes</a><a href="../studio/">Studio</a></nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap"><a class="back" href="../">← Portfolio</a></div>
+  <div class="wrap hero"><div class="hero-main">
+    <p class="eyebrow">Exhibit 3 · Notes</p>
+    <h1>Notes</h1>
+    <p class="lede">Short write-ups on valuation, coverage, and what I learn from conversations with analysts along the way.</p>
+  </div></div>
+  <section class="wrap block" aria-label="Posts">
+    <div class="entries" id="entries"><p class="empty">Loading…</p></div>
+  </section>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <div class="fl" id="footLinks"></div>
+    © <span data-year>2026</span> Gideon Anthony. Nothing on this site is investment advice or a recommendation to buy or sell any security.
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+<script>
+const {get, esc, url, byDate, footer} = Site;
+Promise.all(['site.json','notes.json'].map(get)).then(([site, notes]) => {
+  footer(site);
+  notes = (notes||[]).sort(byDate);
+  document.getElementById('entries').innerHTML = notes.length
+    ? notes.map(n => `<a class="card entry" href="${esc(url(n.url))}">
+        ${n.image ? `<div class="pic"><img src="${esc(url(n.image))}" alt="${esc(n.alt||'')}" width="1200" height="630" loading="lazy"></div>` : ''}
+        <div class="txt"><span class="ex">${esc(n.when||n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.summary)}</p>
+        <span class="live"><span>${esc(n.read ? n.read + ' read' : 'Read')}</span></span></div></a>`).join('')
+    : '<div class="coming" style="grid-column:1/-1"><b>The first post is on its way.</b><br>Notes will cover valuation, coverage, and what I learn along the way.</div>';
+});
+</script>
+</body>
+</html>

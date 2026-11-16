@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calls · Gideon Anthony</title>
+<meta name="description" content="Buy and sell calls on Canadian utilities, midstream and gas by Gideon Anthony, with how the research process has developed from report to report.">
+<meta property="og:title" content="Calls · Gideon Anthony">
+<meta property="og:description" content="Buy and sell calls on Canadian utilities, midstream and gas.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gidant12-svg.github.io/calls/">
+<meta property="og:image" content="https://gidant12-svg.github.io/images/cards/calls.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap top">
+    <a class="brand" href="../">GIDEON ANTHONY</a>
+    <nav aria-label="Pages"><a href="../">Portfolio</a><a href="./" aria-current="page">Calls</a><a href="../desk/">Desk</a><a href="../notes/">Notes</a><a href="../studio/">Studio</a></nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap"><a class="back" href="../">← Portfolio</a></div>
+  <div class="wrap hero">
+    <div class="hero-main">
+      <p class="eyebrow">Exhibit 1 · Calls</p>
+      <h1>Buy and sell calls</h1>
+      <p class="lede">Each call shows where my process stood at the time it was written. Newest first; prices and targets are as of each call's valuation date.</p>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <section class="wrap block" id="calls" aria-labelledby="h-calls">
+    <div class="sec-head">
+      <h2 id="h-calls">Calls</h2>
+      <button class="toggle" id="toggleAll" type="button">Expand all</button>
+    </div>
+    <p class="sub">Open any call for the thesis, valuation and context.</p>
+    <div class="list" id="callList"><p class="empty">Loading…</p></div>
+    <noscript><p class="sub">Read the reports directly: <a href="../reports/SPB_Initiation_Oct2026.pdf">Superior Plus (SPB)</a> · <a href="../reports/ENB_Initiation_Dec2025.pdf">Enbridge (ENB)</a> · <a href="../reports/NVDA_Initiation_Jan2026.pdf">NVIDIA (NVDA)</a></p></noscript>
+  </section>
+
+  <section class="wrap block" id="along" aria-labelledby="h-along">
+    <div class="sec-head"><h2 id="h-along">Along the way</h2></div>
+    <p class="sub">What I've been learning between calls.</p>
+    <div class="list" id="milestones"><p class="empty">Loading…</p></div>
+  </section>
+
+  <section class="wrap block" id="process" aria-labelledby="h-process">
+    <div class="sec-head"><h2 id="h-process">How my process has changed</h2></div>
+    <p class="sub">Earlier reports compared with what every new report now includes.</p>
+    <div class="list"><div class="detail" style="padding:6px 6px 10px">
+      <div class="cmp">
+        <div class="h"></div><div class="h">Earlier reports</div><div class="h n">Current process</div>
+        <div class="k">Sources</div><div class="then">Financial statements and market data</div><div class="now">AIF, MD&amp;A, earnings call Q&amp;A, investor presentations, consensus estimates and news flow</div>
+        <div class="k">Industry context</div><div class="then">Learned while writing</div><div class="now">Start from a sector primer (e.g. Alerian on energy infrastructure) before building the model</div>
+        <div class="k">Valuation</div><div class="then">DCF and comps applied as taught in class</div><div class="now">Damodaran's DCF framework, with every assumption tied back to the business story</div>
+        <div class="k">Thesis</div><div class="then">Led by the model, with catalysts implied</div><div class="now">A stated view against consensus, explicit catalysts, and what would change my mind</div>
+        <div class="k">Format</div><div class="then">35 pages, then 3 pages</div><div class="now">Thesis and catalysts up front, with supporting detail behind them</div>
+      </div>
+    </div></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="fl" id="footLinks"></div>
+    © <span data-year>2026</span> Gideon Anthony. These reports are for informational and professional development purposes only and are not investment advice or a recommendation to buy or sell any security.
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script>
+const {get, esc, byDate, reportItem, milestoneItem, footer} = Site;
+Promise.all(['site.json','reports.json','timeline.json'].map(get)).then(([site, reports, timeline]) => {
+  footer(site);
+  reports = (reports||[]).sort(byDate); timeline = (timeline||[]).sort(byDate);
+  const cur = timeline.find(t => t.current);
+  // The call being written (if any) sits on top of the published calls; other milestones go below.
+  const calls = (cur ? [milestoneItem(cur)] : []).concat(reports.map((r,i) => reportItem(r, i===0 && !cur)));
+  document.getElementById('callList').innerHTML = calls.length ? calls.join('') : '<p class="empty">No calls yet.</p>';
+  const rest = timeline.filter(t => !t.current);
+  document.getElementById('milestones').innerHTML = rest.length ? rest.map(milestoneItem).join('') : '<p class="empty">Nothing to show yet.</p>';
+  document.getElementById('stats').innerHTML =
+    `<div><b>${reports.length}</b>Published calls</div>` +
+    (cur ? `<div><b>${esc(cur.title)}</b>In progress</div>` : '') +
+    `<div><b>CFA Level II</b>Candidate · May 2027</div>`;
+});
+document.getElementById('toggleAll').addEventListener('click', e => {
+  const items = [...document.querySelectorAll('#callList details')];
+  const open = !items.every(d => d.open);
+  items.forEach(d => d.open = open);
+  e.target.textContent = open ? 'Collapse all' : 'Expand all';
+});
+</script>
+</body>
+</html>
