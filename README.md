@@ -90,9 +90,11 @@ autoplays (muted) at the top of the collection.
 ```
 - `caption`: `"title"` puts each piece's title under its tiles, `"short"` uses the piece's `short` label, leave it out for no captions.
 - `list: true` lists each piece (title, date, credits) in the sidebar.
+- `below`: smaller galleries shown under the main one in the same row, e.g. the teasers under the hoodies, or scanned sketches:
+  `"below": [{ "title": "Process", "date": "2025", "works": ["explorer-sketches"], "fit": "contain", "cols": 6 }]` (6 = smallest tiles).
 - `lead: true` makes the first image twice the size. `cols` is 4 or 5 (5 = smaller tiles). `"fit": "contain"` shows whole artworks without cropping.
 
-**Add to Earlier Work:** add an entry to `"journey"` with a `"year"`; it is placed under that year automatically.
+**Add to Earlier Work:** add an entry to `"journey"` with a `"year"`; it is placed under that year automatically, newest year and month first.
 
 ## After changing `assets/site.css` or `assets/site.js`
 Browsers keep old copies for a few minutes. Bump the `?v=` number on the `site.css` / `site.js` links in every page

@@ -340,13 +340,12 @@
      "id": "sky-concept-art",
      "label": "A",
      "title": "Concept art",
-     "date": "March–May 2025",
+     "date": "May 2025",
      "text": [
       "The sky is not the limit; it’s just the beginning.",
       "Step into the cosmos with The Explorer and chase the stars of Virgo. We’re made of stardust; why stop at the sky?"
      ],
      "works": [
-      "sky-teasers",
       "sky-concept"
      ],
      "caption": "title",
@@ -370,7 +369,18 @@
      "caption": "short",
      "list": true,
      "lead": true,
-     "cols": 4
+     "cols": 4,
+     "below": [
+      {
+       "title": "Teasers",
+       "date": "March–April 2025",
+       "works": [
+        "sky-teasers"
+       ],
+       "fit": "contain",
+       "cols": 4
+      }
+     ]
     }
    ]
   },
