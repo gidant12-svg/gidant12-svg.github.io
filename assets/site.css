@@ -424,3 +424,8 @@ footer.site .fl a:hover{color:var(--accent)}
   .art .yr-items{grid-template-columns:1fr 1fr}
 }
 .art .grid.lead.nocap figure:first-child .zoom{height:100%}
+.art .grid.c6{--cols:6}
+.art .sublab{margin:26px 0 10px;padding-top:12px;border-top:1px solid var(--line);font:600 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ac)}
+.art .sublab span{margin-left:8px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--faint)}
+@media (max-width:860px){.art .grid.c6{--cols:4}}
+@media (max-width:560px){.art .grid.c6{--cols:3;gap:6px}}

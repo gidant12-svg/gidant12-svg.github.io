@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;1,8..60,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=20261116f">
+<link rel="stylesheet" href="../assets/site.css?v=20261116g">
 </head>
 <body class="art">
 <a class="skip" href="#main">Skip to content</a>
@@ -52,7 +52,7 @@
   </div>
 </footer>
 
-<script src="../assets/site.js?v=20261116f"></script>
+<script src="../assets/site.js?v=20261116g"></script>
 <script>
 const {get, esc, url, footer} = Site;
 const SETS = {};          // one set per gallery, for the lightbox
@@ -107,36 +107,46 @@ function intro(c, w) {
   </div>`;
 }
 
-function section(c, s, byId, header) {
-  const works = s.works.map(id => byId[id]).filter(Boolean);
+// One gallery: a grid of tiles sharing a lightbox set.
+function gallery(c, s, works) {
   const items = [];
   works.forEach(w => {
     (w.images || []).forEach(im => items.push({...im, alt: im.alt || w.title,
       cap: s.caption === 'title' ? w.title : s.caption === 'short' ? (w.short || w.title) : '',
-      full: s.caption === 'short' ? `${w.title}` : `${s.caption === 'title' ? w.title : c.title + ': ' + s.title}`}));
+      full: s.caption ? w.title : `${c.title}: ${s.title}`}));
     (w.videos || []).forEach(v => items.push({...v, alt: v.caption || w.title, cap: s.caption === 'title' ? `${w.title} (motion)` : '', full: v.caption || w.title}));
   });
-  if (s.id === 'virgo-hoodie' && c.featured) {   // the back of the black hoodie leads the catalogue
+  if (s.lead && c.featured) {   // the collection's featured image leads its catalogue
     const k = items.findIndex(it => it.src === c.featured.src);
     if (k > 0) items.unshift(items.splice(k, 1)[0]);
-    if (k >= 0) items[0].full = c.featured.caption;
+    if (k >= 0 && c.featured.caption) items[0].full = c.featured.caption;
   }
   const set = register(items.map(it => ({...it, src: it.src && url(it.src), video: it.video && url(it.video), poster: it.poster && url(it.poster)})));
   const cols = s.cols || 4, anyCap = items.some(it => it.cap);
-  const list = s.list ? `<ul class="wl">${works.map(w => `<li><b>${esc(w.title)}</b><span>${esc(w.date)} · ${esc(w.medium)}</span>
+  return `<div class="grid${s.fit === 'contain' ? ' fit' : ''}${s.lead ? ' lead' : ''}${anyCap ? '' : ' nocap'}${cols !== 4 ? ' c' + cols : ''}">
+      ${items.map((it, i) => tile(it, set, i, s.lead && i === 0 ? '(max-width: 560px) 100vw, 420px' : `(max-width: 560px) 50vw, ${cols > 4 ? 160 : 220}px`, it.cap)).join('')}
+    </div>`;
+}
+
+// A section is one row: description on the left, its gallery (plus any smaller galleries below it) on the right.
+function section(c, s, byId, header) {
+  const pick = ids => (ids || []).map(id => byId[id]).filter(Boolean);
+  const works = pick(s.works), below = (s.below || []).map(b => ({...b, ws: pick(b.works)}));
+  const all = works.concat(...below.map(b => b.ws));
+  const list = s.list ? `<ul class="wl">${all.map(w => `<li><b>${esc(w.title)}</b><span>${esc(w.date)} · ${esc(w.medium)}</span>
       ${!(s.text || []).length && w.text ? `<p>${esc(w.text)}</p>` : ''}${credits(w.credits)}</li>`).join('')}</ul>` : '';
   return `<div class="row" id="${esc(s.id)}">
     <div class="side">
       ${header || ''}
-      <p class="lab">${esc(s.label)} · ${esc(s.title)}</p>
+      <p class="lab">${s.label ? esc(s.label) + ' · ' : ''}${esc(s.title)}</p>
       <p class="dt">${esc(s.date || '')}</p>
       ${paras(s.text)}
       ${credits(s.credits)}
       ${list}
     </div>
-    <div class="gal"><div class="grid${s.fit === 'contain' ? ' fit' : ''}${s.lead ? ' lead' : ''}${anyCap ? '' : ' nocap'}${cols === 5 ? ' c5' : ''}">
-      ${items.map((it, i) => tile(it, set, i, s.lead && i === 0 ? '(max-width: 560px) 100vw, 420px' : '(max-width: 560px) 50vw, 220px', it.cap)).join('')}
-    </div></div>
+    <div class="gal">${gallery(c, s, works)}
+      ${below.map(b => `<p class="sublab">${esc(b.title)}${b.date ? ` <span>${esc(b.date)}</span>` : ''}</p>${gallery(c, b, b.ws)}`).join('')}
+    </div>
   </div>`;
 }
 
@@ -154,14 +164,18 @@ function collection(c) {
 
 // Earlier Work keeps its year-by-year archive, now beside the same sidebar.
 function journey(items) {
-  const years = [...new Set(items.map(j => j.year))].sort();
+  // Latest first: newest year on top; within a year, newest month first (pieces dated only by year go last).
+  const years = [...new Set(items.map(j => j.year))].sort((a, b) => b - a);
+  const M = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+  const month = j => M.indexOf(String(j.date).split(' ')[0].toLowerCase());
+  items = items.map((j, i) => ({...j, _i: i})).sort((a, b) => (month(b) - month(a)) || (b._i - a._i));
   return `<section class="cat wrap" id="journey" style="--ac:var(--faint)" aria-labelledby="h-journey">
     <div class="row">
       <div class="side">
         <span class="num">Collection 03</span>
         <h2 id="h-journey">Earlier Work</h2>
         <p class="subt">The journey</p>
-        <p class="yr">${esc(years[0])}–${esc(years[years.length - 1])}</p>
+        <p class="yr">${esc(years[years.length - 1])}–${esc(years[0])} · latest first</p>
         <div class="story"><p>Where it started: my first characters, comics and digital art, then learning to sew.</p></div>
       </div>
       <div class="gal">
