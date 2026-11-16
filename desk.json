@@ -1,0 +1,18 @@
+[
+  {
+    "title": "The Analyst Atlas",
+    "kind": "Interactive guide",
+    "date": "2026-11-16",
+    "url": "desk/atlas/",
+    "image": "images/cards/options/desk-b-cover.jpg",
+    "alt": "The Analyst Atlas cover",
+    "summary": "Twelve analyst seats, fourteen finance models. Pick the model you know and see which seats use it every day, which barely touch it, and what to learn next.",
+    "cta": "Open the Atlas"
+  },
+  {
+    "title": "Excel practice workbook",
+    "soon": true,
+    "date": "2026-11-15",
+    "summary": "The workbook I built to drill Damodaran's DCF chapters, cleaned up so you can practise with it."
+  }
+]

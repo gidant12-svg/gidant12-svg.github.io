@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Analyst Atlas</title>
+<meta name="description" content="A visual map of every analyst seat in finance — what each does, which models it runs on, and how to aim your career.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<style>
+/* Layout: a paged deck; one model "lens" re-reads every slide. Single dark look, by choice. */
+:root{
+  color-scheme:dark;
+  --bg:#0c0f15; --surface:#151a23; --surface-2:#1c232f; --surface-3:#232c3a;
+  --ink:#eef1f6; --ink-soft:#aeb7c6; --ink-mute:#6f7b8d; --line:#28303d; --line-2:#333d4d;
+  --gold:#e3a83c; --gold-soft:#3a2f16;
+  --research:#5aa9e6; --investing:#54d59d; --deals:#b79cf0; --credit:#e7b24c;
+  --advisory:#ec89a0; --specialist:#45cfbe; --corporate:#9aa6b8; --quant:#8c9bf0;
+  --font-display:'Fraunces',Georgia,serif;
+  --font-body:'IBM Plex Sans',system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased;overflow:hidden}
+h1,h2,h3{margin:0;text-wrap:balance}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.mono{font-family:var(--font-mono)}
+#prog{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:3px;background:var(--gold);width:0;z-index:40;transition:width .3s ease}
+#deck{height:100%;display:flex;flex-direction:column}
+.stage{flex:1;position:relative;overflow:hidden}
+.slide{position:absolute;inset:0;overflow-y:auto;padding:clamp(22px,5vw,64px);padding-bottom:96px;opacity:0;transform:translateY(14px);transition:opacity .4s ease,transform .4s ease;pointer-events:none;visibility:hidden}
+.slide.active{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+@media (prefers-reduced-motion:reduce){.slide,#prog{transition:none}}
+.inner{max-width:1000px;margin:0 auto;min-height:100%}
+.kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.slide h2{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,4.4vw,40px);line-height:1.08;letter-spacing:-.015em;margin:12px 0 8px}
+.lead{font-size:clamp(15px,1.9vw,18px);color:var(--ink-soft);max-width:66ch;line-height:1.55}
+.navbar{position:fixed;left:0;right:0;bottom:0;padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:12px;background:linear-gradient(to top,var(--bg) 60%,transparent);z-index:35}
+.navbar .btn{border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:999px;width:40px;height:40px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none}
+.navbar .btn:hover{border-color:var(--gold);color:var(--gold)}
+.navbar .btn:disabled{opacity:.35;cursor:default;border-color:var(--line)}
+.counter{font-family:var(--font-mono);font-size:12.5px;color:var(--ink-mute);min-width:52px;text-align:center;font-variant-numeric:tabular-nums}
+.dots{display:flex;gap:6px;flex:1;overflow-x:auto;justify-content:center;padding:4px 0}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line-2);border:0;padding:0;cursor:pointer;flex:none;transition:background .2s,transform .2s}
+.dot.on{background:var(--gold);transform:scale(1.3)}
+.ovbtn{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-soft);border-radius:999px;padding:9px 14px;font-size:12.5px;cursor:pointer;white-space:nowrap}
+.ovbtn:hover{border-color:var(--gold);color:var(--gold)}
+.lensbtn{border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}
+.lensbtn b{font-weight:600}
+@media(max-width:620px){.hint{display:none}.dots{display:none}.counter{flex:1;text-align:left}.navbar{gap:8px;padding-left:12px;padding-right:12px}.ovbtn{padding:9px 11px}}
+.hint{position:fixed;right:18px;top:calc(env(safe-area-inset-top,0px) + 14px);font-family:var(--font-mono);font-size:11px;color:var(--ink-mute);z-index:36}
+.title-wrap{display:flex;flex-direction:column;justify-content:center;min-height:100%;gap:18px}
+.title-wrap h1{font-family:var(--font-display);font-weight:600;font-size:clamp(38px,8vw,76px);line-height:.98;letter-spacing:-.03em}
+.title-wrap h1 .g{color:var(--gold)}
+.title-sub{font-size:clamp(16px,2.2vw,20px);color:var(--ink-soft);max-width:60ch;line-height:1.5}
+.title-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.tag{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.05em;color:var(--ink-soft);border:1px solid var(--line-2);border-radius:999px;padding:6px 12px}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px}
+.cta{border:1px solid var(--gold);background:var(--gold);color:#17120a;border-radius:999px;padding:11px 18px;font-weight:600;font-size:14px;cursor:pointer}
+.cta:hover{filter:brightness(1.08)}
+.cta.ghost{background:transparent;color:var(--gold)}
+.grid{display:grid;gap:14px;margin-top:22px}
+@media(min-width:680px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}}
+.cell{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 17px;min-width:0}
+.cell h4{font-size:15.5px;margin:0 0 6px;display:flex;align-items:center;gap:9px}
+.cell p{margin:0;font-size:13.7px;color:var(--ink-soft);line-height:1.5}
+.pin{width:9px;height:9px;border-radius:3px;flex:none}
+.matrix{margin-top:20px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.mrow{display:grid;grid-template-columns:120px 1fr 1fr;border-bottom:1px solid var(--line)}
+.mrow:last-child{border-bottom:0}
+.mrow>div{padding:13px 15px;border-right:1px solid var(--line);min-width:0}
+.mrow>div:last-child{border-right:0}
+.mhead{background:var(--surface-2);font-family:var(--font-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);display:flex;align-items:center}
+.mside{background:var(--surface-2);font-weight:600;font-size:13.5px;display:flex;align-items:center}
+.mrow .fn{font-size:13.3px;color:var(--ink-soft)}
+.mrow .fn b{color:var(--ink);font-weight:600}
+@media(max-width:480px){.mrow{grid-template-columns:86px 1fr 1fr}.mrow>div{padding:11px 10px}}
+.spec{margin-top:30px;position:relative;padding:60px 6px 30px}
+.spec-track{height:8px;border-radius:999px;background:linear-gradient(90deg,#2a3240,var(--gold))}
+.spec-ends{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-family:var(--font-mono);font-size:11.5px;color:var(--ink-mute)}
+.spec-chip{position:absolute;transform:translateX(-50%);top:0;font-size:11.5px;background:var(--surface-2);border:1px solid var(--line-2);border-radius:8px;padding:5px 9px;white-space:nowrap;color:var(--ink);cursor:pointer;--drop:14px}
+.spec-chip:hover{border-color:var(--gold)}
+.spec-chip::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:var(--drop);background:var(--line-2);transform:translateX(-50%)}
+.role-top{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.role-no{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,6vw,52px);line-height:1;color:var(--rc,var(--gold));min-width:52px}
+.role-id{flex:1;min-width:220px}
+.role-cat{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--rc,var(--gold))}
+.role-name{font-family:var(--font-display);font-weight:600;font-size:clamp(22px,3.6vw,32px);line-height:1.05;margin-top:4px}
+.side-badge{font-family:var(--font-mono);font-size:11px;padding:5px 11px;border-radius:999px;border:1px solid var(--rc,var(--gold));color:var(--rc,var(--gold));white-space:nowrap;align-self:center}
+.dcf-meter{display:flex;align-items:center;gap:9px;margin-top:4px;font-family:var(--font-mono);font-size:11.5px;color:var(--ink-mute);flex-wrap:wrap}
+.dcf-bar{width:96px;height:6px;border-radius:999px;background:var(--line-2);overflow:hidden}
+.dcf-fill{height:100%;background:var(--rc,var(--gold));transition:width .35s ease}
+.role-body{display:grid;gap:13px;margin-top:22px}
+@media(min-width:680px){.role-body{grid-template-columns:1fr 1fr}}
+.rb{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px 16px;border-left:3px solid var(--rc,var(--gold));min-width:0}
+.rb .lab{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--rc,var(--gold));margin-bottom:8px}
+.rb ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:6px}
+.rb li{font-size:13.6px;color:var(--ink-soft);line-height:1.45}
+.rb li b{color:var(--ink);font-weight:600}
+.kit{margin-top:16px;background:var(--surface-2);border:1px solid var(--line);border-radius:13px;padding:13px 15px}
+.kit-lab{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.kit-row{display:flex;flex-wrap:wrap;gap:8px}
+.kchip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-2);background:var(--surface);border-radius:9px;padding:6px 10px;font-size:12.5px;cursor:pointer;color:var(--ink-soft)}
+.kchip:hover{border-color:var(--gold);color:var(--ink)}
+.kchip.on{border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}
+.kchip .kb{width:34px;height:4px;border-radius:999px;background:var(--line-2);overflow:hidden;display:inline-block}
+.kchip .kb i{display:block;height:100%;background:var(--gold)}
+.kchip .ks{font-family:var(--font-mono);font-size:10.5px;color:var(--ink-mute);font-variant-numeric:tabular-nums}
+.sectbl{margin-top:20px;overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:540px;font-size:13.5px}
+th,td{text-align:left;padding:12px 15px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surface-2);font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);font-weight:400}
+td:first-child{font-weight:600;color:var(--ink)}
+td b{color:var(--gold);font-weight:600}
+tr:last-child td{border-bottom:0}
+.heat table{min-width:860px;font-size:12px}
+.heat th,.heat td{padding:0;text-align:center;vertical-align:middle;border-right:1px solid var(--bg);border-bottom:1px solid var(--bg)}
+.heat th{padding:9px 4px;font-size:10px;letter-spacing:.03em;text-transform:none}
+.heat th button{background:none;border:0;color:var(--ink-soft);cursor:pointer;font-family:var(--font-mono);font-size:10.5px;padding:2px 4px;border-radius:5px;line-height:1.25}
+.heat th button:hover{color:var(--gold)}
+.heat .rowh{position:sticky;left:0;z-index:1;background:var(--surface-2);text-align:left;min-width:150px}
+.heat .rowh button{width:100%;text-align:left;background:none;border:0;padding:9px 12px;cursor:pointer;color:var(--ink);font-family:var(--font-body);font-size:12.5px;font-weight:500;display:flex;align-items:center;gap:8px}
+.heat .rowh button:hover{color:var(--gold)}
+.heat td.hc{font-family:var(--font-mono);font-size:11px;font-variant-numeric:tabular-nums;width:56px;height:34px;cursor:pointer}
+.heat tr.on .rowh{box-shadow:inset 3px 0 0 var(--gold);background:var(--gold-soft)}
+.heat tr.on .rowh button{color:var(--gold)}
+.heat tr.on td.hc{outline:1px solid rgba(227,168,60,.55);outline-offset:-1px}
+.heat-key{display:flex;align-items:center;gap:8px;margin-top:12px;font-family:var(--font-mono);font-size:11px;color:var(--ink-mute);flex-wrap:wrap}
+.heat-key .ramp{width:140px;height:8px;border-radius:999px;background:linear-gradient(90deg,var(--surface),var(--gold))}
+.stack{margin-top:22px;display:flex;flex-direction:column;gap:11px}
+.srow{display:flex;gap:15px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 16px}
+.srow .n{font-family:var(--font-display);font-weight:600;font-size:22px;color:var(--gold);min-width:30px}
+.srow .t b{font-size:15px;color:var(--ink)}
+.srow .t p{margin:3px 0 0;font-size:13.3px;color:var(--ink-soft)}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 17px}
+.qcard .q{font-size:15px;font-weight:600;margin-bottom:9px}
+.branch{display:flex;gap:10px;flex-wrap:wrap}
+.branch span,.branch button{font-size:12.8px;padding:6px 11px;border-radius:9px;background:var(--surface-3);color:var(--ink-soft);border:1px solid transparent;text-align:left}
+.branch button{cursor:pointer}
+.branch button:hover{border-color:var(--line-2);color:var(--ink)}
+.branch button.on{border-color:var(--gold);background:var(--gold-soft);color:var(--ink)}
+.branch span b,.branch button b{color:var(--gold)}
+.qresult{margin-top:14px;background:var(--surface-2);border:1px solid var(--gold);border-radius:14px;padding:15px 17px}
+.qresult .qr-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.qresult .qr-h b{font-family:var(--font-display);font-size:18px}
+.linkbtn{background:none;border:0;color:var(--ink-mute);font-family:var(--font-mono);font-size:11px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.linkbtn:hover{color:var(--gold)}
+.qr-list{display:grid;gap:10px;margin-top:12px}
+@media(min-width:680px){.qr-list{grid-template-columns:1fr 1fr 1fr}}
+.qr-item{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--rc,var(--gold));border-radius:11px;padding:12px 13px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.qr-item .qn{font-weight:600;font-size:14px}
+.qr-item .qm{font-family:var(--font-mono);font-size:10.5px;color:var(--ink-mute)}
+.qr-item .kit-row{gap:6px}
+.qr-item .kchip{padding:4px 8px;font-size:11.5px}
+.you{margin-top:18px;display:grid;gap:12px}
+@media(min-width:680px){.you{grid-template-columns:1fr 1fr}}
+.youcard{border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--surface);border-radius:12px;padding:15px 16px}
+.youcard h4{font-size:15px;margin:0 0 6px;color:var(--gold)}
+.youcard p{margin:0;font-size:13.6px;color:var(--ink-soft);line-height:1.5}
+.youcard p b{color:var(--ink)}
+.flowmap{margin-top:20px;display:flex;flex-direction:column;gap:14px}
+.flow-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-family:var(--font-mono);font-size:11px;color:var(--ink-mute)}
+.flow-legend span{display:inline-flex;align-items:center;gap:6px}
+.flow-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.flowrow{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 16px;border-left:3px solid var(--gold)}
+.flow-src{font-family:var(--font-display);font-weight:600;font-size:18px;color:var(--ink);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.flow-side{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);border:1px solid var(--line-2);border-radius:999px;padding:3px 9px}
+.flow-arrows{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.flow-to{font-size:13.6px;color:var(--ink);padding:9px 12px;border-radius:9px;background:var(--surface-2);border-left:3px solid var(--ink-mute)}
+.flow-to em{display:block;font-style:normal;font-size:12.4px;color:var(--ink-soft);margin-top:3px}
+.flow-to.strong{border-left-color:var(--investing)}
+.flow-to.mid{border-left-color:var(--gold)}
+.flow-to.weak{border-left-color:var(--ink-mute);opacity:.9}
+.flow-to .lk{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:6px;margin-left:6px}
+.flow-to.strong .lk{background:rgba(84,213,157,.14);color:var(--investing)}
+.flow-to.mid .lk{background:rgba(227,168,60,.16);color:var(--gold)}
+.flow-to.weak .lk{background:var(--surface-3);color:var(--ink-mute)}
+.src-note{margin-top:16px;font-family:var(--font-mono);font-size:11px;color:var(--ink-mute);line-height:1.5}
+.goalcard{border-top:3px solid var(--gc,var(--gold))}
+.goalcard h4{font-size:15px;margin:0 0 4px}
+.goalcard .own,.goalcard .pay{margin:6px 0 0;font-size:12.8px;color:var(--ink-soft);line-height:1.45}
+.goalcard .own b,.goalcard .pay b{color:var(--ink);font-weight:600}
+.goalcard .via{margin:10px 0 0;font-family:var(--font-mono);font-size:10.5px;color:var(--ink-mute);line-height:1.4}
+.ladder{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ladder .rung{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-soft);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.ladder .rung.top{border-color:var(--gold);color:var(--gold);font-weight:500}
+.ladder .arw{color:var(--ink-mute);font-size:13px}
+.ladder .lbl{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);width:100%;margin-bottom:2px}
+.statrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:20px}
+@media(max-width:560px){.statrow{grid-template-columns:1fr}}
+.stat{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 15px}
+.stat .num{font-family:var(--font-display);font-weight:600;font-size:26px;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
+.stat .cap{font-size:12.3px;color:var(--ink-soft);margin-top:6px;line-height:1.4}
+.srclist{margin-top:20px;display:grid;gap:10px}
+@media(min-width:680px){.srclist{grid-template-columns:1fr 1fr}}
+.srcitem{display:block;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:12px 14px;text-decoration:none;color:inherit;border-left:3px solid var(--gold)}
+.srcitem:hover{border-color:var(--gold)}
+.srcitem .st{font-size:13.8px;font-weight:600;color:var(--ink);display:block}
+.srcitem .sd{font-size:12.2px;color:var(--ink-soft);margin-top:3px;display:block}
+.srcitem .sty{font-family:var(--font-mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-mute);margin-top:6px;display:inline-block}
+/* model picker */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:10px;margin-top:20px}
+.mcard{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 13px;cursor:pointer;display:flex;flex-direction:column;gap:5px;border-top:3px solid var(--mc,var(--gold))}
+.mcard:hover{border-color:var(--line-2);border-top-color:var(--mc,var(--gold))}
+.mcard.on{background:var(--gold-soft);border-color:var(--gold);border-top-color:var(--gold)}
+.mcard .mn{font-weight:600;font-size:14px;color:var(--ink)}
+.mcard .mq{font-size:12.3px;color:var(--ink-soft);line-height:1.4}
+.mcard .mf{font-family:var(--font-mono);font-size:10.5px;color:var(--ink-mute);margin-top:auto;padding-top:4px}
+.mdetail{margin-top:18px;display:grid;gap:13px}
+@media(min-width:760px){.mdetail{grid-template-columns:1.05fr 1fr}}
+.mdetail .rb{border-left-color:var(--gold)}
+.mdetail .rb .lab{color:var(--gold)}
+.mdetail .mtitle{font-family:var(--font-display);font-weight:600;font-size:22px;line-height:1.1;margin-bottom:10px}
+.mdetail p{margin:0 0 10px;font-size:13.6px;color:var(--ink-soft);line-height:1.5}
+.mdetail p b{color:var(--ink)}
+.rank{display:flex;flex-direction:column;gap:5px}
+.rk{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 34px;gap:10px;align-items:center;background:none;border:0;border-radius:8px;padding:5px 6px;cursor:pointer;text-align:left;color:var(--ink-soft);font-size:13px}
+.rk:hover{background:var(--surface-2);color:var(--ink)}
+.rk .rkn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rk .rkb{height:6px;border-radius:999px;background:var(--line-2);overflow:hidden}
+.rk .rkb i{display:block;height:100%;background:var(--rc,var(--gold))}
+.rk .rks{font-family:var(--font-mono);font-size:11px;color:var(--ink-mute);text-align:right;font-variant-numeric:tabular-nums}
+.nextlist{display:flex;flex-direction:column;gap:7px}
+.nextlist button{text-align:left;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:8px 11px;cursor:pointer;font-size:12.8px;color:var(--ink-soft);line-height:1.4}
+.nextlist button:hover{border-color:var(--gold)}
+.nextlist button b{color:var(--gold);font-weight:600}
+/* stack builder */
+.builder{display:grid;gap:14px;margin-top:18px}
+@media(min-width:760px){.builder{grid-template-columns:1fr 1.15fr}}
+.know{display:flex;flex-wrap:wrap;gap:7px}
+.know button{border:1px solid var(--line-2);background:var(--surface-2);color:var(--ink-soft);border-radius:999px;padding:7px 12px;font-size:12.8px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.know button::before{content:"";width:9px;height:9px;border-radius:3px;border:1px solid var(--ink-mute)}
+.know button.on{border-color:var(--gold);color:var(--ink);background:var(--gold-soft)}
+.know button.on::before{background:var(--gold);border-color:var(--gold)}
+.ready .rk{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 42px}
+.ready .rk .rkb i{background:var(--gold)}
+.ready .rk.lo .rkb i{background:var(--ink-mute)}
+.ready .rk.hi .rkb i{background:var(--investing)}
+.legend-sm{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--font-mono);font-size:10.5px;color:var(--ink-mute);margin-top:10px}
+.legend-sm span{display:inline-flex;align-items:center;gap:6px}
+.legend-sm i{width:9px;height:9px;border-radius:3px;display:inline-block}
+/* overlays */
+.sheet{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 96%,transparent);z-index:50;padding:calc(env(safe-area-inset-top,0px) + 22px) 18px calc(env(safe-area-inset-bottom,0px) + 22px);overflow-y:auto}
+.ov-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.ov-item{border:1px solid var(--line-2);background:var(--surface);border-radius:11px;padding:13px 14px;cursor:pointer;min-height:78px;text-align:left;display:flex;flex-direction:column}
+.ov-item:hover{border-color:var(--gold)}
+.ov-item.on{border-color:var(--gold);background:var(--gold-soft)}
+.ov-item .oi-n{font-family:var(--font-mono);font-size:11px;color:var(--ink-mute)}
+.ov-item .oi-t{font-size:13.5px;font-weight:500;margin-top:5px;line-height:1.3}
+.ov-item .oi-q{font-size:12px;color:var(--ink-soft);margin-top:5px;line-height:1.35}
+.ov-close{max-width:1000px;margin:0 auto 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ov-close b{font-family:var(--font-display);font-size:18px}
+.ov-close span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+.ov-close button{border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:13px;cursor:pointer;flex:none}
+#lensGrid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.deskback{position:fixed;left:calc(14px + env(safe-area-inset-left,0px));top:calc(env(safe-area-inset-top,0px) + 10px);z-index:36;font-family:var(--font-mono);font-size:11.5px;color:var(--ink-soft);text-decoration:none;background:var(--surface);border:1px solid var(--line-2);border-radius:999px;padding:6px 11px}
+.deskback:hover{color:var(--gold);border-color:var(--gold)}
+.slide{padding-top:calc(clamp(22px,5vw,64px) + 22px)}
+</style>
+<div id="prog"></div>
+<a class="deskback" href="../">← Desk</a>
+<div class="hint" id="hint">← → to move · L to switch model</div>
+<div id="deck">
+  <div class="stage" id="stage"></div>
+  <div class="navbar">
+    <button class="btn" id="prev" aria-label="Previous">‹</button>
+    <button class="btn" id="next" aria-label="Next">›</button>
+    <span class="counter" id="counter"></span>
+    <div class="dots" id="dots"></div>
+    <button class="ovbtn lensbtn" id="lensOpen" aria-label="Switch model lens">Lens · <b id="lensName">DCF</b></button>
+    <button class="ovbtn" id="ovOpen">All slides</button>
+  </div>
+</div>
+<div id="overview" class="sheet" hidden>
+  <div class="ov-close"><b>All slides</b><button id="ovClose">Close ✕</button></div>
+  <div class="ov-grid" id="ovGrid"></div>
+</div>
+<div id="lensSheet" class="sheet" hidden>
+  <div class="ov-close"><div><b>Read the atlas through a model</b><span>Every meter, spectrum and ranking re-scores for the model you pick.</span></div><button id="lensClose">Close ✕</button></div>
+  <div class="ov-grid" id="lensGrid"></div>
+</div>
+<script>
+const C={research:'var(--research)',investing:'var(--investing)',deals:'var(--deals)',credit:'var(--credit)',advisory:'var(--advisory)',specialist:'var(--specialist)',corporate:'var(--corporate)',quant:'var(--quant)'};
+const ROLES=[
+ {no:'01',cat:'research',catName:'Markets · Research',name:'Sell-Side Equity Research Analyst',side:'Sell-side',dcf:100,
+  do:['Cover 10–20 public companies in <b>one sector</b>','Publish initiations, notes, ratings (Buy/Hold/Sell) + price targets','Model earnings, talk to management, service investor clients'],
+  val:['<b>DCF + comps on every report</b> — the football field','Full 3-statement models, sector multiples','Published-style research notes <b>are</b> the audition'],
+  also:['Sharp <b>writing</b> and a non-consensus thesis','Deep sector fluency; forecast earnings vs the Street','Client communication and conviction'],
+  path:['The most direct route from DCF work','CFA well-regarded · Associate → Analyst']},
+ {no:'02',cat:'investing',catName:'Investing · Buy-side',name:'Buy-Side Equity Analyst',side:'Buy-side',dcf:92,
+  do:['Pitch stocks to a Portfolio Manager','Own a coverage list; decide conviction and sizing','Publish little — being <b>right</b> is the product'],
+  val:['DCF + comps to find <b>mispricing</b>','Scenario / variant analysis; risk-reward framing','Position sizing logic'],
+  also:['Judgment under uncertainty; differentiated insight','Accountability to <b>performance</b>, not page views','Emotional discipline'],
+  path:['Usually from sell-side research or IB','Asset managers, mutual funds, hedge funds']},
+ {no:'03',cat:'deals',catName:'Deals · Banking',name:'Investment Banking Analyst',side:'Sell-side',dcf:80,
+  do:['Build deal models and pitchbooks','Support M&A, IPOs, debt/equity financing','Run live transaction processes'],
+  val:['DCF is <b>one of four</b> — plus comps, precedents, LBO','Accretion/dilution (merger) models','Valuation to justify a deal price'],
+  also:['<b>Modeling speed + precision</b>; brutal hours','Attention to detail; deal-process stamina','Formatting and client polish'],
+  path:['Analyst → Associate','The classic <b>feeder</b> to PE and hedge funds']},
+ {no:'04',cat:'investing',catName:'Investing · Private',name:'Private Equity Analyst / Associate',side:'Buy-side',dcf:78,
+  do:['Evaluate buyout targets; run diligence','Build LBO models; structure the debt','Monitor and improve portfolio companies'],
+  val:['<b>LBO-centric</b> — solve for IRR / MOIC','DCF for entry value, comps for exit','Heavy debt-schedule and returns work'],
+  also:['Operational insight; diligence rigor','Deal judgment; long horizon','Usually <b>post-IB</b>'],
+  path:['IB → PE','Prestige and compensation peak']},
+ {no:'05',cat:'credit',catName:'Credit',name:'Credit Analyst',side:'Both sides',dcf:48,
+  do:['Assess ability to <b>service debt</b>, not upside','Set/monitor ratings, or lend (private credit)','Write credit memos with covenants'],
+  val:['<b>Cash-flow durability &gt; equity DCF</b>','Leverage (Debt/EBITDA), coverage, recovery','Distance-to-default; downside scenarios'],
+  also:['Capital-structure and <b>legal/covenant</b> literacy','Obsessive downside focus','Patience over prestige'],
+  path:['Ratings agency, bank, or private-credit fund','<b>Very learnable from a DCF base</b>']},
+ {no:'06',cat:'advisory',catName:'Advisory · Valuation',name:'Valuation Advisory (Big 4 / boutique)',side:'Advisory',dcf:100,
+  do:['Value companies/assets for M&A, tax, disputes','409A, financial-reporting, fairness opinions','Defend the number under audit scrutiny'],
+  val:['<b>DCF + comps every single day</b>','The purest application of what you are learning','Methodology you must document and defend'],
+  also:['Rigorous documentation; audit trail','Often CFA / ASA / CBV credentials','Consistency over creativity'],
+  path:['Big 4 or independent valuation boutiques','<b>The most DCF-direct entry point</b>']},
+ {no:'07',cat:'specialist',catName:'Sector Specialist',name:'Real Estate / REIT Analyst',side:'Both sides',dcf:58,
+  do:['Value properties, portfolios, and REITs','Underwrite acquisitions and development','Model rent rolls and financing'],
+  val:['<b>NAV, cap rates, NOI, FFO/AFFO</b>','DCF on property cash flows — not earnings DCF','Cap-rate sensitivity drives value'],
+  also:['Lease structures, local property markets','Financing and development risk','Physical-asset intuition'],
+  path:['REITs, real-estate PE, brokerage research','A distinct, durable specialty']},
+ {no:'08',cat:'specialist',catName:'Sector Specialist',name:'Commodities & Precious Metals Analyst',side:'Both sides',dcf:40,
+  do:['Forecast supply/demand and prices','Value miners and producers','Build commodity <b>price decks</b>'],
+  val:['<b>NAV of reserves</b> (mine-life DCF)','Not earnings multiples — reserves and grades','Extreme sensitivity to the price deck'],
+  also:['Geology / production basics; macro cycles','Hedging and cyclicality','Stomach for volatility'],
+  path:['Bank commodities research; mining-focused funds','Niche, cyclical, high-conviction']},
+ {no:'09',cat:'specialist',catName:'Sector Specialist',name:'Pharma / Biotech Analyst',side:'Both sides',dcf:72,
+  do:['Value drug pipelines and platforms','Read trial data; judge approval odds and TAM','Trade around binary catalysts'],
+  val:['<b>Risk-adjusted NPV (rNPV)</b> per drug','A probability-weighted DCF — not comps','Value swings on probability of success'],
+  also:['<b>Science literacy</b> — trials, FDA, mechanisms','Binary-event risk management','Catalyst calendars'],
+  path:['Healthcare research and funds','A science background is prized']},
+ {no:'10',cat:'corporate',catName:'Corporate · In-house',name:'Corporate FP&A Analyst',side:'Corporate',dcf:28,
+  do:['Internal forecasting, budgeting, board reporting','Variance analysis (incl. <b>billings</b>, revenue)','Partner with business units on decisions'],
+  val:['Not valuation-centric','DCF only for capex / project decisions','Heavy <b>Excel + Power BI</b>, operational metrics'],
+  also:['Business partnering and communication','Understanding the operating model','Lifestyle-friendlier, broad exposure'],
+  path:['In-house at any company','Stable, transferable, everywhere']},
+ {no:'11',cat:'quant',catName:'Quant · Systematic',name:'Quant / Systematic Analyst',side:'Buy-side',dcf:12,
+  do:['Build statistical / factor models and signals','Backtest strategies at scale','Systematic, rules-based investing'],
+  val:['<b>Little DCF</b> — factor models dominate','Statistics, optimization, Python / ML','Signals over stories'],
+  also:['Heavy math / CS; strong programming','Data engineering','A genuinely different track'],
+  path:['STEM-heavy background','Quant funds, systematic desks']},
+ {no:'12',cat:'quant',catName:'Risk',name:'Risk Analyst',side:'Both sides',dcf:14,
+  do:['Measure and monitor market or credit risk','VaR, stress tests, limits, exposures','Guard the firm, not pick winners'],
+  val:['Minimal DCF','Statistics, scenario analysis, exposures','Downside and tail focus'],
+  also:['Stats and regulation (Basel, etc.)','Systems and reporting','Steady, defensive mindset'],
+  path:['Banks and asset managers','Stable and in demand']},
+];
+const RS=['Research','Buy-side','Banking','PE','Credit','Advisory','Real Estate','Metals','Pharma','FP&A','Quant','Risk'];
+
+/* The models. Scores (0–100) = how central the model is to each seat's day-to-day work,
+   in role order: Research, Buy-side, Banking, PE, Credit, Advisory, Real Estate, Metals, Pharma, FP&A, Quant, Risk.
+   The DCF row is the original atlas's DCF meter. */
+const MODELS=[
+ {id:'dcf',short:'DCF',name:'Discounted Cash Flow (DCF)',cat:'research',
+  q:'What is this business intrinsically worth, based on the cash it will generate?',
+  out:'Enterprise and equity value per share, WACC, terminal value, sensitivity tables',
+  s:[100,92,80,78,48,100,58,40,72,28,12,14],
+  next:[['comps','Price the same company off its peers, and explain the gap'],['three','The engine under every serious DCF'],['lbo','A DCF plus a debt schedule is most of an LBO']]},
+ {id:'comps',short:'Comps',name:'Trading Comparables',cat:'research',
+  q:'What is the market paying for similar public companies right now?',
+  out:'EV/EBITDA, P/E and EV/Sales ranges, and the value they imply',
+  s:[95,88,95,72,40,95,55,55,50,15,20,10],
+  next:[['dcf','Comps give you the price; a DCF gives you the value'],['precedents','The same method, applied to takeover prices']]},
+ {id:'precedents',short:'Precedents',name:'Precedent Transactions',cat:'deals',
+  q:'What have buyers actually paid to take control of similar companies?',
+  out:'Deal multiples, control premiums, a takeover value range',
+  s:[30,35,90,70,25,85,45,40,45,10,5,5],
+  next:[['merger','Turns a deal price into an EPS impact for the buyer'],['lbo','Shows what a financial buyer could afford']]},
+ {id:'three',short:'3-Statement',name:'3-Statement Model',cat:'corporate',
+  q:'How do the income statement, balance sheet and cash flow move together?',
+  out:'Linked forecasts, free cash flow, cash and debt balances',
+  s:[95,85,92,88,85,70,40,55,50,80,10,15],
+  next:[['dcf','Discount the cash flows you just forecast'],['credit','Stress the same model for the downside']]},
+ {id:'lbo',short:'LBO',name:'Leveraged Buyout (LBO)',cat:'deals',
+  q:'What can a sponsor pay, mostly with debt, and still hit its target return?',
+  out:'IRR, MOIC, sources and uses, debt schedule',
+  s:[15,30,85,100,70,30,50,10,10,10,5,10],
+  next:[['credit','The lender’s side of the same capital structure'],['merger','The strategic buyer’s version of the deal']]},
+ {id:'merger',short:'M&A',name:'Merger Model (Accretion / Dilution)',cat:'deals',
+  q:'Does this acquisition raise or lower the buyer’s earnings per share?',
+  out:'Pro forma EPS, synergies needed to break even, ownership split',
+  s:[35,30,92,40,25,35,30,35,40,30,5,5],
+  next:[['precedents','Sanity-check the price being paid'],['lbo','Compare against what a sponsor would bid']]},
+ {id:'credit',short:'Credit',name:'Credit / Debt Capacity Model',cat:'credit',
+  q:'Can the borrower pay us back, even in a bad year?',
+  out:'Debt/EBITDA, interest coverage, covenant headroom, recovery value',
+  s:[25,40,55,75,100,30,60,35,15,30,15,70],
+  next:[['three','Credit work lives on the cash flow statement'],['project','Asset-level lending against long-dated cash flows']]},
+ {id:'nav',short:'NAV',name:'NAV / Sum-of-the-Parts',cat:'specialist',
+  q:'What are the assets worth, piece by piece, after the debt?',
+  out:'NAV per share, P/NAV, cap-rate or reserve-based asset values',
+  s:[50,45,40,25,35,55,100,100,30,5,5,10],
+  next:[['dcf','Each asset value is a DCF underneath'],['project','Value one long-life asset in depth']]},
+ {id:'rnpv',short:'rNPV',name:'Risk-Adjusted NPV (rNPV)',cat:'specialist',
+  q:'What is a drug pipeline worth once you price in the odds of failure?',
+  out:'Probability-weighted NPV per drug, peak sales, launch timing',
+  s:[30,30,25,10,10,35,5,15,100,5,5,5],
+  next:[['dcf','rNPV is a DCF with a probability on every cash flow'],['comps','Benchmark against peer biotech valuations']]},
+ {id:'ddm',short:'DDM',name:'Dividend Discount / Excess Return',cat:'investing',
+  q:'How do you value a bank, insurer or utility, where capital is the constraint?',
+  out:'Justified P/B, cost of equity, the spread of ROE over cost of equity',
+  s:[45,40,30,10,20,40,35,10,5,5,15,15],
+  next:[['comps','Banks trade on P/B against ROE, peer by peer'],['dcf','The same discounting logic, on equity cash flows']]},
+ {id:'project',short:'Project Finance',name:'Project Finance Model',cat:'credit',
+  q:'Will one asset’s cash flow cover its debt for the next 20–30 years?',
+  out:'DSCR, LLCR, the cash waterfall, equity IRR',
+  s:[25,25,50,55,65,45,55,45,5,25,5,20],
+  next:[['credit','Lenders own the downside of every project'],['lbo','Returns logic for infrastructure equity']]},
+ {id:'budget',short:'FP&A',name:'Budget & Operating Model (FP&A)',cat:'corporate',
+  q:'What will we earn and spend next year, and why did we miss last quarter?',
+  out:'Annual budget, rolling forecast, variance analysis, driver models',
+  s:[20,15,15,45,30,15,35,15,15,100,5,20],
+  next:[['three','Tie the operating model to all three statements'],['dcf','Capex and project decisions run on NPV']]},
+ {id:'factor',short:'Factor',name:'Factor / Statistical Models',cat:'quant',
+  q:'Which measurable signals predict returns across thousands of stocks?',
+  out:'Factor exposures, alpha, backtests, Sharpe ratio',
+  s:[10,35,5,5,15,5,10,20,5,10,100,60],
+  next:[['var','Measure the risk of the portfolio you build'],['comps','Value and quality factors start from multiples']]},
+ {id:'var',short:'VaR',name:'VaR & Stress Testing',cat:'quant',
+  q:'How much could the firm lose on a bad day, or in a crisis?',
+  out:'Value-at-Risk, expected shortfall, stress losses, limit usage',
+  s:[5,25,5,10,40,10,10,25,5,15,60,100],
+  next:[['factor','Risk models are built on factor exposures'],['credit','Credit risk is the other half of the risk desk']]},
+];
+const M=Object.fromEntries(MODELS.map(m=>[m.id,m]));
+
+/* ---------- state (per-viewer conveniences only) ---------- */
+function load(k,d){try{const v=localStorage.getItem('atlas.'+k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function save(k,v){try{localStorage.setItem('atlas.'+k,JSON.stringify(v));}catch(e){}}
+const hashId=(location.hash||'').slice(1);
+let lens=M[hashId]?hashId:(M[load('lens','dcf')]?load('lens','dcf'):'dcf');
+let known=load('known',['dcf']).filter(id=>M[id]);
+let answers=load('answers',{});
+
+const L=()=>M[lens];
+const band=v=>v>=80?'core':v>=50?'one of several':'peripheral';
+function topModels(ri,min,max){return MODELS.map(m=>({m,v:m.s[ri]})).filter(x=>x.v>=min).sort((a,b)=>b.v-a.v).slice(0,max);}
+function seatsWhereCore(m){return m.s.filter(v=>v>=80).length;}
+
+/* readiness: share of a seat's three most-used models you already know, weighted by how central each is */
+function readiness(ri,set){
+ const top=MODELS.map(m=>({id:m.id,v:m.s[ri]})).sort((a,b)=>b.v-a.v).slice(0,3);
+ const tot=top.reduce((a,x)=>a+x.v,0);
+ return Math.round(top.reduce((a,x)=>a+(set.includes(x.id)?x.v:0),0)/tot*100);
+}
+
+const SLIDES=[{type:'title'},{type:'picker'},{type:'matrix'},{type:'spectrum'},{type:'heatmap'},...ROLES.map((r,i)=>({type:'role',r,i})),{type:'sector'},{type:'pathways'},{type:'goals'},{type:'canada'},{type:'stack'},{type:'builder'},{type:'navigate'},{type:'close'},{type:'sources'}];
+const ROLE0=SLIDES.findIndex(s=>s.type==='role');
+const idxOf=t=>SLIDES.findIndex(s=>s.type===t);
+
+function kchip(m,v,extra=''){
+ return `<button class="kchip${m.id===lens?' on':''}" data-lens="${m.id}" data-k="k-${extra}-${m.id}">${m.short}<span class="kb"><i style="width:${v}%"></i></span><span class="ks">${v}</span></button>`;
+}
+
+function roleSlide(r,ri){
+ const col=C[r.cat];
+ const v=L().s[ri];
+ const kit=topModels(ri,40,7);
+ return `<div class="inner" style="--rc:${col}">
+   <div class="role-top">
+     <div class="role-no">${r.no}</div>
+     <div class="role-id">
+       <div class="role-cat">${r.catName}</div>
+       <div class="role-name">${r.name}</div>
+       <div class="dcf-meter">${L().short} centrality <span class="dcf-bar"><span class="dcf-fill" style="width:${v}%"></span></span> ${band(v)}</div>
+     </div>
+     <div class="side-badge">${r.side}</div>
+   </div>
+   <div class="role-body">
+     <div class="rb"><div class="lab">What you do</div><ul>${r.do.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+     <div class="rb"><div class="lab">Valuation &amp; where DCF fits</div><ul>${r.val.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+     <div class="rb"><div class="lab">What it also demands</div><ul>${r.also.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+     <div class="rb"><div class="lab">The path in</div><ul>${r.path.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+   </div>
+   <div class="kit"><div class="kit-lab"><span>This seat's model toolkit</span><span>Tap a model to read the atlas through it</span></div>
+     <div class="kit-row">${kit.map(x=>kchip(x.m,x.v,'r'+ri)).join('')}</div></div>
+ </div>`;
+}
+
+function build(s){
+ const lm=L();
+ if(s.type==='title') return `<div class="inner title-wrap">
+   <div class="kicker">The valuation career map</div>
+   <h1>The Analyst <span class="g">Atlas</span></h1>
+   <p class="title-sub">"Analyst" is a dozen different jobs. This maps every seat in finance, shows exactly where your DCF edge is decisive, and turns "endless options" into a direction you can aim a resume at.</p>
+   <p class="title-sub" style="font-size:clamp(14px,1.8vw,16px)">DCF isn't the only model. Pick the one you know, and every slide re-scores around it.</p>
+   <div class="cta-row"><button class="cta" data-go="${idxOf('picker')}" data-k="cta-pick">Which model do you know? →</button><button class="cta ghost" data-go="${idxOf('heatmap')}" data-k="cta-heat">See every model × every seat</button></div>
+   <div class="title-meta"><span class="tag">12 roles</span><span class="tag">14 models</span><span class="tag">where ${lm.short} fits each</span><span class="tag">sector lenses</span><span class="tag">how to choose</span></div>
+ </div>`;
+ if(s.type==='picker'){
+  const ranked=ROLES.map((r,i)=>({r,i,v:lm.s[i]})).sort((a,b)=>b.v-a.v);
+  return `<div class="inner">
+   <div class="kicker">Start here</div>
+   <h2>Which model do you know?</h2>
+   <p class="lead">Pick the model you've studied most. The atlas shows the seats where it's the <b>core tool</b>, the ones where it's a footnote, and which model to learn next.</p>
+   <div class="mgrid">${MODELS.map(m=>`<button class="mcard${m.id===lens?' on':''}" style="--mc:${C[m.cat]}" data-lens="${m.id}" data-k="pick-${m.id}"><span class="mn">${m.name}</span><span class="mq">${m.q}</span><span class="mf">core in ${seatsWhereCore(m)} of 12 seats</span></button>`).join('')}</div>
+   <div class="mdetail">
+     <div class="rb"><div class="lab">Through the ${lm.short} lens</div>
+       <div class="mtitle">${lm.name}</div>
+       <p><b>The question it answers:</b> ${lm.q}</p>
+       <p><b>What you hand over:</b> ${lm.out}</p>
+       <div class="lab" style="margin-top:14px">Learn next</div>
+       <div class="nextlist">${lm.next.map(([id,why])=>`<button data-lens="${id}" data-k="next-${id}"><b>${M[id].short}</b> · ${why}</button>`).join('')}</div>
+     </div>
+     <div class="rb"><div class="lab">Where ${lm.short} earns its keep · tap a seat</div>
+       <div class="rank">${ranked.map(x=>`<button class="rk" style="--rc:${C[x.r.cat]}" data-go="${ROLE0+x.i}" data-k="rk-${x.i}"><span class="rkn">${x.r.name}</span><span class="rkb"><i style="width:${x.v}%"></i></span><span class="rks">${x.v}</span></button>`).join('')}</div>
+     </div>
+   </div>
+  </div>`;
+ }
+ if(s.type==='matrix') return `<div class="inner">
+   <div class="kicker">The two questions that split every seat</div>
+   <h2>First, orient: two axes, seven functions</h2>
+   <p class="lead">Every analyst role is placed by <b>who you serve</b> (buy-side owns the decision; sell-side produces research/execution for clients) and <b>which function</b> you sit in.</p>
+   <div class="matrix">
+     <div class="mrow"><div class="mhead"></div><div class="mhead">Sell-side / advisory</div><div class="mhead">Buy-side / owner</div></div>
+     <div class="mrow"><div class="mside">Research</div><div class="fn"><b>Equity Research</b> — publish ratings &amp; targets</div><div class="fn"><b>Buy-side analyst</b> — pitch, decide, size</div></div>
+     <div class="mrow"><div class="mside">Deals</div><div class="fn"><b>Investment Banking</b> — models &amp; processes</div><div class="fn"><b>Private Equity</b> — LBOs, own the company</div></div>
+     <div class="mrow"><div class="mside">Credit</div><div class="fn"><b>Ratings / bank credit</b></div><div class="fn"><b>Private credit</b> — lend and hold</div></div>
+     <div class="mrow"><div class="mside">Specialist</div><div class="fn"><b>RE · Metals · Pharma</b> research</div><div class="fn">Sector-focused funds</div></div>
+     <div class="mrow"><div class="mside">Other</div><div class="fn"><b>Valuation Advisory</b> (Big 4)</div><div class="fn"><b>Quant · Risk · Corporate FP&amp;A</b></div></div>
+   </div>
+ </div>`;
+ if(s.type==='spectrum'){
+   const isDcf=lens==='dcf';
+   const chips=isDcf
+     ?[['Quant',12,10],['FP&A',28,9],['Metals',40,7],['Credit',48,4],['Real Estate',58,6],['Pharma',72,8],['PE',78,3],['Banking',80,2],['Buy-side',92,1],['Research',100,0],['Advisory',100,5]]
+     :RS.map((n,i)=>[n,lm.s[i],i]).sort((a,b)=>a[1]-b[1]);
+   const grp=(lo,hi)=>ROLES.map((r,i)=>[RS[i],lm.s[i]]).filter(x=>x[1]>=lo&&x[1]<hi).sort((a,b)=>b[1]-a[1]).map(x=>x[0]).join(', ')||'None of the 12 seats';
+   const cells=isDcf
+     ?`<div class="cell"><h4><span class="pin" style="background:var(--research)"></span>DCF is the job</h4><p>Equity research, valuation advisory, buy-side fundamental — you live in intrinsic value.</p></div>
+       <div class="cell"><h4><span class="pin" style="background:var(--deals)"></span>One of several</h4><p>Banking and PE use DCF beside comps, precedents and LBOs.</p></div>
+       <div class="cell"><h4><span class="pin" style="background:var(--specialist)"></span>Replaced by a variant</h4><p>Metals use NAV of reserves; pharma uses rNPV; real estate uses cap rates.</p></div>`
+     :`<div class="cell"><h4><span class="pin" style="background:var(--research)"></span>${lm.short} is the job</h4><p>${grp(80,101)}</p></div>
+       <div class="cell"><h4><span class="pin" style="background:var(--deals)"></span>One of several</h4><p>${grp(50,80)}</p></div>
+       <div class="cell"><h4><span class="pin" style="background:var(--specialist)"></span>Peripheral</h4><p>${grp(0,50)}</p></div>`;
+   return `<div class="inner">
+     <div class="kicker">Your edge, priced</div>
+     <h2>Where ${lm.short} actually earns its keep</h2>
+     <p class="lead">${isDcf?'Intrinsic DCF is central to some seats and nearly absent in others — because each field has its own value driver. Aim where your skill is the <b>core tool</b>, not a footnote.':`${lm.name} answers one question: <b>${lm.q.replace(/\?$/,'')}</b>? Some seats ask it every day; others never do. Aim where it is the <b>core tool</b>, not a footnote.`}</p>
+     <div class="spec" id="spec">
+       ${chips.map(c=>`<button class="spec-chip" data-x="${c[1]}" data-go="${ROLE0+c[2]}" data-k="sc-${c[0]}" style="left:${Math.max(4,Math.min(96,c[1]))}%">${c[0]}</button>`).join('')}
+       <div class="spec-track"></div>
+       <div class="spec-ends"><span>Peripheral — other tools rule</span><span>Core — ${lm.short} every day</span></div>
+     </div>
+     <div class="grid g3" style="margin-top:26px">${cells}</div>
+   </div>`;
+ }
+ if(s.type==='heatmap'){
+   const cellBg=v=>`color-mix(in srgb, var(--gold) ${Math.round(v*0.85)}%, var(--surface))`;
+   return `<div class="inner">
+   <div class="kicker">The whole map on one screen</div>
+   <h2>Every model × every seat</h2>
+   <p class="lead">Read across a row to see where a model is used. Read down a column to see what a seat runs on. Tap a row to switch the lens, or a column to open that seat.</p>
+   <div class="sectbl heat"><table>
+     <thead><tr><th class="rowh" style="padding:9px 12px">Model ↓ · Seat →</th>${RS.map((n,i)=>`<th><button data-go="${ROLE0+i}" data-k="hh-${i}">${n.replace(' ','<br>')}</button></th>`).join('')}</tr></thead>
+     <tbody>${MODELS.map(m=>`<tr class="${m.id===lens?'on':''}"><td class="rowh"><button data-lens="${m.id}" data-k="hr-${m.id}"><span class="pin" style="background:${C[m.cat]}"></span>${m.name}</button></td>${m.s.map((v,i)=>`<td class="hc" data-lens="${m.id}" title="${m.short} in ${RS[i]}: ${v} (${band(v)})" style="background:${cellBg(v)};color:${v>=70?'#14100a':v>=35?'var(--ink)':'var(--ink-mute)'}">${v}</td>`).join('')}</tr>`).join('')}</tbody>
+   </table></div>
+   <div class="heat-key"><span>0 · not used</span><span class="ramp"></span><span>100 · the core tool</span></div>
+   <p class="src-note">Scores are editorial estimates of how central each model is to a seat's day-to-day work, drawn from the career and modeling guides in the sources. The DCF row matches the original atlas.</p>
+ </div>`;
+ }
+ if(s.type==='role') return roleSlide(s.r,s.i);
+ if(s.type==='sector') return `<div class="inner">
+   <div class="kicker">The "endless options" decoded</div>
+   <h2>Same research seat, different sector lens</h2>
+   <p class="lead">Most of those "gazillion analyst roles" are the <b>same job</b> pointed at a different sector — and each sector swaps in its own valuation tool. Pick a sector to go deep; that becomes your moat.</p>
+   <div class="sectbl"><table>
+     <thead><tr><th>Sector</th><th>What drives value</th><th>Primary valuation</th><th>Lens</th></tr></thead>
+     <tbody>
+       <tr><td>Energy / Pipelines</td><td>Throughput, tolls, rate base, rates, leverage</td><td><b>FCFF DCF + DDM</b>, EV/EBITDA</td><td>${lensBtn('dcf','s0')}</td></tr>
+       <tr><td>Metals &amp; Mining</td><td>Reserves, grades, commodity price deck</td><td><b>NAV of reserves</b></td><td>${lensBtn('nav','s1')}</td></tr>
+       <tr><td>Pharma / Biotech</td><td>Pipeline, probability of approval, TAM</td><td><b>Risk-adjusted NPV</b></td><td>${lensBtn('rnpv','s2')}</td></tr>
+       <tr><td>Real Estate / REITs</td><td>NOI, occupancy, cap rates, financing</td><td><b>NAV, cap rate, FFO</b></td><td>${lensBtn('nav','s3')}</td></tr>
+       <tr><td>Banks / Financials</td><td>Regulatory capital, ROE, credit losses</td><td><b>P/B vs ROE</b>, excess return, DDM</td><td>${lensBtn('ddm','s4')}</td></tr>
+       <tr><td>Tech / Software</td><td>Growth, margins, TAM, retention</td><td><b>Growth DCF</b>, EV/Sales, Rule of 40</td><td>${lensBtn('dcf','s5')}</td></tr>
+       <tr><td>Consumer / Retail</td><td>Same-store sales, units, brand, margins</td><td><b>FCFF DCF</b>, EV/EBITDA, P/E</td><td>${lensBtn('comps','s6')}</td></tr>
+       <tr><td>Infrastructure / Utilities</td><td>Contracted cash flows, regulated returns, debt sizing</td><td><b>Project finance</b>, DDM, DCF</td><td>${lensBtn('project','s7')}</td></tr>
+     </tbody>
+   </table></div>
+ </div>`;
+ if(s.type==='goals') return `<div class="inner">
+   <div class="kicker">Where the climb ends</div>
+   <h2>The end goals — what you're aiming at</h2>
+   <p class="lead">The last slide showed <b>entry</b> seats. These are the <b>summits</b> — senior roles people reach after 10–20 years and rarely leave. At this level pay is driven by <b>carry and performance fees</b>, not salary.</p>
+   <div class="grid g3" style="margin-top:22px">
+     <div class="cell goalcard" style="--gc:var(--investing)"><h4>Portfolio Manager (PM)</h4><p class="own"><b>Owns</b> a book or strategy — makes the buy &amp; sell calls and carries the P&amp;L.</p><p class="pay"><b>Paid</b> a slice of the fund's management + performance fees.</p><p class="via">Via: equity research or IB → buy-side analyst → PM</p></div>
+     <div class="cell goalcard" style="--gc:var(--deals)"><h4>Partner / Principal (PE)</h4><p class="own"><b>Owns</b> deals — sources buyouts, sits on portfolio-company boards.</p><p class="pay"><b>Paid</b> carry — a share of the fund's profits, the big multiplier.</p><p class="via">Via: IB → PE associate → VP → Principal → Partner</p></div>
+     <div class="cell goalcard" style="--gc:var(--research)"><h4>Managing Director (IB)</h4><p class="own"><b>Owns</b> client relationships — originates and wins deal mandates.</p><p class="pay"><b>Paid</b> on the fees they generate; base + large bonus.</p><p class="via">Via: staying in IB — Analyst → Associate → VP → Director → MD</p></div>
+     <div class="cell goalcard" style="--gc:var(--specialist)"><h4>Chief Investment Officer</h4><p class="own"><b>Owns</b> the whole investment strategy of a fund, endowment or insurer.</p><p class="pay"><b>Paid</b> on institutional performance; senior-most seat.</p><p class="via">Via: senior PM / head of research → CIO</p></div>
+     <div class="cell goalcard" style="--gc:var(--corporate)"><h4>CFO / Head of Corp Dev</h4><p class="own"><b>Owns</b> a company's finances, or its M&amp;A and strategy.</p><p class="pay"><b>Paid</b> salary + equity; the corporate summit.</p><p class="via">Via: corp dev / FP&amp;A, often after IB or advisory</p></div>
+     <div class="cell goalcard" style="--gc:var(--credit)"><h4>Founder / GP of your own fund</h4><p class="own"><b>Owns</b> the firm — raise capital, run your strategy, keep the upside.</p><p class="pay"><b>Paid</b> the full economics; the highest ceiling and the highest risk.</p><p class="via">Via: a real track record on the buy-side or in PE</p></div>
+   </div>
+   <div class="ladder">
+     <span class="lbl">The generic climb → the end goal is the last rung</span>
+     <span class="rung">Analyst</span><span class="arw">→</span>
+     <span class="rung">Associate</span><span class="arw">→</span>
+     <span class="rung">VP</span><span class="arw">→</span>
+     <span class="rung">Director / Principal</span><span class="arw">→</span>
+     <span class="rung top">MD · Partner · PM</span>
+   </div>
+ </div>`;
+ if(s.type==='canada') return `<div class="inner">
+   <div class="kicker">The market you're actually recruiting into</div>
+   <h2>Canada changes the map</h2>
+   <p class="lead">The arrows' <b>directions</b> hold — but the structure is different on Bay Street. Here's what shifts for a Toronto candidate.</p>
+   <div class="statrow">
+     <div class="stat"><div class="num">~30%</div><div class="cap">Lower pay than US peers — same figures, but in CAD</div></div>
+     <div class="stat"><div class="num">~100–200</div><div class="cap">New IB analyst hires per year, nationally</div></div>
+     <div class="stat"><div class="num">~70%</div><div class="cap">Of IB analysts stay in banking or move corporate</div></div>
+   </div>
+   <div class="grid g3" style="margin-top:16px">
+     <div class="cell"><h4>Bank-owned dealers rule</h4><p>The Big Five — RBC, BMO, TD, Scotia, CIBC (+ National Bank) — run <b>both</b> IB and research. Few boutiques; shallower capital markets, so big issuers often raise debt in the US.</p></div>
+     <div class="cell"><h4>The IB → PE pipeline is weak</h4><p>No US-style "2-and-out" conveyor. Far fewer PE seats, so most analysts <b>stay in banking</b> or go corporate.</p></div>
+     <div class="cell"><h4>Maple 8 pensions = the summit</h4><p>CPPIB, OTPP, OMERS, CDPQ, PSP, AIMCo, HOOPP, BCI invest directly in PE, infra, real estate &amp; credit — the <b>top buy-side exit</b> here. "PE lite": better hours, ~70–80% US pay, no carry.</p></div>
+     <div class="cell"><h4>CFA + CBV, not the MBA</h4><p>The CFA is more central than in the US; the <b>CBV</b> (Chartered Business Valuator) is Canada's own valuation designation — the credential for valuation advisory.</p></div>
+     <div class="cell"><h4>Sector tilt: mining &amp; energy</h4><p>Toronto is a <b>global mining-finance hub</b> (TSX/TSXV); Calgary is energy. Pipeline and utility models are in steady demand.</p></div>
+     <div class="cell"><h4>Recruiting reality</h4><p>Target schools: Ivey, Queen's, McGill, UofT, UBC, Waterloo. On-cycle, and a few months behind the US calendar.</p></div>
+   </div>
+ </div>`;
+ if(s.type==='stack') return `<div class="inner">
+   <div class="kicker">The skills that compound everywhere</div>
+   <h2>God-mode: what makes you elite across all of them</h2>
+   <p class="lead">These six transfer to <b>every</b> seat above. Master them and you can move between roles instead of being trapped in one.</p>
+   <div class="stack">
+     <div class="srow"><div class="n">1</div><div class="t"><b>Accounting fluency</b><p>Read any 10-K and know what's real — the base layer under every model.</p></div></div>
+     <div class="srow"><div class="n">2</div><div class="t"><b>DCF + relative valuation, both</b><p>Build intrinsic value and price off peers — and know when the two diverge.</p></div></div>
+     <div class="srow"><div class="n">3</div><div class="t"><b>One sector, genuinely deep</b><p>Depth in a single sector is the edge generalists can't fake. This is your moat.</p></div></div>
+     <div class="srow"><div class="n">4</div><div class="t"><b>Modeling speed in Excel (then Python)</b><p>Fast, clean, auditable models — Python to scale and automate them.</p></div></div>
+     <div class="srow"><div class="n">5</div><div class="t"><b>Narrative &amp; writing</b><p>Turn a model into a thesis someone acts on — the sell-side and buy-side currency.</p></div></div>
+     <div class="srow"><div class="n">6</div><div class="t"><b>Judgment</b><p>Argue against yourself; know when the model is lying. The rarest, highest-paid skill.</p></div></div>
+   </div>
+ </div>`;
+ if(s.type==='builder'){
+   const rows=ROLES.map((r,i)=>({r,i,v:readiness(i,known)})).sort((a,b)=>b.v-a.v);
+   const ready=rows.filter(x=>x.v>=67).length, part=rows.filter(x=>x.v>=34&&x.v<67).length;
+   const cands=MODELS.filter(m=>!known.includes(m.id)).map(m=>{
+     const after=[...known,m.id];
+     const deltas=ROLES.map((r,i)=>({i,d:readiness(i,after)-readiness(i,known)})).sort((a,b)=>b.d-a.d);
+     return {m,gain:deltas.reduce((a,x)=>a+x.d,0),top:deltas.filter(x=>x.d>0).slice(0,3)};
+   }).sort((a,b)=>b.gain-a.gain);
+   const best=cands[0];
+   return `<div class="inner">
+   <div class="kicker">From one model to a toolkit</div>
+   <h2>Build your model stack</h2>
+   <p class="lead">Tick every model you can build from a blank sheet. Each seat is scored on its <b>three most-used models</b>, so you can see which doors are open and which single model opens the most new ones.</p>
+   <div class="statrow">
+     <div class="stat"><div class="num">${known.length}</div><div class="cap">Models in your stack</div></div>
+     <div class="stat"><div class="num">${ready} / 12</div><div class="cap">Seats where you cover most of the toolkit${part?` · ${part} more partway`:''}</div></div>
+     <div class="stat"><div class="num">${best?best.m.short:'—'}</div><div class="cap">${best?`Best next model: it raises readiness across ${best.top.length?best.top.map(x=>RS[x.i]).join(', '):'several seats'}`:'You know every model on the map'}</div></div>
+   </div>
+   <div class="builder">
+     <div class="rb" style="border-left-color:var(--gold)"><div class="lab" style="color:var(--gold)">Models I can build</div>
+       <div class="know">${MODELS.map(m=>`<button class="${known.includes(m.id)?'on':''}" data-know="${m.id}" aria-pressed="${known.includes(m.id)}" data-k="kn-${m.id}">${m.short}</button>`).join('')}</div>
+       ${cands.length?`<div class="lab" style="color:var(--gold);margin-top:16px">Highest-value next models</div>
+       <div class="nextlist">${cands.slice(0,3).map(c=>`<button data-know="${c.m.id}" data-k="nx-${c.m.id}"><b>+ ${c.m.name}</b><br>${c.top.length?'Biggest lift: '+c.top.map(x=>RS[x.i]).join(', '):'Small lift across the map'}</button>`).join('')}</div>`:''}
+     </div>
+     <div class="rb ready" style="border-left-color:var(--gold)"><div class="lab" style="color:var(--gold)">Seat readiness · tap to open</div>
+       <div class="rank">${rows.map(x=>`<button class="rk ${x.v>=67?'hi':x.v<34?'lo':''}" data-go="${ROLE0+x.i}" data-k="rd-${x.i}"><span class="rkn">${x.r.name}</span><span class="rkb"><i style="width:${x.v}%"></i></span><span class="rks">${x.v}%</span></button>`).join('')}</div>
+       <div class="legend-sm"><span><i style="background:var(--investing)"></i>67%+ covered</span><span><i style="background:var(--gold)"></i>partway</span><span><i style="background:var(--ink-mute)"></i>a gap to close</span></div>
+     </div>
+   </div>
+ </div>`;
+ }
+ if(s.type==='navigate'){
+   const tally=ROLES.map(()=>0); let n=0;
+   QUIZ.forEach((q,qi)=>{const a=answers[qi]; if(a!=null&&q.a[a]){n++; q.a[a][1].forEach(ri=>tally[ri]++);}});
+   const top=tally.map((v,i)=>({v,i})).filter(x=>x.v>0).sort((a,b)=>b.v-a.v||a.i-b.i).slice(0,3);
+   return `<div class="inner">
+   <div class="kicker">From "endless options" to a direction</div>
+   <h2>Five questions that aim your resume</h2>
+   <p class="lead">Answer these honestly and the field narrows fast. Your answers point at a <b>cluster</b>, not a single job — then you tailor toward it. <b>Tap an answer</b> on each card.</p>
+   <div class="grid g2" style="margin-top:20px">
+     ${QUIZ.map((q,qi)=>`<div class="qcard"><div class="q">${q.q}</div><div class="branch">${q.a.map((a,ai)=>`<button class="${answers[qi]===ai?'on':''}" aria-pressed="${answers[qi]===ai}" data-ans="${qi}:${ai}" data-k="q-${qi}-${ai}">${a[0]}</button>`).join('')}</div></div>`).join('')}
+     <div class="qcard" style="border-color:var(--gold)"><div class="q" style="color:var(--gold)">The tie-breaker</div><div class="branch"><span>Follow the sector you're <b>genuinely curious</b> about — depth beats prestige.</span></div></div>
+   </div>
+   <div class="qresult">
+     <div class="qr-h"><b>${n?'Your cluster':'Your cluster appears here'}</b>${n?`<button class="linkbtn" data-reset="1" data-k="q-reset">Clear answers</button>`:''}</div>
+     ${n?`<div class="qr-list">${top.map(x=>{const r=ROLES[x.i];return `<div class="qr-item" style="--rc:${C[r.cat]}"><span class="qm">matches ${x.v} of ${n} answer${n>1?'s':''}</span><button class="linkbtn" style="text-align:left;font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--ink);text-decoration:none" data-go="${ROLE0+x.i}" data-k="qr-${x.i}">${r.name} →</button><span class="qm">Models to master</span><div class="kit-row">${topModels(x.i,0,3).map(t=>kchip(t.m,t.v,'q'+x.i)).join('')}</div></div>`;}).join('')}</div>`
+       :`<p style="margin:8px 0 0;font-size:13.6px;color:var(--ink-soft)">Answer one or more questions and the three seats that fit best show up here, with the models each one runs on.</p>`}
+   </div>
+ </div>`;
+ }
+ if(s.type==='pathways') return `<div class="inner">
+   <div class="kicker">Where each seat actually leads</div>
+   <h2>Career pathways — who feeds whom</h2>
+   <p class="lead">IB is not the destination the others feed into — it is the <b>hub that feeds out</b>. Equity research runs to the buy-side; valuation advisory feeds IB and corporate development. Arrows reflect standard, documented flows, not exceptions.</p>
+   <div class="flow-legend"><span><i style="background:var(--investing)"></i>Common / natural</span><span><i style="background:var(--gold)"></i>Possible</span><span><i style="background:var(--ink-mute)"></i>Rare / indirect</span></div>
+   <div class="flowmap">
+     <div class="flowrow">
+       <div class="flow-src">Equity Research <span class="flow-side">sell-side</span></div>
+       <div class="flow-arrows">
+         <div class="flow-to strong">→ Buy-side: Hedge Funds / Asset Management <span class="lk">common</span><em>Direct skill overlap — you already analyze public securities. The natural exit.</em></div>
+         <div class="flow-to weak">→ Investment Banking <span class="lk">rare</span><em>Not a natural move; used mainly as an intermediate step if you ultimately want PE.</em></div>
+         <div class="flow-to weak">→ Private Equity (direct) <span class="lk">very rare</span><em>Almost impossible straight from research — route through IB first if you must.</em></div>
+       </div>
+     </div>
+     <div class="flowrow">
+       <div class="flow-src">Valuation Advisory <span class="flow-side">Big 4 / boutique</span></div>
+       <div class="flow-arrows">
+         <div class="flow-to mid">→ Investment Banking <span class="lk">main path</span><em>Usually via the Big 4's in-house Corporate Finance team, then a boutique / middle-market bank (best within 1–3 yrs).</em></div>
+         <div class="flow-to strong">→ Corporate Development <span class="lk">strong</span><em>Valuation teams already value acquisition targets — the work transfers directly.</em></div>
+         <div class="flow-to weak">→ Private Equity <span class="lk">rare</span><em>Unlikely directly; mostly smaller / startup funds, or outside the U.S.</em></div>
+       </div>
+     </div>
+     <div class="flowrow" style="border-left-color:var(--deals)">
+       <div class="flow-src">Investment Banking <span class="flow-side">the hub — feeds out</span></div>
+       <div class="flow-arrows">
+         <div class="flow-to strong">→ Private Equity <span class="lk">classic</span><em>The flagship exit; deal and modeling skills transfer directly.</em></div>
+         <div class="flow-to strong">→ Hedge Funds / Asset Management <span class="lk">common</span><em>Shift to investing in individual companies and securities.</em></div>
+         <div class="flow-to mid">→ Corporate Development <span class="lk">common</span><em>In-house M&amp;A and deals at an operating company.</em></div>
+         <div class="flow-to mid">→ Venture Capital <span class="lk">possible</span><em>"PE lite" — minority stakes in early-stage firms, lighter analysis.</em></div>
+       </div>
+     </div>
+   </div>
+   <p class="src-note">Flows per Mergers &amp; Inquisitions career guides — equity research, IB exit opportunities, and Big 4 transaction services / valuation (2026). Note: PE and buy-side seats are largely terminal — few people exit them to something else.</p>
+ </div>`;
+ if(s.type==='close') return `<div class="inner">
+   <div class="kicker">My path</div>
+   <h2>Where my own build points</h2>
+   <p class="lead">One worked example of using the atlas. Given what I'm building (Damodaran DCF, published research notes, Excel → Python, an Enbridge model), I'm <b>already walking toward three seats</b>. I tailor to one and treat the rest as adjacent.</p>
+   <div class="you">
+     <div class="youcard"><h4>Primary · Equity Research</h4><p>My <b>reports are the audition</b>. Sell-side or buy-side. The most direct use of everything you've learned.</p></div>
+     <div class="youcard"><h4>Most DCF-direct · Valuation Advisory</h4><p>Big 4 / boutique. DCF + comps daily, structured entry, credential-friendly. The cleanest door.</p></div>
+     <div class="youcard"><h4>Adjacent · Credit</h4><p>I've started a credit course. Downside-focused, in demand — a strong second lane, not a dead end.</p></div>
+     <div class="youcard"><h4>My move now</h4><p>Go deep in <b>one sector</b>. My Enbridge and Superior Plus work already plants me in <b>energy, pipelines and gas</b>.</p></div>
+   </div>
+ </div>`;
+ if(s.type==='sources') return `<div class="inner">
+   <div class="kicker">Cited &amp; cross-checked</div>
+   <h2>The 12 sources behind this deck</h2>
+   <p class="lead">Diversified across independent career guides, official designation bodies, a securities institute, modeling-training firms and reference sources — so no single view drives the map. Tap any to open it.</p>
+   <div class="srclist">
+     <a class="srcitem" href="https://mergersandinquisitions.com/investment-banking-in-canada/" target="_blank" rel="noopener"><span class="st">Investment Banking in Canada</span><span class="sd">Big Five dealers, deal flow, exits, pay</span><span class="sty">Mergers &amp; Inquisitions · career guide</span></a>
+     <a class="srcitem" href="https://mergersandinquisitions.com/canadian-pension-funds/" target="_blank" rel="noopener"><span class="st">Canadian Pension Funds</span><span class="sd">Maple 8 as the top buy-side exit</span><span class="sty">Mergers &amp; Inquisitions · career guide</span></a>
+     <a class="srcitem" href="https://mergersandinquisitions.com/equity-research/" target="_blank" rel="noopener"><span class="st">Equity Research Careers &amp; Exits</span><span class="sd">Research → buy-side is the natural path</span><span class="sty">Mergers &amp; Inquisitions · career guide</span></a>
+     <a class="srcitem" href="https://www.wallstreetprep.com/knowledge/investment-banking-in-canada-big-five-banks-target-schools-and-salaries-guide/" target="_blank" rel="noopener"><span class="st">Investment Banking in Canada</span><span class="sd">Banks, target schools, salary bands</span><span class="sty">Wall Street Prep · training firm</span></a>
+     <a class="srcitem" href="https://wallstmastermind.com/investment-banking-canada/" target="_blank" rel="noopener"><span class="st">Bay Street Recruiting Guide</span><span class="sd">How Canadian IB recruiting works</span><span class="sty">Wall Street Mastermind · coaching</span></a>
+     <a class="srcitem" href="https://www.preplounge.com/en/blog/finance/investment-banking/firms/canada" target="_blank" rel="noopener"><span class="st">Top Investment Banks in Canada</span><span class="sd">Firm landscape and league tables</span><span class="sty">PrepLounge · career community</span></a>
+     <a class="srcitem" href="https://cbvinstitute.com/why-become-a-cbv/" target="_blank" rel="noopener"><span class="st">Why Become a CBV</span><span class="sd">Canada's business-valuation designation</span><span class="sty">CBV Institute · official body</span></a>
+     <a class="srcitem" href="https://corporatefinanceinstitute.com/resources/career/chartered-business-valuator-cbv/" target="_blank" rel="noopener"><span class="st">Chartered Business Valuator (CBV)</span><span class="sd">Role, training, where CBVs work</span><span class="sty">Corporate Finance Institute · education</span></a>
+     <a class="srcitem" href="https://www.csi.ca/en/explore/career-map/research-analyst" target="_blank" rel="noopener"><span class="st">Research Analyst — career map</span><span class="sd">Canadian research-analyst pathway</span><span class="sty">Canadian Securities Institute · industry body</span></a>
+     <a class="srcitem" href="https://en.wikipedia.org/wiki/Maple_Eight" target="_blank" rel="noopener"><span class="st">The Maple Eight</span><span class="sd">The eight large Canadian pension funds</span><span class="sty">Wikipedia · reference</span></a>
+     <a class="srcitem" href="https://www.wallstreetprep.com/knowledge/types-of-financial-models/" target="_blank" rel="noopener"><span class="st">Types of Financial Models</span><span class="sd">DCF, comps, LBO, merger and 3-statement models compared</span><span class="sty">Wall Street Prep · training firm</span></a>
+     <a class="srcitem" href="https://corporatefinanceinstitute.com/resources/financial-modeling/types-of-financial-models/" target="_blank" rel="noopener"><span class="st">Types of Financial Models</span><span class="sd">The common models and what each one is used for</span><span class="sty">Corporate Finance Institute · education</span></a>
+   </div>
+   <p class="src-note">Career-path norms are US/Canada-centric and shift with the hiring cycle — the directions are stable; how open each door is moves with the market. Model-by-seat scores are editorial estimates built from these guides.</p>
+ </div>`;
+ return '<div class="inner"></div>';
+}
+function lensBtn(id,k){const m=M[id];return `<button class="kchip${id===lens?' on':''}" data-lens="${id}" data-k="lb-${k}">${m.short}</button>`;}
+
+const QUIZ=[
+ {q:'1 · Decide, or produce?',a:[['Decide → <b>buy-side, PE</b>',[1,3]],['Produce → <b>research, IB, advisory</b>',[0,2,5]]]},
+ {q:'2 · Public markets or private deals?',a:[['Public → <b>research, HF, advisory</b>',[0,1,5]],['Private → <b>PE, private credit, IB</b>',[3,4,2]]]},
+ {q:'3 · One sector deep, or many shallow?',a:[['Deep → <b>specialist research</b>',[6,7,8,0]],['Many → <b>IB, advisory generalist</b>',[2,5]]]},
+ {q:'4 · Upside, or downside?',a:[['Upside → <b>equity</b>',[0,1,3]],['Downside → <b>credit, risk</b>',[4,11]]]},
+ {q:'5 · Words, or numbers?',a:[['Words → <b>research</b>',[0,1]],['Numbers → <b>IB, quant, PE</b>',[2,10,3]]]},
+];
+
+/* ---------- deck ---------- */
+const stage=document.getElementById('stage');
+let cur=0;
+stage.innerHTML=SLIDES.map((s,i)=>`<section class="slide" data-i="${i}">${build(s)}</section>`).join('');
+const slides=[...document.querySelectorAll('.slide')];
+const dots=document.getElementById('dots');
+dots.innerHTML=SLIDES.map((s,i)=>`<button class="dot" data-i="${i}" aria-label="Slide ${i+1}"></button>`).join('');
+const dotEls=[...document.querySelectorAll('.dot')];
+const counter=document.getElementById('counter');
+const prog=document.getElementById('prog');
+const prevB=document.getElementById('prev'), nextB=document.getElementById('next');
+
+function rerender(){
+ const k=document.activeElement&&document.activeElement.dataset?document.activeElement.dataset.k:null;
+ slides.forEach((el,i)=>{el.innerHTML=build(SLIDES[i]);});
+ document.getElementById('lensName').textContent=L().short;
+ buildLensGrid(); buildOverview();
+ layoutSpectrum();
+ if(k){const el=stage.querySelector(`[data-k="${CSS.escape(k)}"]`); if(el) el.focus({preventScroll:true});}
+}
+function go(i){
+ cur=Math.max(0,Math.min(SLIDES.length-1,i));
+ slides.forEach((s,k)=>s.classList.toggle('active',k===cur));
+ dotEls.forEach((d,k)=>d.classList.toggle('on',k===cur));
+ counter.textContent=(cur+1)+' / '+SLIDES.length;
+ prog.style.width=((cur)/(SLIDES.length-1)*100)+'%';
+ prevB.disabled=cur===0; nextB.disabled=cur===SLIDES.length-1;
+ slides[cur].scrollTop=0;
+ if(SLIDES[cur].type==='spectrum') layoutSpectrum();
+}
+function setLens(id){
+ if(!M[id]) return;
+ lens=id; save('lens',id);
+ try{history.replaceState(null,'','#'+id);}catch(e){}
+ rerender();
+}
+
+/* spectrum: stack chips into rows so none overlap, then draw each leader line down to the track */
+function layoutSpectrum(){
+ const spec=document.getElementById('spec'); if(!spec) return;
+ const W=spec.clientWidth-12; if(W<=0) return;
+ const chips=[...spec.querySelectorAll('.spec-chip')];
+ const rows=[]; const placed=[];
+ chips.forEach(ch=>{
+   const w=ch.offsetWidth, h=ch.offsetHeight;
+   const cx=Math.max(w/2,Math.min(W-w/2,(+ch.dataset.x/100)*W));
+   let r=rows.findIndex(end=>end+6<=cx-w/2);
+   if(r<0){r=rows.length;rows.push(0);}
+   rows[r]=cx+w/2;
+   placed.push({ch,cx,r,h});
+ });
+ const rowH=32, padTop=rows.length*rowH+20;
+ spec.style.paddingTop=padTop+'px';
+ placed.forEach(p=>{
+   p.ch.style.left=(p.cx+6)+'px';
+   p.ch.style.top=(p.r*rowH)+'px';
+   p.ch.style.setProperty('--drop',Math.max(6,padTop-p.r*rowH-p.h)+'px');
+ });
+}
+
+prevB.onclick=()=>go(cur-1); nextB.onclick=()=>go(cur+1);
+dotEls.forEach(d=>d.onclick=()=>go(+d.dataset.i));
+
+stage.addEventListener('click',e=>{
+ const t=e.target.closest('[data-lens],[data-go],[data-know],[data-ans],[data-reset]'); if(!t) return;
+ if(t.dataset.lens){setLens(t.dataset.lens);return;}
+ if(t.dataset.go){go(+t.dataset.go);return;}
+ if(t.dataset.know){const id=t.dataset.know; known=known.includes(id)?known.filter(x=>x!==id):[...known,id]; save('known',known); rerender(); return;}
+ if(t.dataset.ans){const [q,a]=t.dataset.ans.split(':').map(Number); if(answers[q]===a) delete answers[q]; else answers[q]=a; save('answers',answers); rerender(); return;}
+ if(t.dataset.reset){answers={}; save('answers',answers); rerender(); return;}
+});
+
+const ov=document.getElementById('overview'), ovGrid=document.getElementById('ovGrid');
+const lensSheet=document.getElementById('lensSheet'), lensGrid=document.getElementById('lensGrid');
+const TITLES={title:'Cover',picker:'Which model do you know?',matrix:'Orient: the map',spectrum:()=>`Where ${L().short} fits`,heatmap:'Every model × every seat',sector:'Sector lenses',pathways:'Career pathways',goals:'End goals',canada:'Canada lens',stack:'God-mode stack',builder:'Build your model stack',navigate:'How to choose',close:'My path',sources:'Sources'};
+function buildOverview(){
+ ovGrid.innerHTML=SLIDES.map((s,i)=>{const t=s.type==='role'?s.r.name:(typeof TITLES[s.type]==='function'?TITLES[s.type]():TITLES[s.type]);return `<button class="ov-item" data-i="${i}"><span class="oi-n">${String(i+1).padStart(2,'0')}</span><span class="oi-t">${t||''}</span></button>`;}).join('');
+}
+function buildLensGrid(){
+ lensGrid.innerHTML=MODELS.map(m=>`<button class="ov-item${m.id===lens?' on':''}" data-m="${m.id}" style="border-top:3px solid ${C[m.cat]}"><span class="oi-n">core in ${seatsWhereCore(m)} of 12 seats</span><span class="oi-t">${m.name}</span><span class="oi-q">${m.q}</span></button>`).join('');
+}
+ovGrid.addEventListener('click',e=>{const t=e.target.closest('[data-i]'); if(t){go(+t.dataset.i); ov.hidden=true;}});
+lensGrid.addEventListener('click',e=>{const t=e.target.closest('[data-m]'); if(t){setLens(t.dataset.m); lensSheet.hidden=true;}});
+document.getElementById('ovOpen').onclick=()=>{ov.hidden=false;};
+document.getElementById('ovClose').onclick=()=>{ov.hidden=true;};
+document.getElementById('lensOpen').onclick=()=>{lensSheet.hidden=false;};
+document.getElementById('lensClose').onclick=()=>{lensSheet.hidden=true;};
+
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){ov.hidden=true;lensSheet.hidden=true;return;}
+ if(!ov.hidden||!lensSheet.hidden) return;
+ if(e.key==='ArrowRight'||e.key==='PageDown'){go(cur+1);e.preventDefault();}
+ else if(e.key==='ArrowLeft'||e.key==='PageUp'){go(cur-1);e.preventDefault();}
+ else if(e.key==='Home')go(0); else if(e.key==='End')go(SLIDES.length-1);
+ else if((e.key==='l'||e.key==='L')&&!e.metaKey&&!e.ctrlKey){lensSheet.hidden=false;}
+});
+let tx=0,ty=0;
+stage.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+stage.addEventListener('touchend',e=>{
+ if(e.target.closest('.sectbl')) return;
+ const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+ if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){dx<0?go(cur+1):go(cur-1);}
+},{passive:true});
+window.addEventListener('hashchange',()=>{const id=location.hash.slice(1); if(M[id]&&id!==lens) setLens(id);});
+let rz; window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(layoutSpectrum,120);});
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(layoutSpectrum);
+setTimeout(()=>{const h=document.getElementById('hint');if(h){h.style.transition='opacity .6s';h.style.opacity='0';}},4200);
+
+document.getElementById('lensName').textContent=L().short;
+buildOverview(); buildLensGrid();
+go(0); layoutSpectrum();
+</script>
+
+</body>
+</html>

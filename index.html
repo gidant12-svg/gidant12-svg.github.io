@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gideon Anthony · Equity Research</title>
-<meta name="description" content="Gideon Anthony: independent equity research focused on Canadian utilities, midstream and gas. Reports, valuation work, and how my research process has developed.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gideon Anthony · Portfolio</title>
+<meta name="description" content="Gideon Anthony: independent equity research on Canadian utilities, midstream and gas, tools for finance students, notes, and creative work.">
 <meta property="og:title" content="Gideon Anthony · Independent Equity Research">
 <meta property="og:description" content="Independent equity research focused on utilities, midstream and gas, with how my process has developed from report to report.">
 <meta property="og:type" content="website">
@@ -17,342 +17,126 @@
 <meta name="twitter:title" content="Gideon Anthony · Independent Equity Research">
 <meta name="twitter:description" content="Buy and sell calls in utilities, midstream and gas.">
 <meta name="twitter:image" content="https://gidant12-svg.github.io/og-image.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#f7f6f2; --surface:#ffffff; --ink:#14181f; --muted:#5b6370; --faint:#8a919c;
-  --line:#e3e1da; --navy:#0f2a4a; --accent:#1d4e89; --accent-bg:#e8eff8;
-  --down:#a23b2a; --down-bg:#fbece8; --up:#1f6b45; --up-bg:#e7f3ec; --hold:#7a5a10; --hold-bg:#f8f0dc;
-  --bar:#e9e7e0; --hover:#fbfaf7;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0e1116; --surface:#161a21; --ink:#e8eaee; --muted:#a3aab5; --faint:#7a828e;
-    --line:#2a303a; --navy:#cfe0f5; --accent:#7fb0ea; --accent-bg:#1a2636;
-    --down:#f08a76; --down-bg:#3a1f1a; --up:#7fd1a3; --up-bg:#16301f; --hold:#e6c46e; --hold-bg:#33290f;
-    --bar:#252b34; --hover:#1a1f27;
-  }
-}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-a{color:var(--accent)}
-.wrap{max-width:960px;margin:0 auto;padding-left:20px;padding-right:20px}
-header{border-bottom:1px solid var(--line);background:var(--surface)}
-.top{display:flex;justify-content:space-between;align-items:center;padding-top:14px;padding-bottom:14px;font-size:14px}
-.brand{font-weight:600;letter-spacing:.02em;color:var(--ink);text-decoration:none}
-.top nav a{color:var(--muted);text-decoration:none;margin-left:20px}
-.top nav a:hover{color:var(--ink)}
-
-.hero{padding-top:40px;padding-bottom:28px;display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-end}
-.hero-main{flex:1 1 480px}
-.eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
-h1{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:clamp(28px,5vw,38px);line-height:1.15;margin:0 0 12px;color:var(--navy)}
-.lede{font-size:16.5px;color:var(--muted);max-width:600px;margin:0}
-.focus{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-.chip{font-size:12.5px;font-weight:500;color:var(--accent);background:var(--accent-bg);border-radius:999px;padding:3px 11px}
-.stats{display:grid;grid-template-columns:auto auto;gap:14px 28px;font-size:13px;color:var(--muted)}
-.stats b{display:block;font-size:18px;color:var(--ink);font-weight:600;line-height:1.3}
-
-section.block{padding-top:24px;padding-bottom:20px}
-.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
-h2{font-family:"Source Serif 4",Georgia,serif;font-size:24px;font-weight:600;margin:0;color:var(--navy)}
-.sub{color:var(--muted);margin:0 0 16px;font-size:14.5px;max-width:680px}
-.toggle{background:none;border:1px solid var(--line);color:var(--muted);font:500 13px Inter,sans-serif;padding:5px 12px;border-radius:6px;cursor:pointer}
-.toggle:hover{color:var(--ink);border-color:var(--faint)}
-
-/* list */
-.list{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.item{border-top:1px solid var(--line)}
-.item:first-child{border-top:0}
-.item summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:96px 1fr auto 18px;gap:16px;align-items:center;padding:16px 20px}
-.item summary::-webkit-details-marker{display:none}
-.item summary:hover{background:var(--hover)}
-.item summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.when{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
-.t{font-weight:600;font-size:16px;line-height:1.3;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.t .serif{font-family:"Source Serif 4",Georgia,serif;font-size:18px}
-.s{font-size:13px;color:var(--faint);margin-top:2px}
-.kind{font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:4px;background:var(--bar);color:var(--muted)}
-.kind.report{background:var(--navy);color:var(--bg)}
-.kind.now{background:var(--accent-bg);color:var(--accent)}
-.right{display:flex;align-items:center;gap:12px;justify-content:flex-end;text-align:right}
-.mini{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.mini b{color:var(--ink);font-weight:600}
-.chev{width:18px;height:18px;color:var(--faint);transition:transform .2s}
-.item[open] .chev{transform:rotate(180deg)}
-.item.current summary{box-shadow:inset 3px 0 0 var(--accent)}
-.badge{font-size:11px;font-weight:600;letter-spacing:.05em;padding:4px 8px;border-radius:4px;white-space:nowrap}
-.b-hold{background:var(--hold-bg);color:var(--hold)}
-.b-buy{background:var(--up-bg);color:var(--up)}
-.b-sell{background:var(--down-bg);color:var(--down)}
-.neg{color:var(--down)} .pos{color:var(--up)}
-
-.detail{padding:4px 20px 22px 132px}
-.detail p{margin:0 0 12px;font-size:15px}
-.detail .muted{color:var(--muted)}
-.context{font-size:14px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
-.context b{color:var(--ink);font-weight:600}
-.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:4px 0 16px}
-.fig{background:var(--surface);padding:10px 12px}
-.fig span{display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-.fig b{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
-.range{margin:2px 0 16px}
-.range-label{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:26px}
-.track{position:relative;height:6px;background:var(--bar);border-radius:3px;margin:0 8px}
-.pt{position:absolute;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--muted)}
-.pt.base{border-color:var(--accent);background:var(--accent)}
-.pt.px{width:3px;height:22px;border-radius:1px;border:0;background:var(--ink)}
-.lbl{position:absolute;transform:translateX(-50%);font-size:12px;white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}
-.lbl.below{top:14px} .lbl.above{bottom:14px;font-weight:600;color:var(--ink)}
-.lbl small{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);text-align:center}
-.range-space{height:34px}
-.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:4px}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 10px}
-.btn{display:inline-block;background:var(--navy);color:var(--bg);text-decoration:none;font-size:14px;font-weight:600;padding:9px 16px;border-radius:6px}
-.btn:hover{opacity:.9}
-.btn.alt{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 1.5px var(--navy)}
-
-/* calls */
-.calls .call{display:grid;grid-template-columns:96px 1fr auto 18px;gap:16px;align-items:center;padding:16px 20px;border-top:1px solid var(--line);color:inherit;text-decoration:none}
-.calls .call:first-child{border-top:0}
-.calls .call:hover{background:var(--hover)}
-.calls .call:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.calls .call.pending{cursor:default;box-shadow:inset 3px 0 0 var(--accent)}
-.calls .call.pending:hover{background:none}
-.calls .go{width:18px;height:18px;color:var(--faint)}
-.calls .call:not(.pending):hover .go{color:var(--accent)}
-.calls .call.opts{position:relative}
-.calls .call .stretch{color:inherit;text-decoration:none}
-.calls .call .stretch::after{content:"";position:absolute;inset:0}
-.calls .call .stretch:focus-visible{outline:none}
-.calls .call .stretch:focus-visible::after{outline:2px solid var(--accent);outline-offset:-2px}
-.calls .fmt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.calls .fmt a{position:relative;z-index:1;font-size:12px;font-weight:600;text-decoration:none;padding:4px 10px;border-radius:5px;background:var(--navy);color:var(--bg)}
-.calls .fmt a:hover{opacity:.85}
-
-
-/* process */
-.cmp{display:grid;grid-template-columns:150px 1fr 1fr}
-.cmp>div{padding:12px 16px;font-size:14px;border-top:1px solid var(--line)}
-.cmp .h{font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);border-top:0;padding-top:4px}
-.cmp .h.n{color:var(--accent)}
-.cmp .k{font-weight:600}
-.cmp .then{color:var(--muted)}
-.proc summary{grid-template-columns:1fr auto 18px}
-.proc .detail{padding:0 4px 8px}
-
-footer{border-top:1px solid var(--line);padding-top:20px;padding-bottom:32px;font-size:12.5px;color:var(--faint);margin-top:20px}
-.empty{color:var(--muted);padding:16px 20px;margin:0}
-
-@media (max-width:700px){
-  .wrap{padding-left:16px;padding-right:16px}
-  .hero{padding-top:28px}
-  .stats{grid-template-columns:auto auto auto}
-  .item summary{grid-template-columns:1fr 18px;gap:6px 12px;padding:14px 16px}
-  .item summary .when{grid-column:1}
-  .item summary .mid{grid-column:1}
-  .item summary .right{grid-column:1;justify-content:flex-start}
-  .item summary .chev{grid-column:2;grid-row:1 / span 3;align-self:center}
-  .proc summary .chev{grid-row:1 / span 2}
-  .calls .call{grid-template-columns:1fr 18px;gap:6px 12px;padding:14px 16px}
-  .calls .call>*{grid-column:1;min-width:0}
-  .calls .call .right{justify-content:flex-start;flex-wrap:wrap;gap:8px 12px}
-  .calls .call .go{grid-column:2;grid-row:1 / span 3;align-self:center}
-  .detail{padding:0 16px 18px}
-  .fig b{font-size:16px}
-  .top nav a{margin-left:14px}
-  .cmp{grid-template-columns:1fr}
-  .cmp .h{display:none}
-  .cmp>div{border-top:0;padding:3px 12px}
-  .cmp .k{border-top:1px solid var(--line);padding-top:12px;margin-top:6px}
-  .cmp .k:first-of-type{border-top:0;margin-top:0}
-  .cmp .then::before{content:"Then: ";font-weight:600}
-  .cmp .now::before{content:"Now: ";font-weight:600;color:var(--accent)}
-}
-</style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-<header>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
   <div class="wrap top">
-    <a class="brand" href="#">GIDEON ANTHONY</a>
-    <nav><a href="#calls">Calls</a><a href="#research">Research</a><a href="#process">Process</a></nav>
+    <a class="brand" href="./">GIDEON ANTHONY</a>
+    <nav aria-label="Pages"><a href="./" aria-current="page">Portfolio</a><a href="calls/">Calls</a><a href="desk/">Desk</a><a href="notes/">Notes</a><a href="studio/">Studio</a></nav>
   </div>
 </header>
 
-<div class="wrap hero">
-  <div class="hero-main">
-    <p class="eyebrow">Independent Equity Research</p>
-    <h1>Building coverage in utilities, midstream and gas.</h1>
-    <p class="lede">Buy and sell calls, each showing where my process stood at the time it was written. Newest first.</p>
-    <div class="focus"><span class="chip">Utilities</span><span class="chip">Midstream &amp; Energy Infrastructure</span><span class="chip">Gas &amp; Propane</span></div>
+<main id="main">
+  <div class="wrap hero">
+    <div class="hero-main">
+      <p class="eyebrow">Independent Equity Research</p>
+      <h1>Building coverage in utilities, midstream and gas.</h1>
+      <p class="lede">I write buy and sell calls on Canadian energy infrastructure and build tools that help other finance students find their path. Equity research · CFA Level II candidate (May 2027).</p>
+      <div class="focus"><span class="chip">Utilities</span><span class="chip">Midstream &amp; Energy Infrastructure</span><span class="chip">Gas &amp; Propane</span></div>
+      <div class="contact" id="contact"></div>
+    </div>
+    <div class="stats" id="stats"><div><b>CFA Level II</b>Candidate · May 2027</div></div>
   </div>
-  <div class="stats" id="stats"></div>
-</div>
 
-<section class="wrap block" id="calls">
-  <div class="sec-head"><h2>Calls</h2></div>
-  <p class="sub">Click any call to read it. Newest first; prices and targets are as of each call's valuation date.</p>
-  <div class="list calls" id="callList"><p class="empty">Loading…</p></div>
-</section>
+  <section class="wrap block" aria-labelledby="latest">
+    <div class="sec-head"><h2 id="latest">Latest call</h2><a class="back" style="margin:0" href="calls/">All calls →</a></div>
+    <div id="featured" class="note"><p class="empty">Loading the latest call…</p></div>
+    <noscript><p class="sub">Read the reports directly: <a href="reports/SPB_Initiation_Oct2026.pdf">Superior Plus (SPB)</a> · <a href="reports/ENB_Initiation_Dec2025.pdf">Enbridge (ENB)</a> · <a href="reports/NVDA_Initiation_Jan2026.pdf">NVIDIA (NVDA)</a></p></noscript>
+  </section>
 
-<section class="wrap block" id="research">
-  <div class="sec-head">
-    <h2>Research &amp; progression</h2>
-    <button class="toggle" id="toggleAll" type="button">Expand all</button>
-  </div>
-  <p class="sub">Click any row for the thesis, valuation and context. Prices and targets are as of each report's valuation date.</p>
-  <div class="list" id="list"><p class="empty">Loading…</p></div>
-</section>
+  <section class="wrap block" aria-labelledby="exh">
+    <h2 id="exh" class="side-label" style="font-family:var(--sans);font-size:12px;color:var(--faint)">Exhibits</h2>
+    <div class="exhibits">
+      <a class="card" href="calls/">
+        <div class="pic"><img src="images/cards/calls.jpg" alt="Pages from the Superior Plus pitch deck" width="1200" height="630" loading="lazy"></div>
+        <div class="txt"><span class="ex">Exhibit 1</span><h3>Calls</h3>
+          <p>Buy and sell calls on Canadian utilities, midstream and gas. Each shows where my process stood when it was written, so you can watch it sharpen.</p>
+          <span class="live" data-live="calls">Equity research reports</span></div>
+      </a>
+      <a class="card" href="desk/">
+        <div class="pic"><img src="images/cards/desk.jpg" alt="The Analyst Atlas heatmap of finance models against analyst seats" width="1200" height="630" loading="lazy"></div>
+        <div class="txt"><span class="ex">Exhibit 2</span><h3>Desk</h3>
+          <p>Tools for finance students choosing a path. The Analyst Atlas maps 12 analyst seats against 14 models, with practice material on the way.</p>
+          <span class="live" data-live="desk">Tools for finance students</span></div>
+      </a>
+      <a class="card" href="notes/">
+        <div class="pic"><img src="images/cards/notes.jpg" alt="Notes" width="1200" height="630" loading="lazy"></div>
+        <div class="txt"><span class="ex">Exhibit 3</span><h3>Notes</h3>
+          <p>My investing journey in writing: what I've learned from analysts, from my own calls, and from life.</p>
+          <span class="live" data-live="notes">Blog</span></div>
+      </a>
+    </div>
+  </section>
 
-<section class="wrap block" id="process">
-  <div class="list">
-    <details class="item proc">
-      <summary>
-        <div class="mid"><div class="t"><span class="serif">How my process has changed</span></div>
-        <div class="s">Earlier reports compared with what every new report now includes</div></div>
-        <div class="right"></div>
-        <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
-      </summary>
-      <div class="detail">
-        <div class="cmp">
-          <div class="h"></div><div class="h">Earlier reports</div><div class="h n">Current process</div>
-          <div class="k">Sources</div><div class="then">Financial statements and market data</div><div class="now">AIF, MD&amp;A, earnings call Q&amp;A, investor presentations, consensus estimates and news flow</div>
-          <div class="k">Industry context</div><div class="then">Learned while writing</div><div class="now">Start from a sector primer (e.g. Alerian on energy infrastructure) before building the model</div>
-          <div class="k">Valuation</div><div class="then">DCF and comps applied as taught in class</div><div class="now">Damodaran's DCF framework, with every assumption tied back to the business story</div>
-          <div class="k">Thesis</div><div class="then">Led by the model, with catalysts implied</div><div class="now">A stated view against consensus, explicit catalysts, and what would change my mind</div>
-          <div class="k">Format</div><div class="then">35 pages, then 3 pages</div><div class="now">Thesis and catalysts up front, with supporting detail behind them</div>
-        </div>
-      </div>
-    </details>
-  </div>
-</section>
+  <section class="wrap block" aria-labelledby="outside">
+    <h2 id="outside" class="side-label" style="font-family:var(--sans);font-size:12px;color:var(--faint)">Outside finance</h2>
+    <a class="card wide" href="studio/">
+      <div class="pic"><img src="images/cards/studio.jpg" alt="A black-and-white composite with the LA monogram, beside an astronaut charm on black knit" width="1200" height="630" loading="lazy"></div>
+      <div class="txt"><span class="ex">Studio</span><h3>Concept art, paintings and clothing</h3>
+        <p>Finished pieces I've designed and made, and the process behind them, from first sketch to final piece.</p>
+        <span class="live" data-live="studio">Creative work</span></div>
+    </a>
+  </section>
+</main>
 
-<footer>
+<footer class="site">
   <div class="wrap">
-    © <span id="yr"></span> Gideon Anthony. These reports are for informational and professional development purposes only and are not investment advice or a recommendation to buy or sell any security.
+    <div class="fl" id="footLinks"></div>
+    © <span data-year>2026</span> Gideon Anthony. These reports are for informational and professional development purposes only and are not investment advice or a recommendation to buy or sell any security.
   </div>
 </footer>
 
+<script src="assets/site.js"></script>
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
-const num = s => parseFloat(String(s).replace(/[^0-9.\-]/g,''));
-const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const CHEV = '<svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>';
-function badgeClass(r){ r=r.toUpperCase();
-  if(/SELL|UNDERPERFORM/.test(r) && !/HOLD/.test(r)) return 'b-sell';
-  if(/BUY|OUTPERFORM/.test(r)) return 'b-buy';
-  return 'b-hold'; }
+const {get, esc, num, url, badgeClass, byDate, fileButtons, contactLinks, footer} = Site;
+Promise.all(['site.json','reports.json','timeline.json','desk.json','notes.json','studio.json'].map(get))
+.then(([site, reports, timeline, desk, notes, studio]) => {
+  reports = (reports||[]).sort(byDate); timeline = timeline||[]; desk = desk||[]; notes = notes||[]; studio = studio||[];
+  document.getElementById('contact').innerHTML = contactLinks(site);
+  footer(site);
 
-function rangeBar(r){
-  const s = r.scenarios; if(!s) return '';
-  const pts = {bear:num(s.bear), base:num(s.base), bull:num(s.bull)}, px = num(r.price);
-  const lo = Math.min(pts.bear, px), hi = Math.max(pts.bull, px), pad = (hi-lo)*0.06;
-  const pos = v => ((v-(lo-pad))/((hi+pad)-(lo-pad))*100).toFixed(2)+'%';
-  return `<div class="range"><div class="range-label">Scenario values vs. price at valuation date</div>
-    <div class="track">
-      <div class="pt" style="left:${pos(pts.bear)}"></div>
-      <div class="pt base" style="left:${pos(pts.base)}"></div>
-      <div class="pt" style="left:${pos(pts.bull)}"></div>
-      <div class="pt px" style="left:${pos(px)}"></div>
-      <div class="lbl below" style="left:${pos(pts.bear)}"><small>Bear</small>${esc(s.bear)}</div>
-      <div class="lbl below" style="left:${pos(pts.base)}"><small>Base</small>${esc(s.base)}</div>
-      <div class="lbl below" style="left:${pos(pts.bull)}"><small>Bull</small>${esc(s.bull)}</div>
-      <div class="lbl above" style="left:${pos(px)}">Price ${esc(r.price)}</div>
-    </div><div class="range-space"></div></div>`;
-}
-
-function reportItem(r){
-  const up = num(r.upside);
-  return `<details class="item">
-    <summary>
-      <div class="when">${esc(r.written)}</div>
-      <div class="mid"><div class="t"><span class="serif">${esc(r.company)} (${esc(r.ticker)})</span><span class="kind report">Report</span></div>
-        <div class="s">${esc(r.format)} · ${esc(r.sector)} · ${esc(r.exchange)}</div></div>
-      <div class="right"><span class="mini">Target <b>${esc(r.target)}</b> · <b class="${up<0?'neg':'pos'}">${esc(r.upside)}</b></span><span class="badge ${badgeClass(r.rating)}">${esc(r.rating)}</span></div>
-      ${CHEV}
-    </summary>
-    <div class="detail">
-      <p>${esc(r.thesis)}</p>
-      <div class="figs">
-        <div class="fig"><span>12-mo target</span><b>${esc(r.target)}</b></div>
-        <div class="fig"><span>Price</span><b>${esc(r.price)}</b></div>
-        <div class="fig"><span>Upside</span><b class="${up<0?'neg':'pos'}">${esc(r.upside)}</b></div>
-      </div>
-      ${rangeBar(r)}
-      ${r.context?`<p class="context"><b>Context.</b> ${esc(r.context)}</p>`:''}
-      <div class="foot">
-        <div class="tags">${(r.methods||[]).map(m=>`<span class="tag">${esc(m)}</span>`).join('')}</div>
-        <span style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="${esc(r.file)}" target="_blank" rel="noopener">Read report (PDF)</a>${r.deckPpt?` <a class="btn" href="${esc(r.deckPpt)}" download title="Recommended: best formatting and easiest to read">Download deck (PowerPoint)</a>`:''}${r.deck?` <a class="btn${r.deckPpt?' alt':''}" href="${esc(r.deck)}" target="_blank" rel="noopener">View deck (PDF)</a>`:''}</span>
-      </div>
-    </div>
-  </details>`;
-}
-
-const GO = '<svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4l6 6-6 6"/></svg>';
-function callRow(r){
-  const up = num(r.upside);
-  const inner = (title) => `
-    <div class="when">${esc(r.written)}</div>
-    <div class="mid"><div class="t"><span class="serif">${title}</span></div>
-      <div class="s">${esc(r.format)} · ${esc(r.sector)}</div>${r.deck?`
-      <div class="fmt"><a href="${esc(r.file)}" target="_blank" rel="noopener">Report (PDF)</a><a href="${esc(r.deck)}" target="_blank" rel="noopener">Deck (PDF)</a></div>`:''}</div>
-    <div class="right"><span class="mini">Target <b>${esc(r.target)}</b> · <b class="${up<0?'neg':'pos'}">${esc(r.upside)}</b></span><span class="badge ${badgeClass(r.rating)}">${esc(r.rating)}</span></div>
-    ${GO}`;
-  const name = `${esc(r.company)} (${esc(r.ticker)})`;
-  if(r.deck) return `<div class="call opts">${inner(`<a class="stretch" href="${esc(r.file)}" target="_blank" rel="noopener">${name}</a>`)}
-  </div>`;
-  return `<a class="call" href="${esc(r.file)}" target="_blank" rel="noopener">${inner(name)}
-  </a>`;
-}
-function pendingCall(t){
-  return `<a class="call pending" href="#research" aria-disabled="true" onclick="return false">
-    <div class="when">${esc(t.when)}</div>
-    <div class="mid"><div class="t"><span class="serif">${esc(t.title)}</span></div>
-      <div class="s">Buy or sell call · coming soon</div></div>
-    <div class="right"><span class="kind now">${esc(t.tag)}</span></div>
-    <span></span>
-  </a>`;
-}
-
-function milestoneItem(t){
-  return `<details class="item ${t.current?'current':''}">
-    <summary>
-      <div class="when">${esc(t.when)}</div>
-      <div class="mid"><div class="t"><span class="${t.current?'serif':''}">${esc(t.title)}</span><span class="kind ${t.current?'now':''}">${esc(t.tag)}</span></div>
-        ${t.subtitle?`<div class="s">${esc(t.subtitle)}</div>`:''}</div>
-      <div class="right"></div>
-      ${CHEV}
-    </summary>
-    <div class="detail"><p class="muted">${esc(t.body)}</p></div>
-  </details>`;
-}
-
-const get = f => fetch(f,{cache:'no-store'}).then(r=>r.json()).catch(()=>[]);
-Promise.all([get('reports.json'), get('timeline.json')]).then(([reports, timeline])=>{
-  const rows = [
-    ...reports.map(r=>({date:r.date, current:false, html:reportItem(r)})),
-    ...timeline.map(t=>({date:t.date||'0000', current:!!t.current, html:milestoneItem(t)}))
-  ].sort((a,b)=> (b.current-a.current) || b.date.localeCompare(a.date));
-  document.getElementById('list').innerHTML = rows.length ? rows.map(x=>x.html).join('') : '<p class="empty">Nothing to show yet.</p>';
-  const cur = timeline.find(t=>t.current);
-  const calls = [...reports].sort((a,b)=>b.date.localeCompare(a.date)).map(callRow);
-  if(cur) calls.unshift(pendingCall(cur));
-  document.getElementById('callList').innerHTML = calls.length ? calls.join('') : '<p class="empty">No calls yet.</p>';
+  const cur = timeline.find(t => t.current);
   document.getElementById('stats').innerHTML =
     `<div><b>${reports.length}</b>Published calls</div>` +
-    (cur?`<div><b>${esc(cur.title)}</b>In progress</div>`:'') +
-    `<div><b>CFA Level II</b>May 2027</div>`;
-});
+    (cur ? `<div><b>${esc(cur.title)}</b>In progress</div>` : '') +
+    `<div><b>CFA Level II</b>Candidate · May 2027</div>`;
 
-document.getElementById('toggleAll').addEventListener('click', e=>{
-  const items = [...document.querySelectorAll('#list details')];
-  const open = !items.every(d=>d.open);
-  items.forEach(d=>d.open = open);
-  e.target.textContent = open ? 'Collapse all' : 'Expand all';
+  // Featured call: always the newest report, laid out like the front box of a research note.
+  const r = reports[0], f = document.getElementById('featured');
+  if (r) {
+    const up = num(r.upside);
+    f.innerHTML = `
+      <div class="note-head"><span>Equity research · ${esc(r.format)}</span><span>${esc(r.written)}</span></div>
+      <div class="note-body">
+        <div class="note-main">
+          <p class="note-co">${esc(r.company)} <span style="color:var(--faint);font-weight:500">(${esc(r.exchange.split(' ')[0])}: ${esc(r.ticker)})</span></p>
+          <div class="note-meta">${esc(r.sector)}</div>
+          <p class="note-thesis">${esc(r.thesis)}</p>
+          <div class="note-actions">${fileButtons(r)}</div>
+        </div>
+        <div class="note-box">
+          <div class="rating"><span>Rating</span><b><span class="badge ${badgeClass(r.rating)}" style="font-size:13px">${esc(r.rating)}</span></b></div>
+          <div><span>Target</span><b>${esc(r.target)}</b></div>
+          <div><span>Price</span><b>${esc(r.price)}</b></div>
+          <div><span>Upside</span><b class="${up<0?'neg':'pos'}">${esc(r.upside)}</b></div>
+        </div>
+      </div>`;
+  } else f.innerHTML = '<p class="empty">No calls published yet.</p>';
+
+  // Live detail line on each exhibit card.
+  const live = {
+    calls: r ? `<span><b>${reports.length} call${reports.length===1?'':'s'}</b> · latest ${esc(r.ticker)}, ${esc(r.rating.split(' ')[0])}, ${esc(r.upside)}</span>` : '<span>First call coming soon</span>',
+    desk: (() => { const ready = desk.filter(d => !d.soon); return ready.length ? `<span><b>${ready.length} tool${ready.length===1?'':'s'}</b> · ${esc(ready[0].title)}</span>` : '<span>First tool coming soon</span>'; })(),
+    notes: notes.length ? `<span><b>${notes.length} post${notes.length===1?'':'s'}</b> · latest ${esc(notes.sort(byDate)[0].when || notes[0].date)}</span>` : '<span>First post coming soon</span>',
+    studio: (() => { const fin = studio.filter(s => s.type !== 'process'), pro = studio.filter(s => s.type === 'process'); return studio.length ? `<span><b>${fin.length} finished piece${fin.length===1?'':'s'}</b>${pro.length ? ` · ${pro.length} process${pro.length===1?'':'es'}` : ` · ${esc([...new Set(fin.map(s => s.kind))].join(', ').toLowerCase())}`}</span>` : '<span>Coming soon</span>'; })()
+  };
+  document.querySelectorAll('[data-live]').forEach(el => el.innerHTML = live[el.dataset.live]);
 });
 </script>
 </body>
