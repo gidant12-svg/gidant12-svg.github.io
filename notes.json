@@ -1,8 +1,30 @@
 {
   "collections": [
-    { "id": "journey",  "title": "My Investing Journey",   "blurb": "From my first DCF to my first published call: what changed, and why." },
-    { "id": "analysts", "title": "Lessons from Analysts",  "blurb": "What equity research analysts have taught me about building and writing a call." },
-    { "id": "life",     "title": "Lessons from Life",      "blurb": "Things outside finance that changed how I think about investing." }
+    {
+      "id": "journey",
+      "title": "My Investing Journey",
+      "blurb": "From my first DCF to my first published call: what changed, and why."
+    },
+    {
+      "id": "analysts",
+      "title": "Lessons from Analysts",
+      "blurb": "What equity research analysts have taught me about building and writing a call."
+    },
+    {
+      "id": "life",
+      "title": "Lessons from Life",
+      "blurb": "Things outside finance that changed how I think about investing."
+    }
   ],
-  "posts": []
+  "posts": [
+    {
+      "title": "My First Investment, a 20% Loss, and a Letter from a Financial Demon",
+      "when": "November 2026",
+      "date": "2026-11-16",
+      "url": "notes/my-first-investment/",
+      "read": "5 min",
+      "collection": "journey",
+      "featured": true
+    }
+  ]
 }

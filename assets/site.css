@@ -429,3 +429,13 @@ footer.site .fl a:hover{color:var(--accent)}
 .art .sublab span{margin-left:8px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--faint)}
 @media (max-width:860px){.art .grid.c6{--cols:4}}
 @media (max-width:560px){.art .grid.c6{--cols:3;gap:6px}}
+/* Notes: a letter quoted in full, and a post's credits */
+.nt-body hr{border:0;border-top:1px solid var(--line);margin:36px 0}
+.nt-body .src{font-size:14px;color:var(--faint);font-style:italic}
+.nt-body blockquote.letter{margin:20px 0 8px;padding:26px clamp(18px,4vw,34px);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:4px;background:var(--bg);color:var(--ink);font-family:var(--serif)}
+.nt-body .letter p{font-size:17.5px;line-height:1.7;margin:0 0 14px}
+.nt-body .letter .sal{font-style:italic}
+.nt-body .letter .sign{margin:20px 0 0;font-style:italic}
+.nt-credits{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;font-size:15px;margin:0}
+.nt-credits dt{color:var(--faint);font-weight:600}.nt-credits dd{margin:0;overflow-wrap:anywhere}
+@media (max-width:560px){.nt-credits{grid-template-columns:1fr;gap:2px}.nt-credits dd{margin-bottom:8px}}
