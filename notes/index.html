@@ -14,10 +14,10 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
-<body>
+<body class="nt-page">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site">
   <div class="wrap top">
@@ -27,14 +27,28 @@
 </header>
 <main id="main">
   <div class="wrap"><a class="back" href="../">← Portfolio</a></div>
-  <div class="wrap hero"><div class="hero-main">
-    <p class="eyebrow">Exhibit 3 · Notes</p>
-    <h1>Notes</h1>
-    <p class="lede">Blog posts on my personal investing journey: what I've learned from analysts, from writing my own calls, and from life.</p>
-  </div></div>
-  <section class="wrap block" aria-label="Posts">
-    <div class="entries" id="entries"><p class="empty">Loading…</p></div>
-  </section>
+  <div class="wrap nt-hero">
+    <p class="nt-by"><i>by</i>Gideon Anthony</p>
+    <div class="nt-mark"><span class="nb" aria-hidden="true"></span><h1>Notes</h1></div>
+    <p class="nt-lede">My investing journey in writing: what I've learned from analysts, from my own calls, and from life.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="nt-sheet">
+      <div class="nt-row">
+        <h2 id="h-coll">Collections</h2>
+        <div class="tools"><button type="button" id="shelfNext" aria-label="Scroll collections">→</button></div>
+      </div>
+      <div class="shelf" id="shelf" aria-labelledby="h-coll"></div>
+
+      <div id="collView" hidden></div>
+
+      <div class="nt-cols" id="cols">
+        <section aria-labelledby="h-start"><h2 id="h-start">Start here</h2><ul class="nt-list" id="startList"></ul></section>
+        <section aria-labelledby="h-latest"><h2 id="h-latest">Latest posts</h2><ul class="nt-list" id="latestList"></ul></section>
+      </div>
+    </div>
+  </div>
 </main>
 <footer class="site">
   <div class="wrap">
@@ -45,15 +59,45 @@
 <script src="../assets/site.js"></script>
 <script>
 const {get, esc, url, byDate, footer} = Site;
+let C = [], P = [];
+const item = p => `<li><a href="${esc(url(p.url))}">${esc(p.title)}</a><small>${esc(p.when || p.date)}${p.read ? ' · ' + esc(p.read) + ' read' : ''}</small></li>`;
+const soon = t => `<li class="soon">${t}</li>`;
+
+function render(){
+  const id = location.hash.slice(1), coll = C.find(c => c.id === id);
+  document.getElementById('shelf').innerHTML = C.map(c => {
+    const n = P.filter(p => p.collection === c.id).length;
+    return `<a class="book bk-${esc(c.id)}${coll && coll.id === c.id ? ' on' : ''}" href="#${esc(c.id)}">
+      <span class="bk-top">Gideon's Notes</span>
+      <span class="bk-title">${esc(c.title)}<span class="bk-n">${n ? n + ' post' + (n === 1 ? '' : 's') : 'Coming soon'}</span></span></a>`;
+  }).join('');
+  const sh = document.getElementById('shelf');
+  requestAnimationFrame(() => { document.getElementById('shelfNext').hidden = sh.scrollWidth <= sh.clientWidth + 2; });
+  const view = document.getElementById('collView'), cols = document.getElementById('cols');
+  if (coll) {
+    const posts = P.filter(p => p.collection === coll.id);
+    view.innerHTML = `<div class="nt-coll-head"><div><h2>${esc(coll.title)}</h2><p>${esc(coll.blurb)}</p></div><a class="back" style="margin:0" href="#">← All notes</a></div>
+      <ul class="nt-list" style="margin-top:20px">${posts.length ? posts.map(item).join('') : soon('The first post in this collection is on its way.')}</ul>`;
+    view.hidden = false; cols.hidden = true;
+  } else {
+    view.hidden = true; cols.hidden = false;
+    const featured = P.filter(p => p.featured);
+    const start = (featured.length ? featured : [...P].reverse()).slice(0, 6);
+    document.getElementById('startList').innerHTML = start.length ? start.map(item).join('') : soon('The first post is on its way.');
+    document.getElementById('latestList').innerHTML = P.length ? P.slice(0, 8).map(item).join('') : soon('Posts will follow my investing journey, lessons from analysts, and from life.');
+  }
+}
 Promise.all(['site.json','notes.json'].map(get)).then(([site, notes]) => {
   footer(site);
-  notes = (notes||[]).sort(byDate);
-  document.getElementById('entries').innerHTML = notes.length
-    ? notes.map(n => `<a class="card entry" href="${esc(url(n.url))}">
-        ${n.image ? `<div class="pic"><img src="${esc(url(n.image))}" alt="${esc(n.alt||'')}" width="1200" height="630" loading="lazy"></div>` : ''}
-        <div class="txt"><span class="ex">${esc(n.when||n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.summary)}</p>
-        <span class="live"><span>${esc(n.read ? n.read + ' read' : 'Read')}</span></span></div></a>`).join('')
-    : '<div class="coming" style="grid-column:1/-1"><b>The first post is on its way.</b><br>Posts will follow my investing journey: lessons from analysts, from my own calls, and from life.</div>';
+  notes = notes || {};
+  C = notes.collections || [];
+  P = (Array.isArray(notes) ? notes : notes.posts || []).sort(byDate);
+  render();
+});
+window.addEventListener('hashchange', render);
+document.getElementById('shelfNext').addEventListener('click', () => {
+  const s = document.getElementById('shelf');
+  s.scrollBy({left: s.clientWidth * 0.8, behavior: 'smooth'});
 });
 </script>
 </body>
