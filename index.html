@@ -97,7 +97,7 @@
 const {get, esc, num, url, badgeClass, byDate, fileButtons, contactLinks, footer} = Site;
 Promise.all(['site.json','reports.json','timeline.json','desk.json','notes.json','studio.json'].map(get))
 .then(([site, reports, timeline, desk, notes, studio]) => {
-  reports = (reports||[]).sort(byDate); timeline = timeline||[]; desk = desk||[]; notes = notes||[]; studio = studio||[];
+  reports = (reports||[]).sort(byDate); timeline = timeline||[]; desk = desk||[]; notes = Array.isArray(notes) ? notes : (notes && notes.posts) || []; studio = studio||[];
   document.getElementById('contact').innerHTML = contactLinks(site);
   footer(site);
 

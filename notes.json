@@ -1,1 +1,8 @@
-[]
+{
+  "collections": [
+    { "id": "journey",  "title": "My Investing Journey",   "blurb": "From my first DCF to my first published call: what changed, and why." },
+    { "id": "analysts", "title": "Lessons from Analysts",  "blurb": "What equity research analysts have taught me about building and writing a call." },
+    { "id": "life",     "title": "Lessons from Life",      "blurb": "Things outside finance that changed how I think about investing." }
+  ],
+  "posts": []
+}

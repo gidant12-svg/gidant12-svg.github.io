@@ -52,14 +52,17 @@ Set `"soon": true` to show it as "coming soon" without a link.
 
 ## Write a blog post (Notes)
 Notes is the blog: your investing journey, lessons from analysts, and things learned through life.
-1. Copy `notes/_post-template.html` to `notes/your-post-name/index.html` and replace the placeholder text.
+Posts are grouped into **collections** (the book covers on the Notes page): `journey`, `analysts` and `life`.
+
+1. Copy `notes/_post-template.html` to `notes/your-post-name/index.html` and replace the text in CAPITALS.
    (Files starting with `_` are never published.)
-2. Add an entry to `notes.json`:
+2. In `notes.json`, add the post inside `"posts": [ ... ]`:
 ```json
 { "title": "Post title", "when": "March 2027", "date": "2027-03-01", "url": "notes/your-post-name/",
-  "summary": "Two lines on what it covers.", "read": "4 min", "image": "images/notes/your-post-name.jpg" },
+  "read": "4 min", "collection": "journey", "featured": true },
 ```
-`image` is optional (1200 × 630).
+`featured: true` puts the post under **Start here**; every post appears under **Latest posts** automatically.
+To add or rename a collection, edit `"collections"` in `notes.json` (a new one also needs a cover colour in `assets/site.css`, class `bk-yourid`).
 
 ## Add to Studio
 Studio has two sections: **Finished work** and **Process**. Upload images to `images/studio/`
