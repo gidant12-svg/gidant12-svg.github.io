@@ -47,6 +47,8 @@ Set `"current": true` on a call you are writing now: it shows at the top of Call
 ```
 
 ## Add a Desk tool
+The Excel workbook lives in `desk/excel/` (page + the .xlsx). To publish a new version, upload the new file over `desk/excel/Excel_for_Finance_Intern_to_VP.xlsx` with the same name.
+
 Add an entry to `desk.json`. `url` is the tool's address on the site; `image` is 1200 × 630.
 Set `"soon": true` to show it as "coming soon" without a link.
 
